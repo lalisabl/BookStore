@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import './App.css'
-import TryJs from './try'
 
 function App () {
   const [count, setCount] = useState(0)
   return (
     <>
-    <TryJs />
       <h1>inoSquad bookStore project</h1>
       <div className='card'>
         <button onClick={() => setCount(count => count + 1)}>

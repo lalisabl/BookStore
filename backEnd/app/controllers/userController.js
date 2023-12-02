@@ -13,6 +13,4 @@ exports.createNewAccount = catchAsync(async (req, res) => {
 
 // get all user code start here
 exports.getAllUsers = async (req, res) => {
-  console.log(req.body)
-  res.status(200).json({ data: req.body })
 }
