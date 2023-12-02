@@ -1,7 +1,11 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const bookController = require('../controllers/bookController')
+const bookController = require("../controllers/bookController");
 
-router.post('/book', bookController.postBook)
-module.exports = router
+router.post("/upload", bookController.postBook);
+router.patch("/updateBookTitle/:bookId", bookController.updateBookTitle);
+router.delete("/delete/:bookId", bookController.deleteBook);
+router.post('/report/:bookId', bookController.reportBook);
+
+module.exports = router;
