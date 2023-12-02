@@ -1,6 +1,5 @@
 const User = require('../models/UserModel')
-const catchAsync = require("../../utils/catchAsync");
-
+const catchAsync = require('../../utils/catchAsync')
 
 //create user account code start here
 exports.createNewAccount = catchAsync(async (req, res) => {
@@ -11,3 +10,9 @@ exports.createNewAccount = catchAsync(async (req, res) => {
     fullName: req.body.fullName
   })
 })
+
+// get all user code start here
+exports.getAllUsers = async (req, res) => {
+  console.log(req.body)
+  res.status(200).json({ data: req.body })
+}
