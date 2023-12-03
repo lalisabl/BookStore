@@ -50,11 +50,7 @@ const sendErrorProd = (err, res) => {
 };
 
 module.exports = (err, req, res, next) => {
-<<<<<<< HEAD
   //   console.log(err);
-=======
-  // console.log(err);
->>>>>>> refs/remotes/origin/master
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
   if (process.env.NODE_ENV === "development") {
