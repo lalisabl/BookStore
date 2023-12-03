@@ -4,6 +4,7 @@ const sharp = require("sharp");
 const path = require("path");
 const catchAsync = require("../../utils/catchAsync");
 const AppError = require("../../utils/appError");
+const fs = require("fs").promises;
 
 const storage = multer.diskStorage({
   destination: "uploads/",
@@ -17,25 +18,29 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-exports.postBook = async (req, res, next) => {
+exports.postBook = catchAsync(async (req, res, next) => {
   upload.single("file")(req, res, async function (err) {
     if (err) {
       return next(new AppError("File upload failed", 500));
     }
 
-    const { title, user, categories } = req.body;
+    const { title, user, category } = req.body;
     if (!req.file) {
       //   return res.status(402).json({ error: "bad request: no file selected" });
       return next(new AppError("bad request: no file selected", 400));
     }
     const filename = req.file.filename;
-
-    await Book.create({ title, user, filename, categories });
-
-    res.status(201).json({ message: "Book uploaded successfully" });
+    
+    try {
+      await Book.create({ title, user, filename, category });
+      res.status(201).json({ message: "Book uploaded successfully" });
+    } catch (err) {
+      const filePath = `uploads/${filename}`;
+      await fs.unlink(filePath);
+      return next(new AppError(err.message, 400));
+    }
   });
-};
-
+});
 //update book information
 exports.updateBookTitle = catchAsync(async (req, res, next) => {
   const { bookId } = req.params;
@@ -63,7 +68,8 @@ exports.updateBookTitle = catchAsync(async (req, res, next) => {
 });
 
 //delete book and book data from db
-const fs = require("fs").promises;
+/* The code is defining a function called `deleteBook` that is responsible for deleting a book from the
+database and removing its associated file from the file system. */
 exports.deleteBook = catchAsync(async (req, res, next) => {
   const { bookId } = req.params;
   const { userId /*for demo it needs to be updated */ } = req.body;
@@ -119,6 +125,89 @@ exports.reportBook = catchAsync(async (req, res, next) => {
   res.status(200).json({ message: "Book reported successfully" });
 });
 
-
-
+//Get All product
+class APIfeatures {
+  constructor(query, queryString) {
+    this.query = query;
+    this.queryString = queryString;
+  }
+  multfilter() {
+    const searchQuery = this.queryString.search || "";
+    if (typeof searchQuery === "string") {
+      const regexSearch = {
+        $or: [
+          { title: { $regex: searchQuery, $options: "i" } },
+          { categories: { $regex: searchQuery, $options: "i" } },
+        ],
+      };
+      this.query.find(regexSearch);
+    }
+    return this;
+  }
+  filter() {
+    //1 build query
+    const queryObj = { ...this.queryString };
+    const excludedFields = ["page", "limit", "sort", "fields", "search"];
+    excludedFields.forEach((el) => delete queryObj[el]);
+    // advanced query
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lte|lt|eq)\b/g,
+      (match) => `$${match}`
+    );
+    this.query = this.query.find(JSON.parse(queryStr));
+    return this;
+  }
+  sort() {
+    if (this.queryString.sort) {
+      const sortBy = this.queryString.sort.split(",").join(" ");
+      this.query = this.query.sort(sortBy);
+    } else {
+      this.query = this.query.sort("-upload_date");
+    }
+    return this;
+  }
+  limiting() {
+    if (this.queryString.fields) {
+      const selectedFields = this.queryString.fields.split(",").join(" ");
+      this.query = this.query.select(selectedFields);
+    } else {
+      this.query = this.query.select("-__v");
+    }
+    return this;
+  }
+  paginatinating() {
+    const page = this.queryString.page * 1 || 1;
+    const limit = this.queryString.limit * 1 || 10;
+    const skip = (page - 1) * limit;
+    this.query = this.query.skip(skip).limit(limit);
+    return this;
+  }
+}
+// get all Books
+exports.getAllBooks = async (req, res) => {
+  try {
+    //4 excute query
+    const features = new APIfeatures(Book.find(), req.query)
+      .multfilter()
+      .filter()
+      .sort()
+      .limiting()
+      .paginatinating();
+    const Books = await features.query;
+    res.status(200).json({
+      status: "success",
+      results: Books.length,
+      data: {
+        Books,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
 
