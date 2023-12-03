@@ -16,11 +16,11 @@ const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
 });
-exports.uploadUserPhoto = upload.single("photo");
+
+exports.uploadUserPhoto = upload.single("picture");
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
-  console.log(req.filename);
   await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat("jpeg")
@@ -28,24 +28,23 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     .toFile(`public/images/users/${req.file.filename}`);
   next();
 });
-const filterObj = (obj, ...allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach((el) => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
-  });
-  return newObj;
-};
-//create user account code start here
-exports.createNewAccount = catchAsync(async (req, res) => {
-  const newUser = await User.create({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-    fullName: req.body.fullName,
-  });
+// update user profile
+exports.updateMe = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  const { fullName, username, bio, notifications, favorites, reading_history } =
+    req.body;
+  const picture = req.file.filename;
+  if (fullName) user.fullName = fullName;
+  if (username) user.username = username;
+  if (bio) user.profile.bio = bio;
+  if (favorites) user.profile.favorites = favorites;
+  if (notifications) user.profile.notifications = notifications;
+  if (reading_history) user.profile.reading_history = reading_history;
+  if (picture) user.profile.picture = picture;
+  const updatedUser = await user.save();
   res.status(200).json({
     status: "success",
-    data: newUser,
+    data: { updatedUser },
   });
 });
 // get all users
@@ -59,26 +58,42 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     },
   });
 });
-// update user profile
-exports.updateMe = catchAsync(async (req, res, next) => {
-  //Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(
-    req.body,
-    "fullName",
-    "email",
-    "phoneNumber",
-    "username"
-  );
-  if (req.file) filteredBody.photo = req.file.filename;
-  //Update user document
-  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
-    new: true,
-    runValidators: true,
-  });
+exports.getMe = catchAsync(async (req, res, next) => {
+  req.params.userId = req.user.id;
+  next();
+});
+// get eachuser
+exports.getOneUser = catchAsync(async (req, res, next) => {
+  let query = User.findById(req.params.userId);
+  const user = await query;
+  if (!user) {
+    return next(new AppError("No User found with that ID", 404));
+  }
+
   res.status(200).json({
     status: "success",
     data: {
-      user: updatedUser,
+      data: user,
     },
   });
 });
+// deleting a user
+exports.deleteUser = async (req, res, next) => {
+  const userId = req.params.userId;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error(`There is no user with ${userId} _id`);
+    }
+    user.isActive = user.isActive == true ? false : true;
+    await user.save();
+    return res.status(204).json({
+      status: "success",
+      data: {
+        user: user,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
