@@ -33,6 +33,7 @@ const bookSchema = new Schema({
   },
   thumbnail: String,
   upload_date: { type: Date, default: Date.now },
+
   rating: [
     {
       avgRate: { type: Number, default: 0 },
@@ -47,9 +48,9 @@ const bookSchema = new Schema({
       timestamp: { type: Date, default: Date.now },
     },
   ],
-
-  downloads: { type: [String] },
-  shares: { type: [String] },
+  downloadable: { type: Boolean, default: true },
+  downloads: { type: Number, default: 0 },
+  shares: { type: Number, default: 0 },
   reports: [
     {
       user_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -89,7 +90,6 @@ bookSchema.methods.addReview = async function (user_id, rating, comment) {
 bookSchema.methods.addRating = async function (rating) {
   if (rating < 1 || rating > 5) {
     throw new Error("Rating must be between 1 and 5.");
-
   }
 
   if (!this.rating || !this.rating[0]) {
@@ -101,13 +101,27 @@ bookSchema.methods.addRating = async function (rating) {
     ];
   }
 
-  // Update the sum of ratings
   const totalReviews = this.reviews.length;
   const sumRatings = this.reviews.reduce((sum, r) => sum + r.rating, 0);
 
-  this.rating[0].avgRate = (sumRatings / this.rating[0].numRates).toFixed(2);
+  this.rating[0].avgRate = (sumRatings / totalReviews).toFixed(2);
   this.rating[0].numRates = totalReviews;
 
+  await this.save();
+};
+
+
+/* The `bookSchema.methods.addDownload` function is a method that is added to the `bookSchema` object.
+It is used to increment the `downloads` field of a book document by 1 and save the updated document
+to the database. */
+
+bookSchema.methods.addDownload = async function () {
+  this.downloads += 1;
+  await this.save();
+};
+
+bookSchema.methods.addShare = async function () {
+  this.shares += 1;
   await this.save();
 };
 
