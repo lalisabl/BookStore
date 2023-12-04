@@ -30,7 +30,7 @@ exports.postBook = catchAsync(async (req, res, next) => {
       return next(new AppError("bad request: no file selected", 400));
     }
     const filename = req.file.filename;
-    
+
     try {
       await Book.create({ title, user, filename, category });
       res.status(201).json({ message: "Book uploaded successfully" });
@@ -41,6 +41,7 @@ exports.postBook = catchAsync(async (req, res, next) => {
     }
   });
 });
+
 //update book information
 exports.updateBookTitle = catchAsync(async (req, res, next) => {
   const { bookId } = req.params;
@@ -211,3 +212,47 @@ exports.getAllBooks = async (req, res) => {
   }
 };
 
+// GET EACH book by it's id
+/* The code `exports.getEachBook` is defining a function that handles the request to get a specific
+book by its ID. */
+exports.getEachBook = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const book = await Book.findById(id);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      book,
+    },
+  });
+});
+
+// reaction on books
+
+// API endpoint for setting rating and review
+exports.setRate_review = catchAsync(async (req, res, next) => {
+  const { bookId, user_id /*need to be updated */, rating, comment } = req.body;
+
+  // Validate request parameters
+  if (!bookId || !user_id) {
+    return res.status(400).json({ error: "Book ID and user ID are required." });
+  }
+
+  const book = await Book.findById(bookId);
+
+  if (!book) {
+    return res.status(404).json({ error: "Book not found." });
+  }
+
+  // Set review
+  if (comment !== undefined && rating !== undefined) {
+    await book.addReview(user_id, rating, comment);
+    await book.addRating(rating);
+  }
+
+  return res
+    .status(200)
+    .json({ message: "Rating and review set successfully." });
+});
+
+// Example usage in your Express app
