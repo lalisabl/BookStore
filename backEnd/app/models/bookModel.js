@@ -31,19 +31,19 @@ const bookSchema = new Schema({
     ],
     required: true,
   },
+  thumbnail: String,
   upload_date: { type: Date, default: Date.now },
-
-  ratings: [
+  rating: [
     {
-      user_id: { type: Schema.Types.ObjectId, ref: "User" },
-      rating: { type: Number },
+      avgRate: { type: Number, default: 0 },
+      numRates: { type: Number, default: 0 },
     },
   ],
-
   reviews: [
     {
       user_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
-      comment: { type: String },
+      rating: { type: Number, required: true },
+      comment: { type: String, required: true },
       timestamp: { type: Date, default: Date.now },
     },
   ],
@@ -71,6 +71,44 @@ const bookSchema = new Schema({
     },
   ],
 });
+
+bookSchema.methods.addReview = async function (user_id, rating, comment) {
+  const existingReview = this.reviews.find(
+    (r) => String(r.user_id) === String(user_id)
+  );
+
+  if (existingReview) {
+    existingReview.rating = rating;
+    existingReview.comment = comment;
+  } else {
+    this.reviews.push({ user_id, rating, comment });
+  }
+  await this.save();
+};
+
+bookSchema.methods.addRating = async function (rating) {
+  if (rating < 1 || rating > 5) {
+    throw new Error("Rating must be between 1 and 5.");
+  }
+
+  if (!this.rating || !this.rating[0]) {
+    this.rating = [
+      {
+        avgRate: 0,
+        numRates: 0,
+      },
+    ];
+  }
+
+  // Update the sum of ratings
+  const totalReviews = this.reviews.length;
+  const sumRatings = this.reviews.reduce((sum, r) => sum + r.rating, 0);
+
+  this.rating[0].avgRate = (sumRatings / this.rating[0].numRates).toFixed(2);
+  this.rating[0].numRates = totalReviews;
+
+  await this.save();
+};
 
 const Book = mongoose.model("Book", bookSchema);
 
