@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/UserModel");
 const catchAsync = require("../../utils/catchAsync");
 const AppError = require("../../utils/appError");
 exports.addToFavorites = async (req, res, next) => {
@@ -16,9 +16,7 @@ exports.addToFavorites = async (req, res, next) => {
 
 exports.getFavorites = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id).populate(
-      "profile.favorites"
-    );
+    const user = await User.findById(req.user.id).populate("profile.favorites");
     res.status(200).json({ status: "success", data: user.profile.favorites });
   } catch (error) {
     next(error);
@@ -28,7 +26,7 @@ exports.getFavorites = async (req, res, next) => {
 exports.removeFromFavorites = async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      req.user.id,
       { $pull: { "profile.favorites": req.params.bookId } },
       { new: true }
     ).populate("profile.favorites");
