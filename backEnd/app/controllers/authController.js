@@ -1,5 +1,9 @@
 const User = require("../models/UserModel");
 const jwt = require("jsonwebtoken");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const client_id = process.env.CLIENT_ID;
+const client_secret = process.env.CLIENT_SECRET;
+const passport = require("passport");
 const { promisify } = require("util");
 const catchAsync = require("../../utils/catchAsync");
 const AppError = require("../../utils/appError");
@@ -39,6 +43,7 @@ exports.createNewAccount = catchAsync(async (req, res) => {
   });
   createSendToken(newUser, 201, res);
 });
+
 exports.loginUsers = catchAsync(async (req, res, next) => {
   const MAX_LOGIN_ATTEMPTS = 5;
   const LOCKOUT_DURATION = 5 * 60 * 1000; // 15 minutes in milliseconds
@@ -81,6 +86,7 @@ exports.loginUsers = catchAsync(async (req, res, next) => {
   }
   createSendToken(user, 200, res);
 });
+
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
   if (
@@ -141,3 +147,42 @@ exports.logoutUser = (req, res) => {
   res.status(200).json({ status: "success" });
 };
 exports.resetPassword = async (req, res, next) => {};
+
+// Initialize Passport Google Strategy
+exports.CreateGoogleStrategy = () => {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: client_id,
+        clientSecret: client_secret,
+        callbackURL: "http://localhost:3000/api/v1/users/auth/google/callback",
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          let user = await User.findOne({ googleId: profile.id });
+          if (user) {
+            return done(null, user);
+          } else {
+            user = new User({
+              username: profile.displayName,
+              email: profile.emails[0].value,
+              fullName: profile.displayName,
+              googleId: profile.id,
+            });
+            await user.save();
+            // const token = signToken(user._id);
+            return done(null, user);
+          }
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+};
+
+exports.googleSignInRedirect = (req, res) => {
+  const user = req.user;
+  const token = signToken(user._id);
+  createSendToken(user, 200, res);
+};
