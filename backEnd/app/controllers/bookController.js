@@ -249,6 +249,21 @@ exports.setRate_review = catchAsync(async (req, res, next) => {
     await book.addReview(user_id, rating, comment);
     await book.addRating(rating);
   }
+  // Create a notification for the user who uploaded the book for the review
+
+  console.log(book.title);
+  if (book && book.user) {
+    const notification = await Notification.create({
+      message: `${req.user.username} wrote a review for your book.`,
+      relatedBook: req.params.bookId,
+      sender: req.user.id,
+    });
+    await User.findByIdAndUpdate(
+      book.user,
+      { $addToSet: { "profile.notifications": notification._id } },
+      { new: true }
+    );
+  }
 
   return res
     .status(200)

@@ -7,6 +7,7 @@ const globalErrorHandler = require("./controllers/errorController");
 const userRoute = require("./Routers/UserRouter");
 const bookRoute = require("./Routers/bookRouter");
 const favoriteRoute = require("./Routers/favoritesRoute");
+const notificationRoute = require("./Routers/notificationRouter");
 const cors = require("cors");
 
 // body parser
@@ -18,5 +19,6 @@ app.use("/api/v1/users/", userRoute);
 
 app.use("/api/v1/books/", bookRoute);
 app.use("/api/v1/favorites", favoriteRoute);
+app.use("/api/v1/notification", notificationRoute);
 app.use(globalErrorHandler);
 module.exports = app;

@@ -1,4 +1,6 @@
 const User = require("../models/UserModel");
+const Book = require("../models/bookModel");
+const Notification = require("../models/notificationModel");
 const catchAsync = require("../../utils/catchAsync");
 const AppError = require("../../utils/appError");
 exports.addToFavorites = async (req, res, next) => {
@@ -8,6 +10,23 @@ exports.addToFavorites = async (req, res, next) => {
       { $addToSet: { "profile.favorites": req.params.bookId } },
       { new: true }
     ).populate("profile.favorites");
+
+    // Create a notification for the user who uploaded the book
+    const book = await Book.findById(req.params.bookId);
+    console.log(book.title);
+    if (book && book.user) {
+      const notification = await Notification.create({
+        message: `${req.user.username} added your book to favorites.`,
+        relatedBook: req.params.bookId,
+        sender: req.user.id,
+      });
+      await User.findByIdAndUpdate(
+        book.user,
+        { $addToSet: { "profile.notifications": notification._id } },
+        { new: true }
+      );
+    }
+
     res.status(201).json({ status: "success", data: user.profile.favorites });
   } catch (error) {
     next(error);
