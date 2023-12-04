@@ -233,7 +233,6 @@ exports.getEachBook = catchAsync(async (req, res, next) => {
 exports.setRate_review = catchAsync(async (req, res, next) => {
   const { bookId, user_id /*need to be updated */, rating, comment } = req.body;
 
-  // Validate request parameters
   if (!bookId || !user_id) {
     return res.status(400).json({ error: "Book ID and user ID are required." });
   }
@@ -244,7 +243,6 @@ exports.setRate_review = catchAsync(async (req, res, next) => {
     return res.status(404).json({ error: "Book not found." });
   }
 
-  // Set review
   if (comment !== undefined && rating !== undefined) {
     await book.addReview(user_id, rating, comment);
     await book.addRating(rating);
@@ -270,4 +268,60 @@ exports.setRate_review = catchAsync(async (req, res, next) => {
     .json({ message: "Rating and review set successfully." });
 });
 
-// Example usage in your Express app
+// Endpoint to handle download requests
+exports.shareBook = catchAsync(async (req, res, next) => {
+  const { bookId } = req.params;
+
+  const book = await Book.findById(bookId);
+  if (!book) {
+    return next(new AppError("Book not found", 404));
+  }
+
+  await book.addShare();
+  return res
+    .status(200)
+    .json({ url: book.id, message: "shared successful" });
+});
+
+// Endpoint to handle download requests
+exports.downloadBook = catchAsync(async (req, res, next) => {
+  const { bookId } = req.params;
+
+  const book = await Book.findById(bookId);
+  if (!book) {
+    return next(new AppError("Book not found", 404));
+  }
+
+  if (!book.downloadable) {
+    return next(new AppError("Download not allowed for this book", 403));
+  }
+  await book.addDownload();
+  return res
+    .status(200)
+    .json({ url: book.filename, message: "Download successful" });
+});
+
+
+
+// Endpoint to get file location by book ID
+exports.getFileLocation = async (req, res, next) => {
+  try {
+    const { bookId } = req.params;
+
+    // Check if the book exists
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    // Construct the complete file location URL
+    const fileLocationURL = `${process.env.BASE_URL}/uploads/${book.filename}`;
+
+    // Return the file location URL
+    return res.status(200).json({ fileLocation: fileLocationURL });
+  } catch (error) {
+    // Handle any errors that may occur
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
