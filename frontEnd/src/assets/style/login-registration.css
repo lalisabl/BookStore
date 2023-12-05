@@ -1,5 +1,9 @@
 .registration-container {
-    background-image: linear-gradient(to right,var(--primary-color), #6066ff, #50aeff);
-  }
-  
-  
+  background-image: linear-gradient(
+    to right,
+    #6066ff,
+    var(--primary-color),
+    #6066ff,
+    #50aeff
+  );
+}
