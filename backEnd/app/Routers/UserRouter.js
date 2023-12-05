@@ -7,6 +7,7 @@ const authController = require("../controllers/authController");
 authController.CreateGoogleStrategy();
 router.use(passport.initialize());
 router.post("/register", authController.createNewAccount);
+router.get("/check-availabilty", userController.signupValidation);
 router.post("/login", authController.loginUsers);
 router.get("/logout", authController.logoutUser);
 router.route("/").get(userController.getAllUsers);

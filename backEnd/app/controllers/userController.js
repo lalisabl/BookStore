@@ -97,3 +97,24 @@ exports.deleteUser = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.signupValidation = catchAsync(async (req, res) => {
+  const { username, email } = req.query;
+  const existingEmail = await User.findOne({ email });
+  if (username) {
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      // Username is already taken
+      res.json({ available: { username: false } });
+    } else {
+      res.json({ available: { username: false } });
+    }
+    return;
+  }
+  if (existingEmail) {
+    // email is already taken
+    res.json({ available: { email: false } });
+  } else {
+    res.json({ available: { email: true } });
+  }
+});
