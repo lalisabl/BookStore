@@ -9,16 +9,61 @@ import {
   faRocket,
 } from "@fortawesome/free-solid-svg-icons";
 export function Login() {
-  return <div></div>;
-}
-
-function placeholder() {
   return (
-    <>
-      <div>hello h </div>
-    </>
+    <div className="registration-container">
+      <div className="welcome-banner">
+        <FontAwesomeIcon icon={faRocket} className="icon" />
+        <h3>Welcome </h3>
+        <p>start reading, reader is leader this tooks you 3-5 sec atmost</p>
+        <button className="btn btn-primary-white" type="submit">
+          Register
+        </button>
+      </div>
+      <div className="form-bg">
+        <div className="form-container"></div>
+        <div className="form-content">
+          <h3>Welcome to Gr8Books</h3>
+          <form>
+            <div>
+              <div>
+                {" "}
+                <div className="input-wrapper">
+                  <FontAwesomeIcon icon={faUserAlt} className="icon" />
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Username *"
+                    required
+                  />
+                </div>
+                <br />
+                <div className="input-wrapper">
+                  <FontAwesomeIcon icon={faLock} className="icon" />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password *"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3>google.com</h3>
+            </div>
+            <div>
+              <button className="btn btn-primary" type="submit">
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
+
 export function Register() {
   const [formData, setFormData] = useState({
     fullName: "",

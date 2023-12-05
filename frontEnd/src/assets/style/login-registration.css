@@ -13,6 +13,8 @@
   min-height: 500px;
   max-height: 80vh;
   padding-right: 0;
+  max-width: 80vw;
+  margin: auto;
 }
 .form-bg {
   width: 80%;

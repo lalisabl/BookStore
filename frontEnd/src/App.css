@@ -39,3 +39,6 @@ background-color: var(--primary-color-lighter);}
   
   background-color:#e95645;
 }
+body {
+  background-color: rgb(211, 211, 211);
+}
