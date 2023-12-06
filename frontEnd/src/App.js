@@ -1,12 +1,11 @@
-
-import './App.css';
-import { Login, Register } from './components/login-registration';
+import "./App.css";
+import { Login, Register } from "./components/login-registration";
 
 function App() {
   return (
     <div>
-      {/* <Register /> */}
-      <Login />
+      <Register />
+      {/* <Login /> */}
     </div>
   );
 }
