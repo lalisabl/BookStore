@@ -1,5 +1,6 @@
 @import url('./assets/style/login-registration.css');
-
+@import url('./assets/style/loading.css');
+@import url('./assets/style/modal.css');
 :root {
   --primary-color: #646cff;
   --primary-color-lighter:#5066ff;

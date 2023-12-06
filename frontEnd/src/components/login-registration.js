@@ -48,14 +48,13 @@ export function Login() {
                 </div>
               </div>
             </div>
-
-            <div>
-              <h3>google.com</h3>
-            </div>
             <div>
               <button className="btn btn-primary" type="submit">
                 Login
               </button>
+            </div>
+            <div className="with-google">
+              <img src="images/google.png" />
             </div>
           </form>
         </div>
@@ -192,12 +191,12 @@ export function Register() {
               </div>
             </div>
             <div>
-              <h3>google.com</h3>
-            </div>
-            <div>
               <button className="btn btn-primary" type="submit">
                 Register
               </button>
+            </div>
+            <div className="with-google">
+              <img src="images/google.png" />
             </div>
           </form>
         </div>
