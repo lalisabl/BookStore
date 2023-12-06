@@ -1,5 +1,5 @@
 import "./App.css";
-import { Login, Register } from "./components/login-registration";
+import { Login, Register } from "./components/user/login-registration";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GenericModal from "./shared/GenericModal";
 import { useState } from "react";
