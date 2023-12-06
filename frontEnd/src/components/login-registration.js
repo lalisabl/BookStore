@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -69,45 +70,52 @@ export function Register() {
     email: "",
     username: "",
     password: "",
-    confirmPassword: "", // Make sure to include confirmPassword in formData
+    confirmPassword: "",
   });
+
+  const [usernameAvailability, setUsernameAvailability] = useState(null);
+  const [emailAvailability, setEmailAvailability] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const checkAvailability = async () => {
+      if (formData.username) {
+        const response = await axios.get(
+          `/api/v1/users/check-availability?username=${formData.username}`
+        );
+        setUsernameAvailability(response.data.available);
+      }
 
-    // Check if passwords match
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    // Save registration data
-    const registrationData = {
-      fullName: formData.fullName,
-      email: formData.email,
-      username: formData.username,
-      password: formData.password,
+      if (formData.email) {
+        const response = await axios.get(
+          `/api/v1/users/check-availability?email=${formData.email}`
+        );
+        setEmailAvailability(response.data.available);
+      }
     };
 
-    // You can save the registrationData or perform further actions here
-    console.log("Registration data:", registrationData);
+    // Perform the check whenever username or email in formData changes
+    checkAvailability();
+  }, [formData.username, formData.email]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Send registration data to the backend using Axios
+      const response = await axios.post("/api/register", formData);
+      console.log("Registration successful:", response.data);
 
-    // Clear form fields
-    setFormData({
-      fullName: "",
-      email: "",
-      username: "",
-      password: "",
-      confirmPassword: "",
-    });
+      // Add any additional logic for successful registration (e.g., redirect)
+    } catch (error) {
+      console.error("Registration failed:", error.response.data);
+      // Handle registration failure (e.g., display an error message to the user)
+    }
   };
 
   return (
@@ -148,7 +156,13 @@ export function Register() {
                     onChange={handleChange}
                     placeholder="Email *"
                     required
+                    onInput={handleChange} // Triggered as the user types
                   />
+                  {emailAvailability !== null && (
+                    <div className={emailAvailability ? "available" : "taken"}>
+                      {emailAvailability ? "Email available" : "Email taken"}
+                    </div>
+                  )}
                 </div>
                 <br />
                 <div className="input-wrapper">
@@ -160,7 +174,17 @@ export function Register() {
                     onChange={handleChange}
                     placeholder="Username *"
                     required
+                    onInput={handleChange} // Triggered as the user types
                   />
+                  {usernameAvailability !== null && (
+                    <div
+                      className={usernameAvailability ? "available" : "taken"}
+                    >
+                      {usernameAvailability
+                        ? "Username available"
+                        : "Username taken"}
+                    </div>
+                  )}
                 </div>
                 <br />
               </div>
