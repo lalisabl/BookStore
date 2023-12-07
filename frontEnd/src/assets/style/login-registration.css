@@ -13,6 +13,7 @@
   min-height: 500px;
   max-height: 80vh;
   padding-right: 0;
+  min-width: 70vw;
   max-width: 80vw;
   margin: auto;
 }
@@ -23,12 +24,11 @@
   padding: 50px;
   overflow: hidden;
   padding-right: 0;
-  
 }
 .welcome-banner {
   text-align: center;
   color: white;
-  font-family: "Roboto Mono", monospace;
+  font-family: "Roboto Mono";
   font-weight: 400;
   padding: 10px;
   margin: auto;
@@ -74,7 +74,8 @@
   justify-self: center;
   text-align: center;
   margin-bottom: 15px;
-  font-family: "Roboto Mono", monospace;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
 }
 .input-wrapper {
   position: relative;
@@ -88,4 +89,9 @@
   top: 4px;
   color: var(--primary-color);
   right: 5px;
+}
+
+.form-content .with-google img{
+  max-height: 63px;
+  margin: auto;
 }
