@@ -14,9 +14,10 @@ const cors = require("cors");
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(passport.initialize());
-
+// global middlewares
+app.use(cors());
+// route middlewares
 app.use("/api/v1/users/", userRoute);
-
 app.use("/api/v1/books/", bookRoute);
 app.use("/api/v1/favorites", favoriteRoute);
 app.use("/api/v1/notification", notificationRoute);
