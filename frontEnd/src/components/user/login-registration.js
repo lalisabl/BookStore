@@ -76,6 +76,7 @@ export function Register() {
 
   const [usernameAvailability, setUsernameAvailability] = useState(null);
   const [emailAvailability, setEmailAvailability] = useState(null);
+  const [focusedInput, setFocusedInput] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,28 +85,31 @@ export function Register() {
       [name]: value,
     }));
   };
+  const handleInputFocus = (inputName) => {
+    setFocusedInput(inputName);
+  };
 
   useEffect(() => {
     const checkAvailability = async () => {
-      
-      if (formData.username) {
+      if (formData.username && focusedInput === "username") {
         const response = await axios.get(
           `${apiurl}/users/check-availabilty?username=${formData.username}`
         );
         setUsernameAvailability(response.data.available);
       }
 
-      if (formData.email) {
+      if (formData.email && focusedInput === "email") {
         const response = await axios.get(
           `${apiurl}/users/check-availabilty?email=${formData.email}`
         );
+        console.log(focusedInput);
         setEmailAvailability(response.data.available);
       }
     };
 
     // Perform the check whenever username or email in formData changes
     checkAvailability();
-  }, [formData.username, formData.email]);
+  }, [formData.username, formData.email, focusedInput]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -143,6 +147,7 @@ export function Register() {
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleChange}
+                    onFocus={() => handleInputFocus("fullName")}
                     placeholder="Full Name *"
                     required
                   />
@@ -155,15 +160,20 @@ export function Register() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onFocus={() => handleInputFocus("email")}
                     placeholder="Email *"
                     required
                     onInput={handleChange} // Triggered as the user types
                   />
-                  {emailAvailability !== null && (
-                    <div className={!emailAvailability ? "available" : "taken"}>
-                      {usernameAvailability ? "available" : "taken"}
-                    </div>
-                  )}
+                  {emailAvailability !== null &&
+                    formData.email !== "" &&
+                    focusedInput === "email" && (
+                      <div
+                        className={emailAvailability ? "available" : "taken"}
+                      >
+                        {emailAvailability ? "available" : "taken"}
+                      </div>
+                    )}
                 </div>
                 <br />
                 <div className="input-wrapper">
@@ -173,19 +183,22 @@ export function Register() {
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
+                    onFocus={() => handleInputFocus("username")}
                     placeholder="Username *"
                     required
                     onInput={handleChange} // Triggered as the user types
                   />
-                  {usernameAvailability !== null && (
-                    <div
-                      className={usernameAvailability ? "available" : "taken"}
-                    >
-                      {usernameAvailability
-                        ? "Username available"
-                        : "Username taken"}
-                    </div>
-                  )}
+                  {usernameAvailability !== null &&
+                    formData.username !== "" &&
+                    focusedInput === "username" && (
+                      <div
+                        className={usernameAvailability ? "available" : "taken"}
+                      >
+                        {usernameAvailability
+                          ? "Username available"
+                          : "Username taken"}
+                      </div>
+                    )}
                 </div>
                 <br />
               </div>
@@ -197,6 +210,7 @@ export function Register() {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
+                    onFocus={() => handleInputFocus("password")}
                     placeholder="Password *"
                     required
                   />
@@ -209,6 +223,7 @@ export function Register() {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
+                    onFocus={() => handleInputFocus("username")}
                     placeholder="Confirm Password *"
                     required
                   />
