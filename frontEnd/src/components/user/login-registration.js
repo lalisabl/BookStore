@@ -9,7 +9,7 @@ import {
   faCheckCircle,
   faRocket,
 } from "@fortawesome/free-solid-svg-icons";
-import { apiurl } from "../assets/style/constData";
+import { apiurl } from "../../assets/constData";
 export function Login() {
   return (
     <div className="registration-container">
@@ -87,6 +87,7 @@ export function Register() {
 
   useEffect(() => {
     const checkAvailability = async () => {
+      
       if (formData.username) {
         const response = await axios.get(
           `${apiurl}/users/check-availabilty?username=${formData.username}`
