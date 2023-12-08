@@ -1,0 +1,71 @@
+.book-hover:hover {
+  box-shadow: 1px 1px 5px 1px rgb(180, 178, 178);
+}
+
+.grid-display {
+  margin: 10px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 20px;
+  max-width: 98vw;
+}
+
+.grid-item {
+  overflow: hidden;
+  border: 1px solid #ddd;
+  padding: 0 10px;
+  max-height: 300px;
+  background-color: rgb(235, 235, 240);
+  border-radius: 5px;
+  text-align: center;
+  position: relative;
+  margin-bottom: 50px;
+}
+.grid-item img {
+  max-width: 100%;
+  margin: auto;
+  min-height: 65%;
+  max-height: 65%;
+}
+.grid-item .book-detail {
+  text-align: right;
+}
+.grid-item .book-detail .icon {
+  font-size: small;
+}
+.grid-item .book-owner {
+  position: absolute;
+  bottom: -3px;
+  left: -15px;
+  border-bottom: solid 1px solid gray;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 60%;
+  display: flex;
+  padding: 5px;
+  padding-right: 0;
+  border-radius: 0 5px 0 0;
+}
+.book-owner img {
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid gray;
+  border-radius: 50%;
+  object-fit: cover;
+  width: 27%;
+  aspect-ratio: 1;
+}
+.book-owner div {
+  cursor: pointer;
+  transform: translateX(-25%);
+  color: white;
+  margin: auto 0;
+  font-size: small;
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+/* Responsive grid with media query */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
