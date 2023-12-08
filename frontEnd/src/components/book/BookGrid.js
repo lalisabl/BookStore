@@ -25,8 +25,13 @@ export function BookGrid() {
             </div>
             <div className="book-owner">
               <img src={book.uploader.image} />
-              <div className="btn-primary">
-                <FontAwesomeIcon className="icon" icon={faPlus} /> follow
+
+              <div>
+                <div>{book.uploader.username}</div>
+                <div className="btn-primary">
+                  {" "}
+                  <FontAwesomeIcon className="icon" icon={faPlus} /> follow
+                </div>
               </div>
             </div>
           </div>

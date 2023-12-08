@@ -9,6 +9,7 @@ export const BooksSample = {
       rate: 4.5,
       uploader: {
         id: "user123",
+        username:"john doe",
         image: "images/placeholder.jpg",
         followBtn: true,
       },
@@ -22,6 +23,7 @@ export const BooksSample = {
       uploader: {
         id: "user456",
         image: "images/placeholder.jpg",
+        username:"john doe",
         followBtn: false,
       },
       numberOfViews: 980,
@@ -34,6 +36,7 @@ export const BooksSample = {
       uploader: {
         id: "user789",
         image: "images/placeholder.jpg",
+        username:"john doe",
         followBtn: true,
       },
       numberOfViews: 1500,
@@ -46,6 +49,7 @@ export const BooksSample = {
         uploader: {
           id: "user123",
           image: "images/placeholder.jpg",
+          username:"john doe",
           followBtn: true,
         },
         numberOfViews: 1200,
