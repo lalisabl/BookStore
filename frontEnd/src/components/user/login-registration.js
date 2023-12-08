@@ -117,6 +117,12 @@ export function Register() {
         console.log("Registration successful:", response.data);
       } else {
         console.log("either email or username is taken");
+        if (!emailAvailability) {
+          setFocusedInput("email");
+        }
+        if (!usernameAvailability) {
+          setFocusedInput("username");
+        }
       }
       // Add any additional logic for successful registration (e.g., redirect)
     } catch (error) {

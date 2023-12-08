@@ -104,8 +104,8 @@
   font-size: 14px;
   width: 100%;
   padding: 1px;
-  opacity: 0;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  /* opacity: 0; */
+  /* transition: opacity 0.3s ease, visibility 0.3s ease; */
 }
 
 .available {
@@ -121,8 +121,3 @@
   display: block;
   opacity: 1;
 }
-/* .input-wrapper:focus-within .available,
-.input-wrapper:focus-within .taken {
-  display: block;
-  opacity: 1;
-} */

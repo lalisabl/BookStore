@@ -34,8 +34,9 @@ function TryMod() {
 function App() {
   return (
     <div>
-      <NavBar where={"landing"} />
-      <BookGrid />
+      {/* <NavBar where={"landing"} />
+      <BookGrid /> */}
+      <Register />
     </div>
   );
 }
