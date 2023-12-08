@@ -111,21 +111,15 @@ exports.signupValidation = catchAsync(async (req, res) => {
   let username;
   let email;
   if (req.query.username) {
-    email = null;
     username = req.query.username;
-    console.log("hello from username", req.query.username);
     const existingUsername =
       (await User.findOne({ username })) === null ? false : true;
     respondAvailabilty(existingUsername);
-    console.log(existingUsername);
   }
   if (req.query.email) {
-    username = null;
     email = req.query.email;
-    console.log("hello from email", email);
     const existingEmail =
       (await User.findOne({ email })) === null ? false : true;
-    console.log(existingEmail);
     respondAvailabilty(existingEmail);
   }
 });
