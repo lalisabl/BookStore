@@ -13,7 +13,7 @@ function Pages() {
       </BrowserRouter>
     </>
   );
-}
+} 
 
 function TryMod() {
   const [open, setOpen] = useState(true);
@@ -23,7 +23,7 @@ function TryMod() {
       <GenericModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        children={<Register />}
+        children={<Register />} 
       />
     </>
   );
