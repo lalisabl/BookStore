@@ -1,9 +1,11 @@
-@import url('./assets/style/login-registration.css');
-@import url('./assets/style/loading.css');
-@import url('./assets/style/modal.css');
+@import url("./assets/style/login-registration.css");
+@import url("./assets/style/loading.css");
+@import url("./assets/style/modal.css");
+@import url("./assets/style/navBar.css");
+@import url("./assets/style/bookDisplayeType.css");
 :root {
   --primary-color: #646cff;
-  --primary-color-lighter:#5066ff;
+  --primary-color-lighter: #5066ff;
   --secondary-color: #2ecc71;
   --accent-color: #e74c3c;
 }
@@ -26,20 +28,21 @@
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.btn-primary{
+.btn-primary {
   color: white;
   background-color: var(--primary-color);
 }
 .btn-primary:hover {
-background-color: var(--primary-color-lighter);}
+  background-color: var(--primary-color-lighter);
+}
 .btn-primary-white {
   color: white;
-  background-color:#e74c3c;
+  background-color: #e74c3c;
 }
-.btn-primary-white:hover{
-  
-  background-color:#e95645;
+.btn-primary-white:hover {
+  background-color: #e95645;
 }
 body {
-  background-color: rgb(211, 211, 211);
+  background-color: white;
+  margin: 0;
 }
