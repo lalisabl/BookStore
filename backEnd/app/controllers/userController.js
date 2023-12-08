@@ -3,6 +3,7 @@ const catchAsync = require("../../utils/catchAsync");
 const AppError = require("../../utils/appError");
 const multer = require("multer");
 const sharp = require("sharp");
+const { trusted } = require("mongoose");
 const multerStorage = multer.memoryStorage();
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
@@ -99,15 +100,6 @@ exports.deleteUser = async (req, res, next) => {
 };
 
 exports.signupValidation = catchAsync(async (req, res) => {
-  const { username, email } = req.query;
-  if (username) {
-    const existingUsername = await User.findOne({ username });
-    respondAvailabilty(existingUsername);
-  }
-  if (email) {
-    const existingEmail = await User.findOne({ email });
-    respondAvailabilty(existingEmail);
-  }
   const respondAvailabilty = (existingUser) => {
     if (existingUser) {
       // the email or the username is taken
@@ -116,4 +108,24 @@ exports.signupValidation = catchAsync(async (req, res) => {
       res.json({ available: true });
     }
   };
+  let username;
+  let email;
+  if (req.query.username) {
+    email = null;
+    username = req.query.username;
+    console.log("hello from username", req.query.username);
+    const existingUsername =
+      (await User.findOne({ username })) === null ? false : true;
+    respondAvailabilty(existingUsername);
+    console.log(existingUsername);
+  }
+  if (req.query.email) {
+    username = null;
+    email = req.query.email;
+    console.log("hello from email", email);
+    const existingEmail =
+      (await User.findOne({ email })) === null ? false : true;
+    console.log(existingEmail);
+    respondAvailabilty(existingEmail);
+  }
 });

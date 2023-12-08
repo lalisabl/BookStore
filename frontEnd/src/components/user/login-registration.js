@@ -9,6 +9,7 @@ import {
   faCheckCircle,
   faRocket,
 } from "@fortawesome/free-solid-svg-icons";
+import { apiurl } from "../assets/style/constData";
 export function Login() {
   return (
     <div className="registration-container">
@@ -88,14 +89,14 @@ export function Register() {
     const checkAvailability = async () => {
       if (formData.username) {
         const response = await axios.get(
-          `/api/v1/users/check-availability?username=${formData.username}`
+          `${apiurl}/users/check-availabilty?username=${formData.username}`
         );
         setUsernameAvailability(response.data.available);
       }
 
       if (formData.email) {
         const response = await axios.get(
-          `/api/v1/users/check-availability?email=${formData.email}`
+          `${apiurl}/users/check-availabilty?email=${formData.email}`
         );
         setEmailAvailability(response.data.available);
       }
@@ -107,8 +108,7 @@ export function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send registration data to the backend using Axios
-      const response = await axios.post("/api/register", formData);
+      const response = await axios.post(`${apiurl}/users/register`, formData);
       console.log("Registration successful:", response.data);
 
       // Add any additional logic for successful registration (e.g., redirect)
@@ -159,8 +159,8 @@ export function Register() {
                     onInput={handleChange} // Triggered as the user types
                   />
                   {emailAvailability !== null && (
-                    <div className={emailAvailability ? "available" : "taken"}>
-                      {emailAvailability ? "Email available" : "Email taken"}
+                    <div className={!emailAvailability ? "available" : "taken"}>
+                      {usernameAvailability ? "available" : "taken"}
                     </div>
                   )}
                 </div>
