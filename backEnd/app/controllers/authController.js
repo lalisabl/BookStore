@@ -34,13 +34,28 @@ const createSendToken = (user, statusCode, res) => {
     },
   });
 };
+
+const generateUniqueUsername = async (email) => {
+  const baseUsername = email.split("@")[0];
+  let username;
+  let isUsernameTaken = true;
+  while (isUsernameTaken) {
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
+    // Combine the base username and random number
+    username = `${baseUsername}${randomNumber}`;
+    const existingUser = await User.findOne({ username });
+    isUsernameTaken = !!existingUser;
+  }
+  return username;
+};
 exports.createNewAccount = catchAsync(async (req, res) => {
+  const generatedUsername = await generateUniqueUsername(req.body.email);
   const newUser = await User.create({
-    username: req.body.username,
     email: req.body.email,
+    username: generatedUsername,
     password: req.body.password,
-    fullName: req.body.fullName,
   });
+
   createSendToken(newUser, 201, res);
 });
 
