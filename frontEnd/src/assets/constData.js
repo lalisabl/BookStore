@@ -5,8 +5,12 @@ export const BooksSample = {
   books: [
     {
       id: 1,
+<<<<<<< HEAD
       title:
         "The Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book name",
+=======
+      title: "The Catcher in the Rye the Rye ",
+>>>>>>> refs/remotes/origin/master
       thumbnail: "images/the catcher.jpeg",
       rate: 4.5,
       uploader: {

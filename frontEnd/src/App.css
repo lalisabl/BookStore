@@ -8,6 +8,7 @@
   --primary-color-lighter: #5066ff;
   --secondary-color: #2ecc71;
   --accent-color: #e74c3c;
+  --bg-light-white:#ececec;
 }
 
 .btn {
@@ -42,6 +43,32 @@
 .btn-primary-white:hover {
   background-color: #e95645;
 }
+
+.btn-transparent {
+  background: linear-gradient(
+    to right,
+    transparent 50%,
+    var(--accent-color) 50%
+  );
+  background-size: 200% 100%;
+  background-position: 0 0;
+  border: 1px solid rgba(0, 0, 0);
+  transition: background-position 0.3s, border-color 0.3s, color 0.3s;
+  position: relative;
+  z-index: 1; /* Ensure the button content is above the gradient */
+}
+
+.btn-transparent:hover {
+  background-position: 100% 0;
+  border-color: var(--accent-color);
+  color: white;
+}
+.btn-transparent.active{
+  background-position: 100% 0;
+  border-color: var(--accent-color);
+  color: white;
+}
+
 body {
   background-color: white;
   margin: 0;
