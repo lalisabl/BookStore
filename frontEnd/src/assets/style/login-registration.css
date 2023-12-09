@@ -91,7 +91,33 @@
   right: 5px;
 }
 
-.form-content .with-google img{
+.form-content .with-google img {
   max-height: 63px;
   margin: auto;
+}
+
+.available,
+.taken {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  font-size: 14px;
+  width: 100%;
+  padding: 1px;
+  /* opacity: 0; */
+  /* transition: opacity 0.3s ease, visibility 0.3s ease; */
+}
+
+.available {
+  color: green;
+}
+
+.taken {
+  color: red;
+}
+
+.input-wrapper:hover .available,
+.input-wrapper:hover .taken {
+  display: block;
+  opacity: 1;
 }

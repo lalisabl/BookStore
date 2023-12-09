@@ -102,7 +102,6 @@ export function Register() {
         const response = await axios.get(
           `${apiurl}/users/check-availabilty?email=${formData.email}`
         );
-        console.log(focusedInput);
         setEmailAvailability(response.data.available);
       }
     };
@@ -113,9 +112,18 @@ export function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiurl}/users/register`, formData);
-      console.log("Registration successful:", response.data);
-
+      if (emailAvailability && usernameAvailability) {
+        const response = await axios.post(`${apiurl}/users/register`, formData);
+        console.log("Registration successful:", response.data);
+      } else {
+        console.log("either email or username is taken");
+        if (!emailAvailability) {
+          setFocusedInput("email");
+        }
+        if (!usernameAvailability) {
+          setFocusedInput("username");
+        }
+      }
       // Add any additional logic for successful registration (e.g., redirect)
     } catch (error) {
       console.error("Registration failed:", error.response.data);
@@ -171,7 +179,7 @@ export function Register() {
                       <div
                         className={emailAvailability ? "available" : "taken"}
                       >
-                        {emailAvailability ? "available" : "taken"}
+                        {emailAvailability ? "email available" : "email taken"}
                       </div>
                     )}
                 </div>
@@ -195,8 +203,8 @@ export function Register() {
                         className={usernameAvailability ? "available" : "taken"}
                       >
                         {usernameAvailability
-                          ? "Username available"
-                          : "Username taken"}
+                          ? "username available"
+                          : "username taken"}
                       </div>
                     )}
                 </div>
@@ -223,7 +231,7 @@ export function Register() {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    onFocus={() => handleInputFocus("username")}
+                    onFocus={() => handleInputFocus("confirmPassword")}
                     placeholder="Confirm Password *"
                     required
                   />
