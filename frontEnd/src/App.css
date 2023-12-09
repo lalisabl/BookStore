@@ -3,6 +3,9 @@
 @import url("./assets/style/modal.css");
 @import url("./assets/style/navBar.css");
 @import url("./assets/style/bookDisplayeType.css");
+@import url("./assets/style/BookForm.css");
+
+
 :root {
   --primary-color: #646cff;
   --primary-color-lighter: #5066ff;

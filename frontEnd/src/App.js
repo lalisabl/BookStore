@@ -8,9 +8,9 @@ import { BookGrid } from "./components/book/BookGrid";
 import { BookList } from "./components/book/BookList";
 import { BookCategory } from "./components/book/bookCategory";
 import { BooksSample } from "./assets/constData";
-import Account from "./components/user/account";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
+import BookForm from "./components/book/bookForm";
 function Pages() {
   return (
     <>
@@ -18,6 +18,7 @@ function Pages() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="search/" element={<Search />} />
+          <Route path="/Upload-book" element={<BookForm />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
@@ -43,11 +44,11 @@ function TryMod() {
 
   return (
     <>
-      {/* <GenericModal
+      <GenericModal
         isOpen={open}
         onClose={() => setOpen(false)}
         children={<Register />}
-      /> */}
+      />
     </>
   );
 }
@@ -55,13 +56,11 @@ function TryMod() {
 function App() {
   return (
     <div>
-      <Account />
+      <Pages />
       {/* <BookCategory />
-        <Pages />
       <BookGrid />
       <BookList books={BooksSample.books} /> */}
     </div>
-    // <BookStoreRoutes />
   );
 }
 

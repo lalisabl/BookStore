@@ -1,0 +1,31 @@
+.book-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.book-form {
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  background-color: var(--bg-light-white);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-form input,
+.book-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.book-form > div {
+  display: block;
+  text-align: left;
+}
+.book-form .check-download input {
+  width: max-content;
+}

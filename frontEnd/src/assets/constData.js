@@ -54,6 +54,5 @@ export const BooksSample = {
       },
       numberOfViews: 1200,
     },
-    // Add more books as needed
   ],
 };
