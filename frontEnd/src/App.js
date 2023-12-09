@@ -6,12 +6,17 @@ import { useState } from "react";
 import NavBar from "./components/common/navBar";
 import { BookGrid } from "./components/book/BookGrid";
 import { BookList } from "./components/book/BookList";
-function Pages() {
+function BookStoreRoutes() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" />
+          <Route exact path="/register" element={<Register />} />
+          <Route
+            exact
+            path="/api/v1/users/auth/google/callback"
+            element={<TryMod />}
+          />
         </Routes>
       </BrowserRouter>
     </>
@@ -23,11 +28,12 @@ function TryMod() {
 
   return (
     <>
-      <GenericModal
+      {/* <GenericModal
         isOpen={open}
         onClose={() => setOpen(false)}
         children={<Register />}
-      />
+      /> */}
+      <h3>Hello Home</h3>
     </>
   );
 }
@@ -35,10 +41,12 @@ function TryMod() {
 function App() {
   return (
     <div>
-      <NavBar where={"landing"} />
-      <BookGrid />
-      <BookList />
+      {/* <NavBar where={"landing"} />
+    //   <BookGrid />
+    //   <BookList /> */}
+      <Register />
     </div>
+    // <BookStoreRoutes />
   );
 }
 

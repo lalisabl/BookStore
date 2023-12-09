@@ -1,15 +1,17 @@
 export const apiurl = "http://127.0.0.1:5000/api/v1";
-
+export const CLIENT_ID =
+  "525342472530-dtnmf7adon8jlv397lajmgq3if0a3ds6.apps.googleusercontent.com";
 export const BooksSample = {
   books: [
     {
       id: 1,
-      title: "The Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book name",
+      title:
+        "The Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book name",
       thumbnail: "images/the catcher.jpeg",
       rate: 4.5,
       uploader: {
         id: "user123",
-        username:"john doe",
+        username: "john doe",
         image: "images/placeholder.jpg",
         followBtn: true,
       },
@@ -23,7 +25,7 @@ export const BooksSample = {
       uploader: {
         id: "user456",
         image: "images/placeholder.jpg",
-        username:"john doe",
+        username: "john doe",
         followBtn: false,
       },
       numberOfViews: 980,
@@ -36,24 +38,24 @@ export const BooksSample = {
       uploader: {
         id: "user789",
         image: "images/placeholder.jpg",
-        username:"john doe",
+        username: "john doe",
         followBtn: true,
       },
       numberOfViews: 1500,
     },
     {
-        id: 4,
-        title: "The Catcher in the Rye",
-        thumbnail: "images/the catcher.jpeg",
-        rate: 4.5,
-        uploader: {
-          id: "user123",
-          image: "images/placeholder.jpg",
-          username:"john doe",
-          followBtn: true,
-        },
-        numberOfViews: 1200,
+      id: 4,
+      title: "The Catcher in the Rye",
+      thumbnail: "images/the catcher.jpeg",
+      rate: 4.5,
+      uploader: {
+        id: "user123",
+        image: "images/placeholder.jpg",
+        username: "john doe",
+        followBtn: true,
       },
+      numberOfViews: 1200,
+    },
     // Add more books as needed
   ],
 };

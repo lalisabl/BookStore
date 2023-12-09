@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useNavigate } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FcGoogle } from "react-icons/fc";
@@ -9,6 +9,8 @@ import {
   faRocket,
 } from "@fortawesome/free-solid-svg-icons";
 import { apiurl } from "../../assets/constData";
+import { CLIENT_ID } from "../../../hidden";
+
 export function Login() {
   return (
     <div className="registration-container">
@@ -72,6 +74,7 @@ export function Register() {
   });
   const [emailAvailability, setEmailAvailability] = useState(null);
   const [focusedInput, setFocusedInput] = useState(null);
+  // const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -112,6 +115,14 @@ export function Register() {
       // Handle registration failure (e.g., display an error message to the user)
     }
   };
+  const handleWithGoogle = async () => {
+    try {
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fapi%2Fv1%2Fusers%2Fauth%2Fgoogle%2Fcallback&scope=profile%20email&client_id=${CLIENT_ID}`;
+      // await axios.get(`${apiurl}/users/auth/google`, { withCredentials: true });
+    } catch (err) {
+      console.log("Registration field");
+    }
+  };
 
   return (
     <div className="registration-container">
@@ -129,7 +140,11 @@ export function Register() {
           <h3>Welcome to Gr8Books</h3>
           <form onSubmit={handleSubmit}>
             <div className="with-google">
-              <button className="with-google_btn">
+              <button
+                className="with-google_btn"
+                onClick={handleWithGoogle}
+                type="button"
+              >
                 <FcGoogle />
                 <span>Continue with google</span>
               </button>
