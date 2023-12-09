@@ -15,7 +15,7 @@
   border: 1px solid #ddd;
   padding: 0 10px;
   max-height: 300px;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(250, 250, 250);
   border-radius: 5px;
   text-align: center;
   position: relative;
@@ -110,7 +110,7 @@
   flex-grow: 1;
 }
 .book-detail .book-title {
-  font-size: 18px;
+  font-size: 16px;
   text-align: left;
   font-weight: bold;
   color: #333;
@@ -119,6 +119,37 @@
   display: flex;
   flex-direction: column;
   padding: 0;
+}
+.top-category {
+  margin: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-gap: 50px;
+  max-width: 98vw;
+}
+.category-item {
+  border-radius: 20px;
+  background-color:var(--bg-light-white);
+  padding: 20px;
+}
+.category-item h1 {
+  text-align: center;
+  padding: 0;
+  margin-top: 0;
+  border-bottom: 1px solid #333;
+}
+.top-category .list-item {
+  max-height: 200px;
+}
+.top-category .list-view {
+  margin: 0;
+}
+
+.category-container{
+  width: 98%;
+  margin: auto;
+  font-family: Inter, SF Pro Text, Roboto, Helvetica Neue, Helvetica, Tahoma,
+    Arial, PingFang SC, Microsoft YaHei !important;
 }
 /* Responsive grid with media query */
 @media screen and (max-width: 1200px) {
@@ -136,7 +167,7 @@
   .book-detail {
     font-size: 13px;
   }
-  .list-item .book-owner{
+  .list-item .book-owner {
     width: 100%;
   }
   .list-item .book-owner > div {
