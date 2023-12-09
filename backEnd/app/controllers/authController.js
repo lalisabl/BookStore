@@ -170,7 +170,7 @@ exports.CreateGoogleStrategy = () => {
       {
         clientID: client_id,
         clientSecret: client_secret,
-        callbackURL: "http://localhost:3000/api/v1/users/auth/google/callback",
+        callbackURL: "http://localhost:5000/api/v1/users/auth/google/callback",
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
@@ -185,7 +185,6 @@ exports.CreateGoogleStrategy = () => {
               googleId: profile.id,
             });
             await user.save();
-            // const token = signToken(user._id);
             return done(null, user);
           }
         } catch (error) {
@@ -198,6 +197,5 @@ exports.CreateGoogleStrategy = () => {
 
 exports.googleSignInRedirect = (req, res) => {
   const user = req.user;
-  const token = signToken(user._id);
-  createSendToken(user, 200, res);
+  const token = createSendToken(user, 200, res);
 };
