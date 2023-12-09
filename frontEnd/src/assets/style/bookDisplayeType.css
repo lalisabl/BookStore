@@ -1,5 +1,5 @@
 .book-hover:hover {
-  box-shadow: 1px 1px 5px 1px rgb(180, 178, 178);
+  box-shadow: 0px 0px 6px 0px rgb(180, 178, 178);
 }
 
 .grid-display {
@@ -15,7 +15,7 @@
   border: 1px solid #ddd;
   padding: 0 10px;
   max-height: 300px;
-  background-color: rgb(235, 235, 240);
+  background-color: rgb(245, 245, 245);
   border-radius: 5px;
   text-align: center;
   position: relative;
@@ -30,21 +30,25 @@
 .grid-item .book-detail {
   text-align: right;
 }
-.grid-item .book-detail .icon {
+
+.book-detail .icon {
   font-size: small;
 }
 .grid-item .book-owner {
   position: absolute;
   bottom: -3px;
+  border: 1px solid rgba(128, 128, 128, 0.058);
   left: -15px;
-  border-bottom: solid 1px solid gray;
-  background-color: rgba(0, 0, 0, 0.2);
   width: 60%;
   display: flex;
   padding: 5px;
   padding-right: 0;
   border-radius: 0 5px 0 0;
 }
+.book-owner {
+  position: absolute;
+}
+
 .book-owner img {
   text-align: left;
   cursor: pointer;
@@ -54,23 +58,88 @@
   width: 27%;
   aspect-ratio: 1;
 }
-.book-owner div {
+.grid-item .book-owner div {
   cursor: pointer;
   transform: translateX(-10%);
-  color: white;
   text-align: left;
   margin: auto 0;
   font-size: 15px;
-  border-radius: 5px;
   padding: 1px 5px;
 }
+
 .book-owner div .btn-primary {
   padding: 0;
   font-size: small;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.list-view {
+  margin: 20px;
+}
+
+.list-item {
+  display: flex;
+  border: 1px solid #ddd;
+  background-color: rgb(250, 250, 250);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  position: relative;
+  max-height: 90px;
+}
+
+.list-item img {
+  max-width: 80px;
+  max-height: 100%;
+  margin-right: 10px;
+}
+.list-item .book-owner {
+  bottom: -3px;
+  position: relative;
+  display: flex;
+  padding: 5px;
+  padding-top: 0px;
+}
+.list-item .book-owner img {
+  width: 25px;
+  height: 25px;
+}
+.list-item .book-owner .btn-primary {
+  padding: 1px 3px;
+}
+.book-detail {
+  flex-grow: 1;
+}
+.book-detail .book-title {
+  font-size: 18px;
+  text-align: left;
+  font-weight: bold;
+  color: #333;
+}
+.list-item .book-owner >div {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
 }
 /* Responsive grid with media query */
 @media (max-width: 768px) {
-  .container {
-    grid-template-columns: 1fr;
+  .list-item .book-owner >div {
+    display: block;
+    flex-wrap: nowrap;
+    padding: 0;
+  }
+  .book-owner >div .btn-primary{
+    display: inline-flex;
+  }
+  .grid-display {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+    max-width: 98vw;
+  }
+  .grid-item {
+
   }
 }

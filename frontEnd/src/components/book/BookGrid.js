@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faPlus, faStar } from "@fortawesome/free-solid-svg-icons";
 import { BooksSample } from "../../assets/constData";
+import { formatViews } from "./BookList";
 
 export function BookGrid() {
   return (
@@ -13,14 +14,18 @@ export function BookGrid() {
               <img src={book.thumbnail} />
             </span>
             <div className="book-detail">
-              <div>{book.title}</div>
+              <div className="book-title">
+                {book.title.length > 35
+                  ? `${book.title.substring(0, 35)}...`
+                  : book.title}
+              </div>
               <div>
                 <FontAwesomeIcon className="icon" icon={faStar} /> {book.rate}
               </div>
               <div>
                 {" "}
                 <FontAwesomeIcon className="icon" icon={faEye} />
-                {book.numberOfViews}
+                {formatViews(book.numberOfViews)}
               </div>
             </div>
             <div className="book-owner">

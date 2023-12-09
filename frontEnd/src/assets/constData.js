@@ -4,7 +4,7 @@ export const BooksSample = {
   books: [
     {
       id: 1,
-      title: "The Catcher in the Rye",
+      title: "The Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book name",
       thumbnail: "images/the catcher.jpeg",
       rate: 4.5,
       uploader: {
@@ -13,7 +13,7 @@ export const BooksSample = {
         image: "images/placeholder.jpg",
         followBtn: true,
       },
-      numberOfViews: 1200,
+      numberOfViews: 1279090090,
     },
     {
       id: 2,

@@ -5,6 +5,7 @@ import GenericModal from "./shared/GenericModal";
 import { useState } from "react";
 import NavBar from "./components/common/navBar";
 import { BookGrid } from "./components/book/BookGrid";
+import { BookList } from "./components/book/BookList";
 function Pages() {
   return (
     <>
@@ -36,6 +37,7 @@ function App() {
     <div>
       <NavBar where={"landing"} />
       <BookGrid />
+      <BookList />
     </div>
   );
 }
