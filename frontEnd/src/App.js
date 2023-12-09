@@ -10,6 +10,7 @@ import { BookCategory } from "./components/book/bookCategory";
 import { BooksSample } from "./assets/constData";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
+import BookForm from "./components/book/bookForm";
 function Pages() {
   return (
     <>
@@ -17,6 +18,7 @@ function Pages() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="search/" element={<Search />} />
+          <Route path="/Upload-book" element={<BookForm />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

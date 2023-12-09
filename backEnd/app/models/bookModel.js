@@ -32,6 +32,7 @@ const bookSchema = new Schema({
     required: true,
   },
   thumbnail: String,
+  downloadable: { type: Boolean, default: true },
   upload_date: { type: Date, default: Date.now },
 
   rating: [
@@ -48,7 +49,6 @@ const bookSchema = new Schema({
       timestamp: { type: Date, default: Date.now },
     },
   ],
-  downloadable: { type: Boolean, default: true },
   downloads: { type: Number, default: 0 },
   shares: { type: Number, default: 0 },
   reports: [
