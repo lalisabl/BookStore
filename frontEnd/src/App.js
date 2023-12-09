@@ -8,7 +8,6 @@ import { BookGrid } from "./components/book/BookGrid";
 import { BookList } from "./components/book/BookList";
 import { BookCategory } from "./components/book/bookCategory";
 import { BooksSample } from "./assets/constData";
-import { Profile } from "./components/user/profile";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 import BookForm from "./components/book/bookForm";
@@ -45,11 +44,11 @@ function TryMod() {
 
   return (
     <>
-      {/* <GenericModal
+      <GenericModal
         isOpen={open}
         onClose={() => setOpen(false)}
         children={<Register />}
-      /> */}
+      />
     </>
   );
 }
@@ -57,13 +56,11 @@ function TryMod() {
 function App() {
   return (
     <div>
-      <Profile />
+      <Pages />
       {/* <BookCategory />
-        <Pages />
       <BookGrid />
       <BookList books={BooksSample.books} /> */}
     </div>
-    // <BookStoreRoutes />
   );
 }
 

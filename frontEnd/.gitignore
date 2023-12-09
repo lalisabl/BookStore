@@ -8,7 +8,7 @@
 # testing
 /coverage
 /data
-.hidden
+hidden.js
 
 # production
 /build
