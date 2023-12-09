@@ -8,6 +8,7 @@ import { BookGrid } from "./components/book/BookGrid";
 import { BookList } from "./components/book/BookList";
 import { BookCategory } from "./components/book/bookCategory";
 import { BooksSample } from "./assets/constData";
+import { Profile } from "./components/user/profile";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 function Pages() {
@@ -47,7 +48,6 @@ function TryMod() {
         onClose={() => setOpen(false)}
         children={<Register />}
       /> */}
-      <h3>Hello Home</h3>
     </>
   );
 }
@@ -55,8 +55,9 @@ function TryMod() {
 function App() {
   return (
     <div>
-      <Pages />
+      <Profile />
       {/* <BookCategory />
+        <Pages />
       <BookGrid />
       <BookList books={BooksSample.books} /> */}
     </div>
