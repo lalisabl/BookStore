@@ -34,8 +34,8 @@ export function BookGrid() {
               <div>
                 <div>{book.uploader.username}</div>
                 <div className="btn-primary">
-                  {" "}
-                  <FontAwesomeIcon className="icon" icon={faPlus} /> follow
+                  <FontAwesomeIcon className="icon" icon={faPlus} />{" "}
+                  <span className="mobile-hidden">follow</span>
                 </div>
               </div>
             </div>

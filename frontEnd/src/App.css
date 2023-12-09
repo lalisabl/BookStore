@@ -46,3 +46,9 @@ body {
   background-color: white;
   margin: 0;
 }
+
+@media screen and (max-width: 768px) {
+  .mobile-hidden {
+    display: none;
+  }
+}

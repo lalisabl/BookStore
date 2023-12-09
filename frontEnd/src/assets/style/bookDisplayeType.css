@@ -5,7 +5,7 @@
 .grid-display {
   margin: 10px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
   grid-gap: 20px;
   max-width: 98vw;
 }
@@ -45,12 +45,10 @@
   padding-right: 0;
   border-radius: 0 5px 0 0;
 }
-.book-owner {
-  position: absolute;
-}
 
 .book-owner img {
   text-align: left;
+  position: relative;
   cursor: pointer;
   border: 1px solid gray;
   border-radius: 50%;
@@ -60,7 +58,7 @@
 }
 .grid-item .book-owner div {
   cursor: pointer;
-  transform: translateX(-10%);
+  transform: translateX(-7%);
   text-align: left;
   margin: auto 0;
   font-size: 15px;
@@ -117,29 +115,61 @@
   font-weight: bold;
   color: #333;
 }
-.list-item .book-owner >div {
+.list-item .book-owner > div {
   display: flex;
   flex-direction: column;
   padding: 0;
 }
 /* Responsive grid with media query */
-@media (max-width: 768px) {
-  .list-item .book-owner >div {
+@media screen and (max-width: 1200px) {
+  .grid-display {
+    margin: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-gap: 5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .book-detail .book-title {
+    font-size: 16px;
+  }
+  .book-detail {
+    font-size: 13px;
+  }
+  .list-item .book-owner{
+    width: 100%;
+  }
+  .list-item .book-owner > div {
+    font-size: small;
     display: block;
     flex-wrap: nowrap;
     padding: 0;
   }
-  .book-owner >div .btn-primary{
+  .book-owner .btn-primary {
     display: inline-flex;
+    margin-left: 2px;
+    padding: 10px;
   }
   .grid-display {
-    margin: 10px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    margin: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     grid-gap: 5px;
-    max-width: 98vw;
   }
-  .grid-item {
 
+  .grid-item .book-owner {
+    margin: 0;
+    margin-left: 10px;
+    transform: translateX(-5%);
+  }
+  .grid-item .book-owner div {
+    transform: translateX(-5%);
+    text-align: left;
+    font-size: 15px;
+    padding: 1px 5px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .grid-display {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
   }
 }
