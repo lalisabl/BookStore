@@ -8,7 +8,7 @@ import { BookGrid } from "./components/book/BookGrid";
 import { BookList } from "./components/book/BookList";
 import { BookCategory } from "./components/book/bookCategory";
 import { BooksSample } from "./assets/constData";
-import { Profile } from "./components/user/profile";
+import Account from "./components/user/account";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 function Pages() {
@@ -55,7 +55,7 @@ function TryMod() {
 function App() {
   return (
     <div>
-      <Profile />
+      <Account />
       {/* <BookCategory />
         <Pages />
       <BookGrid />

@@ -9,7 +9,7 @@ import {
   faRocket,
 } from "@fortawesome/free-solid-svg-icons";
 import { apiurl } from "../../assets/constData";
-import { CLIENT_ID } from "../../../hidden";
+import { CLIENT_ID } from "../../hidden";
 
 export function Login() {
   return (
