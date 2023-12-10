@@ -1,6 +1,7 @@
 .account-container {
   font-size: 1.4rem;
 }
+
 .nav {
   width: 100vw;
   height: 4rem;
@@ -12,6 +13,7 @@
   transition: var(--transition);
   padding: 0 20px;
 }
+
 .logo {
   width: 4rem;
   overflow: hidden;
@@ -71,8 +73,8 @@
 }
 
 .account-main {
-  margin-left: 22rem;
-  margin-right: 2rem;
+  margin-top: 5rem;
+  margin-left: 23rem;
   padding: 2rem;
   font-size: 2rem;
 }
@@ -110,4 +112,15 @@
   display: flex;
   flex-direction: column;
   background-color: aqua;
+}
+
+.right-sideBar {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 20vw;
+  padding: 10px;
+  background-color: white;
 }
