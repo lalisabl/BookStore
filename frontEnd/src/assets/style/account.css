@@ -104,3 +104,10 @@
 .main-container .btn {
   color: var(--primary-color);
 }
+.popup {
+  width: 35rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  background-color: aqua;
+}
