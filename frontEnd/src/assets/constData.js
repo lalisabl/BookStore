@@ -4,7 +4,7 @@ export const BooksSample = {
     {
       id: 1,
       title:
-        "The Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book nameThe Catcher in the Rye longer text f book name",
+        "The Catcher in the Rye longer text",
       thumbnail: "images/the catcher.jpeg",
       rate: 4.5,
       uploader: {

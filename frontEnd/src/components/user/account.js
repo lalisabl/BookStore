@@ -8,7 +8,7 @@ import { SiBookstack } from "react-icons/si";
 import ReadingHistory from "./readingHistory";
 import Favorites from "./favorites";
 import Books from "./myBooks";
-import "./account.css";
+import "../../assets/style/account.css";
 const Account = () => {
   const [language, setLanguage] = useState("en");
 

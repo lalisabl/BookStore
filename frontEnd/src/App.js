@@ -18,6 +18,7 @@ function Pages() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/:user" element={<Account />} />
           <Route path="search/" element={<Search />} />
           <Route path="/Upload-book" element={<BookForm />} />
           <Route path="/*" element={<NotFound />} />
@@ -57,11 +58,7 @@ function TryMod() {
 function App() {
   return (
     <div>
-      <Account />
-      {/* <BookCategory />
       <Pages />
-      <BookGrid />
-      <BookList books={BooksSample.books} /> */}
     </div>
   );
 }

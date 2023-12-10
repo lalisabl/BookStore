@@ -10,21 +10,20 @@
   outline: 0;
   list-style: none;
   text-decoration: none;
-  box-sizing: border-box;
 }
 html {
   font-size: 62.5%;
   scroll-behavior: smooth;
 }
 body {
-  font-family: "Roboto", sans-serif;
-  line-height: 1.6;
+  font-family: Inter, SF Pro Text, Roboto, Helvetica Neue, Helvetica, Tahoma,
+    Arial, PingFang SC, Microsoft YaHei !important;
+  
   background-color: white;
 }
 
 :root {
   --primary-hue: 270;
-
   --primary-color: #646cff;
   --primary-color-lighter: #5066ff;
   --secondary-color: #2ecc71;
@@ -42,9 +41,9 @@ a {
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
-  font-size: 1rem;
+  margin: 3px;
+  font-size: 1.4rem;
   width: fit-content;
-  display: flex;
   align-items: center;
   gap: 1rem;
   background: var(--color-light);
@@ -52,6 +51,7 @@ a {
   padding: 0.6rem 2.5rem;
   border: 2px solid transparent;
   border-radius: var(--border-radius-2);
+  border-radius: 2rem;
   cursor: pointer;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
