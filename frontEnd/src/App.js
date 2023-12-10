@@ -11,7 +11,8 @@ import { BooksSample } from "./assets/constData";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 import BookForm from "./components/book/bookForm";
-import Account from "./pages/account";
+import Account from "./components/user/account";
+import ProfileDetail from "./components/user/profileDetail";
 function Pages() {
   return (
     <>
