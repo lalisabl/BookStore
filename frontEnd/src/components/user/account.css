@@ -66,10 +66,28 @@
   gap: 1rem;
   align-items: center;
 }
-.account-sidebar .profile {
-  margin-top: 2rem;
+.main-container h3 {
+  margin-bottom: 4rem;
 }
 .account-main {
   margin-left: 20rem;
   padding: 2rem;
+  font-size: 2rem;
+  /* background-color: aqua; */
+}
+.detail-item {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+.detail-item.username,
+.detail-item.e-mail {
+  justify-content: start;
+  gap: 30%;
+}
+.detail-item span {
+  font-size: 1.6rem;
+}
+.e-mail p {
+  margin-right: 5rem;
 }
