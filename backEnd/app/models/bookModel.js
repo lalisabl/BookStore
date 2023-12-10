@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+
+
 const bookSchema = new Schema({
   title: { type: String, required: true },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -109,7 +111,6 @@ bookSchema.methods.addRating = async function (rating) {
 
   await this.save();
 };
-
 
 /* The `bookSchema.methods.addDownload` function is a method that is added to the `bookSchema` object.
 It is used to increment the `downloads` field of a book document by 1 and save the updated document

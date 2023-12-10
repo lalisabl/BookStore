@@ -5,13 +5,13 @@
 @import url("./assets/style/bookDisplayeType.css");
 @import url("./assets/style/BookForm.css");
 
-
 :root {
   --primary-color: #646cff;
   --primary-color-lighter: #5066ff;
   --secondary-color: #2ecc71;
   --accent-color: #e74c3c;
-  --bg-light-white:#ececec;
+  --bg-light-white: #ececec;
+  --color-danger: #c41401;
 }
 
 .btn {
@@ -27,7 +27,7 @@
   border: 1px solid transparent;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
-  border-radius: 5rem;
+  border-radius: 3rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -57,19 +57,23 @@
   background-position: 0 0;
   border: 1px solid rgba(0, 0, 0);
   transition: background-position 0.3s, border-color 0.3s, color 0.3s;
-  position: relative;
-  z-index: 1; /* Ensure the button content is above the gradient */
+  position: relative; /* Ensure the button content is above the gradient */
 }
 
 .btn-transparent:hover {
   background-position: 100% 0;
-  border-color: var(--accent-color);
+  border: var(--accent-color);
   color: white;
 }
-.btn-transparent.active{
-  background-position: 100% 0;
-  border-color: var(--accent-color);
+.btn-transparent.active {
+  background-position: 100%; 
+   border: var(--accent-color);
   color: white;
+}
+
+.btn-danger {
+  color: white;
+  background-color: var(--color-danger);
 }
 
 body {
