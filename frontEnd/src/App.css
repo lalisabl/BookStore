@@ -40,10 +40,8 @@ a {
   font-weight: 400;
   white-space: nowrap;
   vertical-align: middle;
-  user-select: none;
   margin: 3px;
   font-size: 1.4rem;
-  width: fit-content;
   align-items: center;
   gap: 1rem;
   background: var(--color-light);
@@ -56,7 +54,9 @@ a {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-
+.error-message {
+  color: red;
+}
 .btn-primary {
   color: white;
   background-color: var(--primary-color);
@@ -71,7 +71,9 @@ a {
 .btn-primary-white:hover {
   background-color: #e95645;
 }
-
+.btn-inactive {
+  background-color: #d6d5d5;
+}
 .btn-transparent {
   background: linear-gradient(
     to right,
