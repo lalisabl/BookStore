@@ -1,10 +1,10 @@
 import { useState } from "react";
-import ProfileDetail from "./profileDetail";
 import { PiGlobe } from "react-icons/pi";
 import { GoStarFill } from "react-icons/go";
 import { FaUser } from "react-icons/fa";
 import { FcReading } from "react-icons/fc";
 import { SiBookstack } from "react-icons/si";
+import ProfileDetail from "./profileDetail";
 import ReadingHistory from "./readingHistory";
 import Favorites from "./favorites";
 import Books from "./myBooks";
