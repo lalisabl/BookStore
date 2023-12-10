@@ -3,9 +3,10 @@
 }
 
 .grid-display {
+  font-size: 1.6rem;
   margin: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   grid-gap: 20px;
   max-width: 98vw;
 }
@@ -30,9 +31,8 @@
 .grid-item .book-detail {
   text-align: right;
 }
-
-.book-detail .icon {
-  font-size: small;
+.book-detail{
+  font-size: 1.3rem;
 }
 .grid-item .book-owner {
   position: absolute;
@@ -61,17 +61,17 @@
   transform: translateX(-7%);
   text-align: left;
   margin: auto 0;
-  font-size: 15px;
   padding: 1px 5px;
 }
 
 .book-owner div .btn-primary {
   padding: 0;
-  font-size: small;
   cursor: pointer;
   border-radius: 5px;
 }
-
+.book-owner{
+  font-size: 1.2rem;
+}
 .list-view {
   margin: 20px;
 }
@@ -106,12 +106,10 @@
 .list-item .book-owner .btn-primary {
   padding: 1px 3px;
 }
-.book-detail {
-  flex-grow: 1;
-}
+
 .book-detail .book-title {
-  font-size: 16px;
   text-align: left;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #333;
 }
@@ -120,10 +118,17 @@
   flex-direction: column;
   padding: 0;
 }
+
+.category-container{
+  font-size: 1.2rem;
+}
+.category-container h2{
+  margin: 10px;
+}
 .top-category {
   margin: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
   grid-gap: 50px;
   max-width: 98vw;
 }
@@ -134,8 +139,6 @@
 }
 .category-item h1 {
   text-align: center;
-  padding: 0;
-  margin-top: 0;
   border-bottom: 1px solid #333;
 }
 .top-category .list-item {
@@ -148,8 +151,6 @@
 .category-container{
   width: 98%;
   margin: auto;
-  font-family: Inter, SF Pro Text, Roboto, Helvetica Neue, Helvetica, Tahoma,
-    Arial, PingFang SC, Microsoft YaHei !important;
 }
 /* Responsive grid with media query */
 @media screen and (max-width: 1200px) {
@@ -161,12 +162,12 @@
 }
 
 @media screen and (max-width: 768px) {
-  .book-detail .book-title {
+  /* .book-detail .book-title {
     font-size: 16px;
   }
   .book-detail {
     font-size: 13px;
-  }
+  } */
   .list-item .book-owner {
     width: 100%;
   }
@@ -194,8 +195,8 @@
   }
   .grid-item .book-owner div {
     transform: translateX(-5%);
-    text-align: left;
-    font-size: 15px;
+    /* text-align: left;
+    font-size: 15px; */
     padding: 1px 5px;
   }
 }
