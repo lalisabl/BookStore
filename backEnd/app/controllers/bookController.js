@@ -23,11 +23,11 @@ exports.postBook = catchAsync(async (req, res, next) => {
     if (err) {
       return next(new AppError("File upload failed", 500));
     }
-
-    const { title, user, category } = req.body;
+    const user = "656b7ce9076f27f971d54087";
+    const { title, category } = req.body;
     if (!req.file) {
       //   return res.status(402).json({ error: "bad request: no file selected" });
-      return next(new AppError("bad request: no file selected", 400));
+      return next(new AppError("bad request: no file selected", 404));
     }
     const filename = req.file.filename;
 
@@ -278,9 +278,7 @@ exports.shareBook = catchAsync(async (req, res, next) => {
   }
 
   await book.addShare();
-  return res
-    .status(200)
-    .json({ url: book.id, message: "shared successful" });
+  return res.status(200).json({ url: book.id, message: "shared successful" });
 });
 
 // Endpoint to handle download requests
@@ -301,8 +299,6 @@ exports.downloadBook = catchAsync(async (req, res, next) => {
     .json({ url: book.filename, message: "Download successful" });
 });
 
-
-
 // Endpoint to get file location by book ID
 exports.getFileLocation = async (req, res, next) => {
   try {
@@ -311,7 +307,7 @@ exports.getFileLocation = async (req, res, next) => {
     // Check if the book exists
     const book = await Book.findById(bookId);
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
+      return res.status(404).json({ message: "Book not found" });
     }
 
     // Construct the complete file location URL
@@ -322,6 +318,6 @@ exports.getFileLocation = async (req, res, next) => {
   } catch (error) {
     // Handle any errors that may occur
     console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };

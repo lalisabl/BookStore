@@ -21,6 +21,7 @@ body {
   line-height: 1.6;
   background-color: white;
 }
+
 :root {
   --primary-hue: 270;
 
@@ -81,20 +82,30 @@ a {
   background-position: 0 0;
   border: 1px solid rgba(0, 0, 0);
   transition: background-position 0.3s, border-color 0.3s, color 0.3s;
-  position: relative;
-  z-index: 1; /* Ensure the button content is above the gradient */
+  position: relative; /* Ensure the button content is above the gradient */
 }
 
 .btn-transparent:hover {
   background-position: 100% 0;
-  border-color: var(--accent-color);
+  border: var(--accent-color);
   color: white;
 }
 .btn-transparent.active {
-  background-position: 100% 0;
-  border-color: var(--accent-color);
+  background-position: 100%;
+  border: var(--accent-color);
   color: white;
 }
+
+.btn-danger {
+  color: white;
+  background-color: var(--color-danger);
+}
+
+body {
+  background-color: white;
+  margin: 0;
+}
+
 @media screen and (max-width: 768px) {
   .mobile-hidden {
     display: none;

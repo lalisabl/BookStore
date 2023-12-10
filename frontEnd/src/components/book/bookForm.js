@@ -1,34 +1,89 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { apiurl } from "../../assets/constData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload, faFile } from "@fortawesome/free-solid-svg-icons";
+
+const enumCategories = [
+  "Fiction",
+  "Non-Fiction",
+  "Poetry",
+  "Drama",
+  "Children's Books",
+  "Religion/Spirituality",
+  "Science Fiction/Fantasy",
+  "Mystery/Thriller",
+  "Romance",
+  "History",
+  "Reference",
+  "Humor/Satire",
+  "Graphic Novels/Comics",
+  "Science",
+  "Travel",
+  "Art/Photography",
+  "Education",
+  "Politics/Social Sciences",
+  "Sports",
+  "Philosophy",
+];
 
 const BookForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [msg, setMsg] = useState("");
   const [formData, setFormData] = useState({
     title: "",
-    user: "",
     category: "",
-    thumbnail: null,
-    downloadable: null,
+    file: null,
+    downloadable: "no",
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleFileChange = (e) => {
-    const { name, files } = e.target;
+    console.log("Event:", e);
     setFormData({
       ...formData,
-      [name]: files[0],
+      [e.target.name]: e.target.files[0],
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., send data to backend
-    console.log(formData);
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("category", formData.category);
+    formDataToSend.append("downloadable", formData.downloadable);
+    formDataToSend.append("file", formData.file);
+    console.log(formDataToSend);
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${apiurl}/books/upload`,
+        formDataToSend
+      );
+      setLoading(false);
+      console.log("Response:", response.data);
+      setMsg(response.data.message);
+    } catch (error) {
+      setLoading(false);
+      setError(true);
+      if (error.response.status === 401) {
+        //login first
+        setMsg("un Authorized");
+      } if (error.response.status === 401) {
+        //login first
+        setMsg("un Authorized");
+      } 
+      setMsg(error.response);
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -45,7 +100,6 @@ const BookForm = () => {
             required
           />
         </div>
-
         <div>
           <select
             id="category"
@@ -55,23 +109,24 @@ const BookForm = () => {
             required
           >
             <option value="">Select Category</option>
-            {/* Add options for each category */}
+            {enumCategories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
           </select>
         </div>
-        <div>
-          <label htmlFor="thumbnail">file /docx,pdf,txt:</label>
-          <input type="file" name="file" onChange={handleFileChange} required />
-        </div>
-        <div>
-          <label htmlFor="thumbnail">Thumbnail:/jpeg,png,jpg</label>
+        {/* <div>
+          <label htmlFor="thumbnail">Thumbnail (jpeg, png, jpg):</label>
           <input
             type="file"
             id="thumbnail"
             name="thumbnail"
             onChange={handleFileChange}
           />
-        </div>
+        </div> */}
 
+        <CustomFileInput onChange={handleFileChange} />
         <div className="check-download">
           Downloadable:
           <label>
@@ -99,6 +154,63 @@ const BookForm = () => {
           Submit
         </button>
       </form>
+    </div>
+  );
+};
+
+const CustomFileInput = ({ onChange }) => {
+  const [selectedFileName, setSelectedFileName] = useState(null);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      onChange(file);
+      setSelectedFileName(file.name);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      onChange(e);
+      setSelectedFileName(file.name);
+    }
+  };
+
+  return (
+    <div
+      className="custom-file-input"
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      {selectedFileName ? (
+        <div className="selected-file">
+          <span>{selectedFileName}</span>
+          <button
+            className="btn btn-danger"
+            onClick={() => setSelectedFileName(null)}
+          >
+            Remove
+          </button>
+        </div>
+      ) : (
+        <label htmlFor="file" className="file-label">
+          <FontAwesomeIcon icon={faFile} size="2x" />
+          <span>Drag and drop a file or click to select</span>
+        </label>
+      )}
+      <input
+        type="file"
+        id="file"
+        name="file"
+        onChange={handleFileChange}
+        style={{ display: "none" }}
+      />
     </div>
   );
 };
