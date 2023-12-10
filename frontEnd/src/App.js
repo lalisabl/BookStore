@@ -11,6 +11,7 @@ import { BooksSample } from "./assets/constData";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 import BookForm from "./components/book/bookForm";
+import Account from "./components/user/account";
 function Pages() {
   return (
     <>
@@ -56,8 +57,9 @@ function TryMod() {
 function App() {
   return (
     <div>
-      <Pages />
+      <Account />
       {/* <BookCategory />
+      <Pages />
       <BookGrid />
       <BookList books={BooksSample.books} /> */}
     </div>

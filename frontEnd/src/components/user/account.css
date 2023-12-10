@@ -1,0 +1,75 @@
+.account-container {
+  font-size: 1.4rem;
+}
+.nav {
+  width: 100vw;
+  height: 4rem;
+  background: var(--bg-light-white);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  transition: var(--transition);
+  padding: 0 20px;
+}
+.logo {
+  width: 4rem;
+  overflow: hidden;
+}
+.userProfilePhoto {
+  width: 2.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.account-nav,
+.nav-right,
+.nav-left,
+.favorites,
+.langueges {
+  display: flex;
+  align-items: center;
+}
+.account-nav {
+  justify-content: space-between;
+}
+.nav-right {
+  gap: 4rem;
+}
+.nav-left {
+  gap: 2rem;
+}
+.account-sidebar {
+  margin-top: 4.5rem;
+  width: 20rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+.account-sidebar div {
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.account-sidebar div:hover,
+.active {
+  background-color: #dcdcdc;
+}
+.account-sidebar .item {
+  font-size: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.account-sidebar .profile {
+  margin-top: 2rem;
+}
+.account-main {
+  margin-left: 20rem;
+  padding: 2rem;
+}
