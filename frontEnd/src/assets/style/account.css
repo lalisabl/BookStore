@@ -107,10 +107,29 @@
   color: var(--primary-color);
 }
 .popup {
+  font-size: 1rem;
   width: 35rem;
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  background-color: aqua;
+  gap: 2rem;
 }
-
+.popup h3 {
+  font-size: 2rem;
+}
+.popup input {
+  width: 100%;
+  font-size: 1.8rem;
+  padding: 5px 0;
+  border: none;
+  border-bottom: 1px #000 solid;
+}
+.input-content {
+  position: relative;
+}
+.eye-icons {
+  font-size: 1.5rem;
+  position: absolute;
+  right: 1rem;
+  bottom: 5px;
+}
