@@ -56,8 +56,8 @@ export function RightSideBar({ closeBar, show }) {
           <div
             className="modal"
             onClick={() => {
-              closeBar();
               setShow(false);
+              setTimeout(closeBar, 1000);
             }}
           >
             <motion.div
