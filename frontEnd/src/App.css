@@ -4,6 +4,7 @@
 @import url("./assets/style/navBar.css");
 @import url("./assets/style/bookDisplayeType.css");
 @import url("./assets/style/BookForm.css");
+@import url("./assets/style/userHome.css");
 * {
   margin: 0;
   padding: 0;
@@ -33,6 +34,10 @@ body {
 a {
   color: var(--color-white);
   transition: var(--transition);
+}
+
+.text-muted {
+  color: #6c757d;
 }
 .btn {
   user-select: none;

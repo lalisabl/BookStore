@@ -1,4 +1,4 @@
-const readingHistory = () => {
-  return <div>readingHistory</div>;
+const ReadingHistory = () => {
+  return <div>reading History</div>;
 };
-export default readingHistory;
+export default ReadingHistory;

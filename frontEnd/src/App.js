@@ -12,15 +12,29 @@ import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 import BookForm from "./components/book/bookForm";
 import Account from "./pages/account";
+import { AccountSideBar } from "./components/user/side-bar";
+import ProfileDetail from "./components/user/profileDetail";
+import ReadingHistory from "./components/user/readingHistory";
+import MyContributions from "./components/user/myContributions";
 function Pages() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          {/* <Route exact path="/" element={<FeedPage fed={<Feed />} />} /> */}
+          <Route
+            path="/account/profile"
+            element={<Account path={<ProfileDetail />} />}
+          />
+          <Route
+            path="/read-history"
+            element={<Account path={<ReadingHistory />} />}
+          />
+          <Route
+            path="/my-contributions"
+            element={<Account path={<MyContributions />} />}
+          />
 
           <Route path="/" element={<LandingPage />} />
-          <Route path="/:user" element={<Account />} />
           <Route path="search/" element={<Search />} />
           <Route path="/Upload-book" element={<BookForm />} />
           <Route path="/*" element={<NotFound />} />

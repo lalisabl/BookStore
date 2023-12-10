@@ -19,7 +19,7 @@ export default function UserNav() {
     <div>
       <div className="nav account-nav">
         <div className="nav-right">
-          <img className="logo" src="./images/pre-logo.png" alt="logoPhoto" />
+          <img className="logo" src="/images/pre-logo.png" alt="logoPhoto" />
           <div className="upload">upload</div>
         </div>
         <div className="nav-left">
@@ -40,19 +40,14 @@ export default function UserNav() {
           </div>
           <button onClick={handleClick} className="btn profile">
             <img
-              src="./images/male.png"
+              src="/images/male.png"
               className="userProfilePhoto"
               alt="userPhoto"
             />
           </button>
 
           {isRightSideBarVisible && (
-            <RightSideBar
-              closeBar={() => {
-                setRightSideBarVisibility(false);
-              }}
-              show={isRightSideBarVisible}
-            />
+            <RightSideBar closeBar={()=>{setRightSideBarVisibility(false)}} show={isRightSideBarVisible} />
           )}
         </div>
       </div>

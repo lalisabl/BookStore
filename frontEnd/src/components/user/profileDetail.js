@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoPencil } from "react-icons/io5";
 import { MdOutlineClear } from "react-icons/md";
+import GenericModal from "../../shared/GenericModal";
 const ProfileDetail = () => {
   const [showFullNamePopup, setShowFullNamePopup] = useState(false);
   const [showPasswordPopup, setShowPasswordPopup] = useState(false);
@@ -61,11 +62,17 @@ const ProfileDetail = () => {
         </div>
       </div>
       {showFullNamePopup && (
-        <FullNameUpdate
-          fullName={fullName}
-          setFullName={setFullName}
-          onSave={handleSaveFullName}
-          onClose={handleClosePopup}
+        <GenericModal
+          isOpen={showFullNamePopup}
+          onClose={()=>setShowFullNamePopup(false)}
+          children={
+            <FullNameUpdate
+              fullName={fullName}
+              setFullName={setFullName}
+              onSave={handleSaveFullName}
+              onClose={handleClosePopup}
+            />
+          }
         />
       )}
       {showPasswordPopup && (
