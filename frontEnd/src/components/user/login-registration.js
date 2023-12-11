@@ -1,5 +1,6 @@
-import { useState, useEffect, useNavigate } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FcGoogle } from "react-icons/fc";
 import {
@@ -10,32 +11,80 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { apiurl } from "../../assets/constData";
 import { CLIENT_ID } from "../../hidden";
+import { useNavigate } from "react-router-dom";
 
-export function Login() {
+export function Login({ HandleRegister }) {
+  const [identifier, setIdentifier] = useState("");
+  const navigate = useNavigate();
+  const [password, setPassword] = useState("");
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${apiurl}/users/login`,
+        {
+          [identifier.includes("@") ? "email" : "username"]: identifier,
+          password,
+        },
+        { withCredentials: true }
+      );
+      navigate("/");
+      console.log("Login successful", response.data);
+    } catch (error) {
+      console.error(
+        "Login failed",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
+  const handleWithGoogle = async () => {
+    try {
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fapi%2Fv1%2Fusers%2Fauth%2Fgoogle%2Fcallback&scope=profile%20email&client_id=${CLIENT_ID}`;
+      // await axios.get(`${apiurl}/users/auth/google`, { withCredentials: true });
+    } catch (err) {
+      console.log("Registration field");
+    }
+  };
   return (
-    <div className="registration-container">
+    <div className="registration-container login">
       <div className="welcome-banner">
         <FontAwesomeIcon icon={faRocket} className="icon" />
         <h3>Welcome </h3>
         <p>start reading, reader is leader this tooks you 3-5 sec atmost</p>
-        <button className="btn btn-primary-white" type="submit">
+        <button
+          className="btn btn-primary-white"
+          type="button"
+          onClick={() => HandleRegister()}
+        >
           Register
         </button>
       </div>
-      <div className="form-bg">
+      <div className=" form-bg">
         <div className="form-container"></div>
         <div className="form-content">
           <h3>Welcome to Gr8Books</h3>
-          <form>
+          <form onSubmit={handleLoginSubmit}>
+            <div className="with-google">
+              <button
+                className="with-google_btn"
+                onClick={handleWithGoogle}
+                type="button"
+              >
+                <FcGoogle />
+                <span>Continue with google</span>
+              </button>
+            </div>
+            <div className="option-or">Or</div>
             <div>
               <div>
-                {" "}
                 <div className="input-wrapper">
                   <FontAwesomeIcon icon={faUserAlt} className="icon" />
                   <input
                     type="text"
-                    name="username"
-                    placeholder="Username *"
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
+                    placeholder="Email or Username"
                     required
                   />
                 </div>
@@ -45,6 +94,8 @@ export function Login() {
                   <input
                     type="password"
                     name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password *"
                     required
                   />
@@ -56,9 +107,6 @@ export function Login() {
                 Login
               </button>
             </div>
-            <div className="with-google">
-              <img src="images/google.png" />
-            </div>
           </form>
         </div>
       </div>
@@ -66,7 +114,7 @@ export function Login() {
   );
 }
 
-export function Register() {
+export function Register({ HandleLogin }) {
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -105,7 +153,7 @@ export function Register() {
     try {
       if (emailAvailability) {
         const response = await axios.post(`${apiurl}/users/register`, formData);
-        
+
         console.log("Registration successful:", response.data);
       } else {
         setFocusedInput("email");
@@ -126,12 +174,16 @@ export function Register() {
   };
 
   return (
-    <div className="registration-container">
+    <div className="registration-container register">
       <div className="welcome-banner">
         <FontAwesomeIcon icon={faRocket} className="icon" />
         <h3>Welcome </h3>
         <p>start reading, reader is leader this tooks you 3-5 sec atmost</p>
-        <button className="btn btn-primary-white" type="submit">
+        <button
+          className="btn btn-primary-white"
+          type="button"
+          onClick={HandleLogin}
+        >
           Login
         </button>
       </div>

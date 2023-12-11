@@ -62,13 +62,20 @@ exports.createNewAccount = catchAsync(async (req, res) => {
 exports.loginUsers = catchAsync(async (req, res, next) => {
   const MAX_LOGIN_ATTEMPTS = 5;
   const LOCKOUT_DURATION = 5 * 60 * 1000; // 15 minutes in milliseconds
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return next(new AppError("Please provide email and password!", 400));
+  const { email, username, password } = req.body;
+  if ((email && username) || (!email && !username) || !password) {
+    return next(
+      new AppError("Please provide valid email/username and password!", 400)
+    );
   }
-  let user = await User.findOne({ email });
+  let user;
+  if (email) {
+    user = await User.findOne({ email });
+  } else {
+    user = await User.findOne({ username });
+  }
   if (!user) {
-    return next(new AppError("Invalid email.", 401));
+    return next(new AppError("Invalid email/username.", 401));
   }
   if (!user.isActive) {
     return next(new AppError("You are banned by the admin!", 403));
@@ -93,7 +100,11 @@ exports.loginUsers = catchAsync(async (req, res, next) => {
       new AppError("Account is locked. Please try again later!", 401)
     );
   }
-  user = await User.findOne({ email }).select("+password");
+  if (email) {
+    user = await User.findOne({ email }).select("+password");
+  } else {
+    user = await User.findOne({ username }).select("+password");
+  }
   if (!(await user.validatePassword(password, user.password))) {
     user.loginAttempts++;
     await user.save();

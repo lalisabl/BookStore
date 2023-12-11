@@ -45,18 +45,19 @@
   border-end-start-radius: 0;
   top: -3px;
 }
-.login-button {
+.sign-btn {
   display: flex;
   align-content: center;
   vertical-align: bottom;
+  align-items: center;
 }
-.login-button span {
+.signIn-btn span {
   font-size: larger;
   padding-top: 7px;
   margin-right: 10px;
   cursor: pointer;
 }
-.login-button span:hover {
+.signIn-btn span:hover {
   color: var(--accent-color);
   text-decoration: underline;
   text-decoration-color: var(--primary-color);
