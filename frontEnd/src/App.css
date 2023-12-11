@@ -5,6 +5,10 @@
 @import url("./assets/style/bookDisplayeType.css");
 @import url("./assets/style/BookForm.css");
 @import url("./assets/style/userHome.css");
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 * {
   margin: 0;
   padding: 0;
@@ -34,6 +38,13 @@ body {
 a {
   color: var(--color-white);
   transition: var(--transition);
+}
+.container {
+  width: 100%;
+  background-color: white;
+  margin: 0 auto; 
+  padding: 20px; 
+  box-sizing: border-box; 
 }
 
 .text-muted {

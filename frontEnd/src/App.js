@@ -14,6 +14,7 @@ import { UserPage } from "./pages/UserPage";
 import UserHome from "./components/user/user-home";
 import axios from "axios";
 import { apiurl } from "./assets/constData";
+import { NotFound } from "./pages/NotFoundPage";
 function Pages() {
   const [login, setLogin] = useState(true);
   useEffect(() => {
@@ -25,7 +26,7 @@ function Pages() {
         // setLogin(false);
         console.log(error.response ? error.response.data : error.message);
       }
-    }; 
+    };
 
     fetchData();
   }, []);
@@ -70,19 +71,6 @@ function Pages() {
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
-  );
-}
-
-function NotFound() {
-  const handleGoBack = () => {
-    window.history.back();
-  };
-
-  return (
-    <>
-      <p>Page not found. Please return back.</p>
-      <button onClick={handleGoBack}>Go Back</button>
     </>
   );
 }
