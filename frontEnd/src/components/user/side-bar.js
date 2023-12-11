@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
-import { FaUser } from "react-icons/fa";
+import { FaHome, FaUser } from "react-icons/fa";
 import { FcDownload, FcReading } from "react-icons/fc";
 import { SiBookstack } from "react-icons/si";
 import { FaUserGear } from "react-icons/fa6";
@@ -159,5 +159,23 @@ export function RightSideContent({ close }) {
         </li>
       </ul>
     </>
+  );
+}
+
+export function UserSideBar() {
+  return (
+    <div className="left-user-side-bar">
+      <ul>
+        <li>
+          <FaHome className="icon" />
+          <span>Home</span>
+        </li>
+        <li>Home</li>
+        <li>Home</li>
+        <li>Home</li>
+        <li>Home</li>
+        <li>Home</li>
+      </ul>
+    </div>
   );
 }

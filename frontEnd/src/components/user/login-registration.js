@@ -105,6 +105,7 @@ export function Register() {
     try {
       if (emailAvailability) {
         const response = await axios.post(`${apiurl}/users/register`, formData);
+        
         console.log("Registration successful:", response.data);
       } else {
         setFocusedInput("email");

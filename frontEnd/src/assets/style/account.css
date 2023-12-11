@@ -1,5 +1,7 @@
+.user-main-container,
 .account-container {
   font-size: 1.4rem;
+  margin-top: 5rem;
 }
 
 .nav {
@@ -132,4 +134,34 @@
   position: absolute;
   right: 1rem;
   bottom: 5px;
+}
+.user-main-container{
+  display: flex;
+}
+.left-user-side-bar {
+  border-right: 1px solid rgba(12, 18, 28, 0.12);
+  width: 70px;
+  min-width: 70px;
+  position: sticky;
+  top: -1px;
+  height: 100vh;
+  padding: 24px 0px 0px;
+  min-height: 376px;
+}
+
+.left-user-side-bar ul{
+  margin: 13px;
+}
+.left-user-side-bar ul li{
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  text-align: center;
+  justify-content: center;
+  justify-items: center;
+}
+
+.left-user-side-bar ul li .icon{
+  font-size: 2rem;
 }
