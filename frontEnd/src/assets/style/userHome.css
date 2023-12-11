@@ -48,7 +48,8 @@
   max-width: 60px;
   border-radius: 50%;
   margin-right: 5px;
-}.right-sideBar .profile-header img:hover{
+}
+.right-sideBar .profile-header img:hover {
   box-shadow: 0 0 10px 4px rgba(128, 128, 128, 0.247);
 }
 .right-sideBar .icon-exit {
@@ -94,7 +95,57 @@
 .right-sideBar ul li:hover {
   background-color: var(--bg-light-white);
 }
-.right-sideBar ul .icon{
-    padding: 10px 10px;
-    font-size: 2rem;
+.right-sideBar ul .icon {
+  padding: 10px 10px;
+  font-size: 2rem;
+}
+
+.user-main-container {
+  display: flex;
+  margin: auto;
+  width: 85%;
+}
+.user-main-container .main {
+  width: 100%;
+}
+
+.left-user-side-bar {
+  border-right: 1px solid rgba(12, 18, 28, 0.12);
+  width: 70px;
+  min-width: 70px;
+  color: #1a1a1a;
+  position: fixed;
+  left: 0;
+  height: 100vh;
+}
+
+.left-user-side-bar ul {
+  width: 100%;
+  margin: auto;
+  margin-top: 0;
+}
+.left-user-side-bar ul .bar-item {
+  padding: 7px 16px;
+  margin-bottom: 9px;
+  display: block;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.left-user-side-bar ul .bar-item .icon {
+  font-size: 2.4rem;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+.left-user-side-bar ul .bar-item:hover {
+  background-color: var(--bg-light-white);
+  color: black;
+}
+.left-user-side-bar ul .bar-item.active {
+  color: black;
+  border-left: 3px solid var(--primary-color);
 }

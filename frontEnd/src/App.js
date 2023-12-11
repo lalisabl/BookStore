@@ -17,12 +17,12 @@ import ProfileDetail from "./components/user/profileDetail";
 import ReadingHistory from "./components/user/readingHistory";
 import MyContributions from "./components/user/myContributions";
 import { UserPage } from "./pages/UserPage";
+import UserHome from "./components/user/user-home";
 function Pages() {
   const [login, setLogin] = useState(true);
 
   return (
     <>
-    
       <BrowserRouter>
         <Routes>
           <Route
@@ -39,12 +39,26 @@ function Pages() {
           />
 
           {login ? (
-            <Route path="/" element={<UserPage />} />
+            <>
+              {" "}
+              <Route path="/" element={<UserPage path={<UserHome />} />} />
+              <Route
+                path="/Upload-book"
+                element={<UserPage path={<BookForm />} />}
+              />
+              <Route
+                path="/My-books"
+                element={<UserPage path={<BookForm />} />}
+              />
+              <Route
+                path="/My-favorites"
+                element={<UserPage path={<BookForm />} />}
+              />
+            </>
           ) : (
             <Route path="/" element={<LandingPage />} />
           )}
           <Route path="search/" element={<Search />} />
-          <Route path="/Upload-book" element={<BookForm />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

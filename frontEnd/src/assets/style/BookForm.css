@@ -1,12 +1,10 @@
 .book-form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: auto;
+  width: 70%;
   height: 100vh;
 }
 
 .book-form {
-  max-width: 400px;
   width: 100%;
   padding: 20px;
   background-color: var(--bg-light-white);
@@ -29,7 +27,6 @@
 .book-form .check-download input {
   width: max-content;
 }
-
 
 .custom-file-input {
   display: inline-block;
