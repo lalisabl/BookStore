@@ -20,19 +20,6 @@ import { UserPage } from "./pages/UserPage";
 import axios from "axios";
 function Pages() {
   const [login, setLogin] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await axios.get(`${apiurl}/users/me`, { withCredentials: true });
-        setLogin(true);
-      } catch (error) {
-        setLogin(false);
-        console.log(error.response ? error.response.data : error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
   return (
     <>
       <BrowserRouter>
@@ -49,11 +36,10 @@ function Pages() {
             path="/my-contributions"
             element={<Account path={<MyContributions />} />}
           />
-
           {login ? (
             <Route path="/" element={<UserPage />} />
           ) : (
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
           )}
           <Route path="search/" element={<Search />} />
           <Route path="/Upload-book" element={<BookForm />} />

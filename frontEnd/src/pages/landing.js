@@ -1,10 +1,10 @@
 import { BookCategory } from "../components/book/bookCategory";
 import { NavBarLanding } from "../components/common/navBar";
 
-export function LandingPage() {
+export function LandingPage({ SetLogin }) {
   return (
     <>
-      <NavBarLanding />
+      <NavBarLanding setLogin={SetLogin} />
       <BookCategory />
     </>
   );

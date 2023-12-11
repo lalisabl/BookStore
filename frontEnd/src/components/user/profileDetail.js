@@ -55,7 +55,7 @@ const ProfileDetail = () => {
           <div className="detail-item password">
             <p>Password</p>
             <button onClick={handleEditPassword} className="btn">
-              Edit{" "}
+              Edit
             </button>
           </div>
           <div className="detail-item e-mail">

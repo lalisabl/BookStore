@@ -8,7 +8,7 @@ export default function NavBar({ where }) {
   return <div>{where === "landing" ? <NavBarLanding /> : <></>}</div>;
 }
 
-export function NavBarLanding() {
+export function NavBarLanding({ setLogin }) {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -74,7 +74,10 @@ export function NavBarLanding() {
               isOpen={showLoginPopup}
               onClose={() => setShowLoginPopup(false)}
               children={
-                <Login HandleRegister={() => handleSignInClick(false)} />
+                <Login
+                  HandleRegister={() => handleSignInClick(false)}
+                  SetLogin={setLogin}
+                />
               }
             />
           </>
