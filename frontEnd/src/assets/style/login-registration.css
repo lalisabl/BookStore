@@ -10,16 +10,17 @@
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  min-height: 500px;
+  min-height: 400px;
   max-height: 80vh;
   padding-right: 0;
   min-width: 50vw;
-  max-width: 60vw;
+  max-width: 50vw;
+  overflow: hidden;
   margin: auto;
 }
 .form-bg {
-  width: 80%;
-  min-width: 70%;
+  width: 50%;
+  min-width: 65%;
   position: relative;
   padding: 50px;
   overflow: hidden;
@@ -28,9 +29,9 @@
 .welcome-banner {
   text-align: center;
   color: white;
-  font-family: "Roboto Mono";
   font-weight: 400;
   padding: 10px;
+  font-size: 1.8rem;
   margin: auto;
 }
 .welcome-banner .icon {
@@ -41,22 +42,23 @@
 .welcome-banner h3 {
   margin: 0;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 4rem;
 }
 .form-container {
   position: absolute;
   background-color: #fffff2;
-  top: -86%;
+  top: -74%;
   left: 0;
   width: 100%;
-  height: 1300px;
-  border-radius: 760px 0 0 710px;
+  height: 1000px;
+  border-radius: 1000px 0 0 1000px;
 }
 
 .form-content {
   position: absolute;
   width: 100%;
   top: 25%;
+  left: 0;
   margin: auto;
 }
 .form-content form {
@@ -126,8 +128,6 @@
   font-size: 14px;
   width: 100%;
   padding: 1px;
-  /* opacity: 0; */
-  /* transition: opacity 0.3s ease, visibility 0.3s ease; */
 }
 
 .available {
@@ -142,4 +142,42 @@
 .input-wrapper:hover .taken {
   display: block;
   opacity: 1;
+}
+@media screen and (max-width: 1124px) {
+  .registration-container {
+    min-width: 80vw;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .registration-container {
+    min-width: 90vw;
+  }
+}
+@media screen and (max-width: 776px) {
+  .registration-container {
+    background-image: linear-gradient(100deg, #2328a7, #5358dd, #90c7f8);
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100vh;
+    min-width: 100vw;
+    max-width: 100vw;
+    overflow-y: hidden;
+    padding: 0;
+  }
+  .form-bg {
+    width: 100%;
+    min-width: 100%;
+    min-height: 60%;
+  }
+  .form-content form {
+    margin: 0;
+    width: 100%;
+  }
+  .form-container {
+    top: 0%;
+    left: -30%;
+    width: 150%;
+    height: 100%;
+    border-radius: 100% 100% 0 0;
+  }
 }

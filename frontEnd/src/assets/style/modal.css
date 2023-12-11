@@ -19,7 +19,6 @@
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: max-content;
-  max-width: 90%;
 }
 
 .modal-close {
@@ -38,8 +37,8 @@
   transform: rotate(180deg);
 }
 @media screen and (max-width: 780px) {
-  .modal-content {
-    max-width: 90%;
-    padding: 17px 10px;
+  .mobile-login{
+    position: fixed;
+    bottom: 0;
   }
 }

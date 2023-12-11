@@ -1,36 +1,31 @@
 import "./App.css";
-import { Login, Register } from "./components/user/login-registration";
+import { Register } from "./components/user/login-registration";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GenericModal from "./shared/GenericModal";
 import { useState, useEffect } from "react";
-import NavBar from "./components/common/navBar";
-import { BookGrid } from "./components/book/BookGrid";
-import { BookList } from "./components/book/BookList";
-import { BookCategory } from "./components/book/bookCategory";
-import { BooksSample, apiurl } from "./assets/constData";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 import BookForm from "./components/book/bookForm";
 import Account from "./pages/account";
-import { AccountSideBar } from "./components/user/side-bar";
 import ProfileDetail from "./components/user/profileDetail";
 import ReadingHistory from "./components/user/readingHistory";
 import MyContributions from "./components/user/myContributions";
 import { UserPage } from "./pages/UserPage";
 import UserHome from "./components/user/user-home";
 import axios from "axios";
+import { apiurl } from "./assets/constData";
 function Pages() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
         await axios.get(`${apiurl}/users/me`, { withCredentials: true });
         setLogin(true);
       } catch (error) {
-        setLogin(false);
+        // setLogin(false);
         console.log(error.response ? error.response.data : error.message);
       }
-    };
+    }; 
 
     fetchData();
   }, []);
