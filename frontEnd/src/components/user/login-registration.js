@@ -13,7 +13,7 @@ import { apiurl } from "../../assets/constData";
 import { CLIENT_ID } from "../../hidden";
 import { useNavigate } from "react-router-dom";
 
-export function Login({ HandleRegister }) {
+export function Login({ HandleRegister, SetLogin }) {
   const [identifier, setIdentifier] = useState("");
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -28,7 +28,8 @@ export function Login({ HandleRegister }) {
         },
         { withCredentials: true }
       );
-      navigate("/");
+      SetLogin(true);
+      navigate("/account/profile");
       console.log("Login successful", response.data);
     } catch (error) {
       console.error(

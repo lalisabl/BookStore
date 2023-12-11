@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const app = express();
@@ -10,7 +11,8 @@ const favoriteRoute = require("./Routers/favoritesRoute");
 const notificationRoute = require("./Routers/notificationRouter");
 const cors = require("cors");
 
-// body parser
+// global parser
+app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(passport.initialize());

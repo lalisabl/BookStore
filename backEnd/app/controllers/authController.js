@@ -114,6 +114,7 @@ exports.loginUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
+  console.log(req.cookies.jwt);
   let token;
   if (
     req.headers.authorization &&
