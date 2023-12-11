@@ -2,12 +2,12 @@ import "./App.css";
 import { Login, Register } from "./components/user/login-registration";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GenericModal from "./shared/GenericModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "./components/common/navBar";
 import { BookGrid } from "./components/book/BookGrid";
 import { BookList } from "./components/book/BookList";
 import { BookCategory } from "./components/book/bookCategory";
-import { BooksSample } from "./assets/constData";
+import { BooksSample, apiurl } from "./assets/constData";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 import BookForm from "./components/book/bookForm";
@@ -17,9 +17,22 @@ import ProfileDetail from "./components/user/profileDetail";
 import ReadingHistory from "./components/user/readingHistory";
 import MyContributions from "./components/user/myContributions";
 import { UserPage } from "./pages/UserPage";
+import axios from "axios";
 function Pages() {
   const [login, setLogin] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios.get(`${apiurl}/users/me`, { withCredentials: true });
+        setLogin(true);
+      } catch (error) {
+        setLogin(false);
+        console.log(error.response ? error.response.data : error.message);
+      }
+    };
 
+    fetchData();
+  }, []);
   return (
     <>
       <BrowserRouter>
@@ -65,13 +78,14 @@ function NotFound() {
 }
 
 function TryMod() {
-  const [open, setOpen] = useState(true);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
 
   return (
     <>
       <GenericModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
+        isOpen={showLoginPopup}
+        onClose={() => setShowLoginPopup(false)}
         children={<Register />}
       />
     </>
