@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { GoStarFill } from "react-icons/go";
 import { PiGlobe } from "react-icons/pi";
 import { RightSideBar } from "./side-bar";
-import { useNavigate } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
 
 export default function UserNav() {
   const [language, setLanguage] = useState("en");
-  const navigate = useNavigate();
 
   const handleChangeLanguage = (newLanguage) => {
     setLanguage(newLanguage);
@@ -26,11 +23,7 @@ export default function UserNav() {
           <div className="upload">upload</div>
         </div>
         <div className="nav-left">
-          <div onClick={() => navigate("/")} className="nav-item">
-            <FaHome className="icon" />
-            <span>Home</span>
-          </div>
-          <div onClick={() => navigate("/my-favorites")} className="nav-item">
+          <div className="favorites">
             <GoStarFill />
             Fav
           </div>
