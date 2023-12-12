@@ -19,7 +19,7 @@ app.use(passport.initialize());
 //global Middlewares
 app.use(
   cors({
-    origin: "http://localhost:3000", // Set the allowed origin
+    origin: "http://localhost:5173", // Set the allowed origin
     credentials: true, // Allow cookies and authentication headers
   })
 ); // route middlewares
