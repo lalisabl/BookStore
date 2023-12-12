@@ -86,8 +86,10 @@ export function NavBarLanding({ setLogin }) {
             <GenericModal
               isOpen={showRegisterPopup}
               onClose={() => setShowRegisterPopup(false)}
-              children={<Register HandleLogin={() => handleSignUpClick(false)} />}/>
-              
+              children={
+                <Register HandleLogin={() => handleSignUpClick(false)} />
+              }
+            />
           </>
         )}
       </div>

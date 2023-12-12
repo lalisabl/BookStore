@@ -22,7 +22,8 @@ app.use(
     origin: "http://localhost:5173", // Set the allowed origin
     credentials: true, // Allow cookies and authentication headers
   })
-); // route middlewares
+); 
+// route middlewares
 app.use("/api/v1/users/", userRoute);
 app.use("/api/v1/books/", bookRoute);
 app.use("/api/v1/favorites", favoriteRoute);

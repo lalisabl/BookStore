@@ -17,19 +17,19 @@ import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
 function Pages() {
   const [login, setLogin] = useState(false);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       await axios.get(`${apiurl}/users/me`, { withCredentials: true });
-  //       setLogin(true);
-  //     } catch (error) {
-  //       setLogin(false);
-  //       console.log(error.response ? error.response.data : error.message);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios.get(`${apiurl}/users/me`, { withCredentials: true });
+        setLogin(true);
+      } catch (error) {
+        setLogin(false);
+        console.log(error.response ? error.response.data : error.message);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
   return (
     <>
       <BrowserRouter>
