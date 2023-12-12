@@ -1,6 +1,8 @@
 import "./App.css";
+import { Register } from "./components/user/login-registration";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import GenericModal from "./shared/GenericModal";
+import { useState, useEffect } from "react";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 import BookForm from "./components/book/bookForm";
@@ -10,8 +12,24 @@ import ReadingHistory from "./components/user/readingHistory";
 import MyContributions from "./components/user/myContributions";
 import { UserPage } from "./pages/UserPage";
 import UserHome from "./components/user/user-home";
+import axios from "axios";
+import { apiurl } from "./assets/constData";
+import { NotFound } from "./pages/NotFoundPage";
 function Pages() {
   const [login, setLogin] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios.get(`${apiurl}/users/me`, { withCredentials: true });
+        setLogin(true);
+      } catch (error) {
+        // setLogin(false);
+        console.log(error.response ? error.response.data : error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <BrowserRouter>
@@ -28,6 +46,7 @@ function Pages() {
             path="/my-contributions"
             element={<Account path={<MyContributions />} />}
           />
+
           {login ? (
             <>
               {" "}
@@ -46,7 +65,7 @@ function Pages() {
               />
             </>
           ) : (
-            <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
+            <Route path="/" element={<LandingPage />} />
           )}
           <Route path="search/" element={<Search />} />
           <Route path="/*" element={<NotFound />} />
@@ -56,15 +75,17 @@ function Pages() {
   );
 }
 
-function NotFound() {
-  const handleGoBack = () => {
-    window.history.back();
-  };
+function TryMod() {
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
 
   return (
     <>
-      <p>Page not found. Please return back.</p>
-      <button onClick={handleGoBack}>Go Back</button>
+      <GenericModal
+        isOpen={showLoginPopup}
+        onClose={() => setShowLoginPopup(false)}
+        children={<Register />}
+      />
     </>
   );
 }
