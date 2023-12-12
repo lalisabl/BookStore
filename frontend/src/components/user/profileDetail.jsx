@@ -68,14 +68,13 @@ const ProfileDetail = () => {
         <GenericModal
           isOpen={showFullNamePopup}
           onClose={() => setShowFullNamePopup(false)}
-          children={
-            <FullNameUpdate
-              fullName={fullName}
-              setFullName={setFullName}
-              onSave={handleSaveFullName}
-            />
-          }
-        />
+        >
+          <FullNameUpdate
+            fullName={fullName}
+            setFullName={setFullName}
+            onSave={handleSaveFullName}
+          />
+        </GenericModal>
       )}
       {showPasswordPopup && (
         <GenericModal

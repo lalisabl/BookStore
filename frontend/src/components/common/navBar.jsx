@@ -73,13 +73,12 @@ export function NavBarLanding({ setLogin }) {
             <GenericModal
               isOpen={showLoginPopup}
               onClose={() => setShowLoginPopup(false)}
-              children={
-                <Login
-                  HandleRegister={() => handleSignInClick(false)}
-                  SetLogin={setLogin}
-                />
-              }
-            />
+            >
+              <Login
+                HandleRegister={() => handleSignInClick(false)}
+                SetLogin={setLogin}
+              />
+            </GenericModal>
           </>
         )}
         {showRegisterPopup && (
@@ -87,10 +86,9 @@ export function NavBarLanding({ setLogin }) {
             <GenericModal
               isOpen={showRegisterPopup}
               onClose={() => setShowRegisterPopup(false)}
-              children={
-                <Register HandleLogin={() => handleSignUpClick(false)} />
-              }
-            />
+            >
+              <Register HandleLogin={() => handleSignUpClick(false)} />
+            </GenericModal>
           </>
         )}
       </div>

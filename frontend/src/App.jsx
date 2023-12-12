@@ -1,8 +1,6 @@
 import "./App.css";
-import { Register } from "./components/user/login-registration";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import GenericModal from "./shared/GenericModal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
 import BookForm from "./components/book/bookForm";
@@ -12,8 +10,6 @@ import ReadingHistory from "./components/user/readingHistory";
 import MyContributions from "./components/user/myContributions";
 import { UserPage } from "./pages/UserPage";
 import UserHome from "./components/user/user-home";
-import axios from "axios";
-import { apiurl } from "./assets/constData";
 function Pages() {
   const [login, setLogin] = useState(false);
   return (
@@ -73,23 +69,12 @@ function NotFound() {
   );
 }
 
-function TryMod() {
-  const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
-
-  return (
-    <>
-      <GenericModal
-        isOpen={showLoginPopup}
-        onClose={() => setShowLoginPopup(false)}
-        children={<Register />}
-      />
-    </>
-  );
-}
-
 function App() {
-  return <div>Hello from app </div>;
+  return (
+    <div>
+      <Pages />
+    </div>
+  );
 }
 
 export default App;
