@@ -19,7 +19,7 @@ export function BookList({ books }) {
     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-8">
       {books.length > 0 &&
         books.map((book) => (
-          <div key={book.id} className="bg-white rounded-lg overflow-hidden shadow-md">
+          <div key={book.id} className="bg-white border rounded-lg overflow-hidden shadow-sm">
             <div className="flex">
               <img src={book.thumbnail} alt={book.title} className="w-24 h-32 object-cover" />
 
@@ -44,11 +44,11 @@ export function BookList({ books }) {
                   </div>
                 </div>
 
-                <div className="flex items-center mt-4">
+                <div className="flex items-center mt-4 book-owner">
                   <img
                     src={book.uploader.image}
                     alt={book.uploader.username}
-                    className="w-8 h-8 rounded-full mr-2"
+                    className="w-8 rounded-full mr-2"
                   />
                   <div>
                     <span className="font-semibold">{book.uploader.username}</span>

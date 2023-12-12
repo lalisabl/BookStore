@@ -55,7 +55,7 @@
 .right-sideBar .icon-exit {
   position: absolute;
   right: 3%;
-  font-size: 2.5rem;
+  font-size: 24px;
   top: 0;
   border-radius: 50%;
   padding: 7px;
@@ -97,19 +97,15 @@
 }
 .right-sideBar ul .icon {
   padding: 10px 10px;
-  font-size: 2rem;
+  font-size: 20px;
 }
 
 .user-main-container {
-  display: flex;
-  margin: auto;
-  width: 90%;
+  max-width: 90vw;
+  overflow-x: hidden;
+  height: min-content;
   text-align: center;
 }
-.user-main-container .main {
-  width: 100%;
-}
-
 .left-user-side-bar {
   border-right: 1px solid rgba(12, 18, 28, 0.12);
   width: 70px;
@@ -133,11 +129,11 @@
   cursor: pointer;
   user-select: none;
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 13px;
 }
 
 .left-user-side-bar ul .bar-item .icon {
-  font-size: 2.4rem;
+  font-size: 24px;
   margin: 0;
   padding: 0;
   line-height: 0;
@@ -190,7 +186,7 @@
   border: none;
   border-radius: 10px;
   margin: 0 5px;
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 
 
@@ -203,7 +199,7 @@
   position: absolute;
   right: 0;
   padding: 6px 10px;
-  font-size: 3rem;
+  font-size: 18px;
   height: 49px;
   border-radius: 0 13px 13px 0;
 }

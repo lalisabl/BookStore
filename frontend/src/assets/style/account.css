@@ -1,6 +1,5 @@
 .user-main-container,
 .account-container {
-  font-size: 1.4rem;
   margin-top: 5rem;
 }
 
@@ -21,7 +20,7 @@
   overflow: hidden;
 }
 .userProfilePhoto {
-  width: 2.5rem;
+  width: 40px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -70,7 +69,7 @@
   background-color: #dcdcdc;
 }
 .account-sidebar .item {
-  font-size: 1.5rem;
+  font-size: 14px;
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -83,7 +82,7 @@
   margin-top: 5rem;
   margin-left: 23rem;
   padding: 2rem;
-  font-size: 2rem;
+  font-size: 18px;
 }
 .user-details {
   border: 1px #2321212b solid;
@@ -105,7 +104,7 @@
   gap: 30%;
 }
 .detail-item span {
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 .e-mail p {
   margin-right: 5rem;

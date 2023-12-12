@@ -30,9 +30,8 @@ export function HomeBanner() {
             </form>
           </div>
         </div>
-        <div className="container">
-        </div>
       </div>
+      <Recommended />
     </>
   );
 }
