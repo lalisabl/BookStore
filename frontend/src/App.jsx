@@ -16,7 +16,7 @@ import axios from "axios";
 import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
 function Pages() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
