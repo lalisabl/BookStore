@@ -5,8 +5,6 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
 
-const cookieParser = require("cookie-parser");
-router.use(cookieParser());
 
 // authController.CreateGoogleStrategy();
 router.use(passport.initialize());

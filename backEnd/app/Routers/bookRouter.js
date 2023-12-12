@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+const authController = require("../controllers/authController");
 const bookController = require("../controllers/bookController");
 
-router.post("/upload", bookController.postBook);
+router.post("/upload",authController.protect, bookController.postBook);
 router.patch("/updateBookTitle/:bookId", bookController.updateBookTitle);
 router.delete("/delete/:bookId", bookController.deleteBook);
 router.post("/report/:bookId", bookController.reportBook);

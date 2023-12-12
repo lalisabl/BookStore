@@ -16,7 +16,7 @@ import axios from "axios";
 import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
 function Pages() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +26,7 @@ function Pages() {
         setLogin(true);
       } catch (error) {
         setLoading(true);
-        setLogin(false);
+        // setLogin(false);
         console.log(error.response ? error.response.data : error.message);
       }
     };
@@ -90,9 +90,6 @@ function Pages() {
   );
 }
 
-export function Tpp() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
-}
 
 function App() {
   return (

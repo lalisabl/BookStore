@@ -4,7 +4,6 @@
 @import url("./assets/style/navBar.css");
 @import url("./assets/style/bookDisplayeType.css");
 @import url("./assets/style/BookForm.css");
-@import url("./assets/style/userHome.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,7 +16,6 @@
   text-decoration: none;
 }
 html {
-  font-size: 62.5%;
   scroll-behavior: smooth;
 }
 body {

@@ -105,7 +105,6 @@
   margin: auto;
   width: 90%;
   text-align: center;
-  overflow-x: hidden;
 }
 .user-main-container .main {
   width: 100%;
@@ -143,12 +142,17 @@
   padding: 0;
   line-height: 0;
 }
-
-.left-user-side-bar ul .bar-item:hover {
+.side-bar-item{
+  padding-top: 10px;
+  padding-bottom: 13px;
+}
+.side-bar-item:hover {
   background-color: var(--bg-light-white);
+  
+  border-left: 3px solid var(--primary-color);
   color: black;
 }
-.left-user-side-bar ul .bar-item.active {
+.side-bar-item.active {
   color: black;
   border-left: 3px solid var(--primary-color);
 }

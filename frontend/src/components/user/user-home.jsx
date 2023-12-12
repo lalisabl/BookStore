@@ -31,7 +31,6 @@ export function HomeBanner() {
           </div>
         </div>
         <div className="container">
-          <Recommended />
         </div>
       </div>
     </>

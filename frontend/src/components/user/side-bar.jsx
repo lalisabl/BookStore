@@ -9,6 +9,7 @@ import { MdClose, MdLogout } from "react-icons/md";
 import { GoStarFill } from "react-icons/go";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TiDocumentAdd } from "react-icons/ti";
+import "../../assets/style/userHome.css";
 
 export function AccountSideBar() {
   const navigate = useNavigate();
@@ -22,9 +23,8 @@ export function AccountSideBar() {
       <div className="account-sidebar">
         <h3 className="item sidebar-header">My Account</h3>
         <div
-          className={`item profile ${
-            isActive("/account/profile") ? "active" : ""
-          }`}
+          className={`item profile ${isActive("/account/profile") ? "active" : ""
+            }`}
           onClick={() => {
             navigate("/account/profile");
           }}
@@ -33,9 +33,8 @@ export function AccountSideBar() {
           Profile
         </div>
         <div
-          className={`item reading-history ${
-            isActive("read-history") ? "active" : ""
-          }`}
+          className={`item reading-history ${isActive("read-history") ? "active" : ""
+            }`}
           onClick={() => {
             navigate("/read-history");
           }}
@@ -44,9 +43,8 @@ export function AccountSideBar() {
           Reading History
         </div>
         <div
-          className={`item books ${
-            isActive("my-contributions") ? "active" : ""
-          }`}
+          className={`item books ${isActive("my-contributions") ? "active" : ""
+            }`}
           onClick={() => {
             navigate("/my-contributions");
           }}
@@ -171,44 +169,49 @@ export function UserSideBar() {
   };
 
   return (
-    <div className="left-user-side-bar">
-      <ul>
+    <div className="left-user-side-bar mt-14 text-center">
+      <ul className="flex flex-col">
         <li
-          className={`bar-item ${location.pathname === "/" ? "active" : ""}`}
+          className={`side-bar-item ${location.pathname === "/" ? "active" : ""}`}
           onClick={() => navigate("/ ")}
         >
-          <FaHome className="icon" />
-          <div>Home</div>
+          <BarItem name={'Home'} icon={<FaHome className="icon text-2xl" />}/>
         </li>
         <li
-          className={`bar-item ${isActive("/Upload-book") ? "active" : ""}`}
+          className={`side-bar-item ${isActive("/Upload-book") ? "active" : ""}`}
           onClick={() => navigate("/Upload-book")}
         >
-          <TiDocumentAdd className="icon" />
-          <div>Create</div>
+          
+          <BarItem name={'Create'} icon={<TiDocumentAdd className="icon text-2xl" />}/>
         </li>
         <li
+          className={`side-bar-item ${isActive("/Account") ? "active" : ""}`}
           onClick={() => navigate("/Account/profile")}
-          className={`bar-item ${isActive("/Account") ? "active" : ""}`}
         >
-          <FaUserGear className="icon" />
-          <div>Account</div>
+       
+          <BarItem name={'Account'} icon={<FaUserGear className="icon text-2xl" />}/>
         </li>
         <li
+          className={`side-bar-item ${isActive("/My-books") ? "active" : ""}`}
           onClick={() => navigate("/My-books")}
-          className={`bar-item ${isActive("/My-books") ? "active" : ""}`}
-        >
-          <SiBookstack className="icon" />
-          <div>my Books</div>
+        > 
+          <BarItem name={'My Books'} icon={<SiBookstack className="icon text-2xl" />}/>
         </li>
         <li
+          className={`side-bar-item ${isActive("/My-favorites") ? "active" : ""}`}
           onClick={() => navigate("/My-favorites")}
-          className={`bar-item ${isActive("/My-favorites") ? "active" : ""}`}
         >
-          <GoStarFill className="icon" />
-          <div>My Favors</div>
+          <BarItem name={'My Favors'} icon={<GoStarFill className="icon text-2xl" />} />
         </li>
       </ul>
     </div>
   );
+}
+
+function BarItem({ name, icon }) {
+  return (
+    <div className="flex flex-col items-center cursor-pointer">
+      {icon}
+      <div className="text-sm">{name}</div>
+    </div>)
 }
