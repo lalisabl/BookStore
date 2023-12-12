@@ -1,5 +1,7 @@
 import { BiSearch } from "react-icons/bi";
 import { BookGrid } from "../book/BookGrid";
+import { BookList } from "../book/BookList";
+import { BooksSample } from "../../assets/constData";
 
 export default function UserHome() {
   return (
@@ -40,6 +42,7 @@ function Recommended() {
   return (
     <>
       <BookGrid />
+      <BookList books={BooksSample.books} />
     </>
   );
 }

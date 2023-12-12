@@ -34,6 +34,7 @@ body {
   --secondary-color: #2ecc71;
   --accent-color: #e74c3c;
   --bg-light-white: #ececec;
+  --color-danger:rgb(156, 15, 15); 
 }
 a {
   color: var(--color-white);

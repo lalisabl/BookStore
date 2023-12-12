@@ -1,7 +1,7 @@
 import "./App.css";
 import { Register } from "./components/user/login-registration";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import GenericModal from "./shared/GenericModal";
+import GenericModal, { GenericLittleLoadingModal } from "./shared/GenericModal";
 import { useState, useEffect } from "react";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
@@ -18,13 +18,16 @@ import { NotFound } from "./pages/NotFoundPage";
 axios.defaults.withCredentials = true;
 function Pages() {
   const [login, setLogin] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
         await axios.get(`${apiurl}/users/me`, { withCredentials: true });
+        setLoading(true);
         setLogin(true);
       } catch (error) {
-        // setLogin(false);
+        setLoading(true);
+        setLogin(false);
         console.log(error.response ? error.response.data : error.message);
       }
     };
@@ -33,57 +36,63 @@ function Pages() {
   }, []);
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/account/profile"
-            element={<Account path={<ProfileDetail />} />}
-          />
-          <Route
-            path="/read-history"
-            element={<Account path={<ReadingHistory />} />}
-          />
-          <Route
-            path="/my-contributions"
-            element={<Account path={<MyContributions />} />}
-          />
+      {!loading ? (
+        <GenericLittleLoadingModal isOpen={!loading} />
+      ) : (
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/account/profile"
+              element={<Account path={<ProfileDetail />} />}
+            />
+            <Route
+              path="/read-history"
+              element={<Account path={<ReadingHistory />} />}
+            />
+            <Route
+              path="/my-contributions"
+              element={<Account path={<MyContributions />} />}
+            />
 
-          {login ? (
-            <>
-              {" "}
-              <Route path="/" element={<UserPage SetLogin={()=>setLogin(true)} path={<UserHome />} />} />
-              <Route
-                path="/Upload-book"
-                element={<UserPage path={<BookForm />} />}
-              />
-              <Route
-                path="/My-books"
-                element={<UserPage path={<BookForm />} />}
-              />
-              <Route
-                path="/My-favorites"
-                element={<UserPage path={<BookForm />} />}
-              />
-            </>
-          ) : (
-            <Route path="/" element={<LandingPage SetLogin={setLogin}/>} />
-          )}
-          <Route path="search/" element={<Search />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+            {login ? (
+              <>
+                {" "}
+                <Route
+                  path="/"
+                  element={
+                    <UserPage
+                      SetLogin={() => setLogin(true)}
+                      path={<UserHome />}
+                    />
+                  }
+                />
+                <Route
+                  path="/Upload-book"
+                  element={<UserPage path={<BookForm />} />}
+                />
+                <Route
+                  path="/My-books"
+                  element={<UserPage path={<BookForm />} />}
+                />
+                <Route
+                  path="/My-favorites"
+                  element={<UserPage path={<BookForm />} />}
+                />
+              </>
+            ) : (
+              <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
+            )}
+            <Route path="search/" element={<Search />} />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      )}
     </>
   );
 }
 
-
-
-export  function Tpp() {
-  return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  )
+export function Tpp() {
+  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
 }
 
 function App() {

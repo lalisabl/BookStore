@@ -105,6 +105,7 @@
   margin: auto;
   width: 90%;
   text-align: center;
+  overflow-x: hidden;
 }
 .user-main-container .main {
   width: 100%;
