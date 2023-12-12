@@ -22,7 +22,7 @@ const createSendToken = (user, statusCode, res) => {
   };
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
-  res.cookie("jwt", token, cookieOptions);
+  res.cookie("test", token, cookieOptions);
   // Remove password from output
   user.password = undefined;
 
@@ -114,7 +114,7 @@ exports.loginUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  console.log(req.cookies.jwt);
+  console.log(req.cookies.test);
   let token;
   if (
     req.headers.authorization &&

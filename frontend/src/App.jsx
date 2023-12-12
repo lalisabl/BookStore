@@ -17,19 +17,19 @@ import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
 function Pages() {
   const [login, setLogin] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await axios.get(`${apiurl}/users/me`, { withCredentials: true });
-        setLogin(true);
-      } catch (error) {
-        // setLogin(false);
-        console.log(error.response ? error.response.data : error.message);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       await axios.get(`${apiurl}/users/me`, { withCredentials: true });
+  //       setLogin(true);
+  //     } catch (error) {
+  //       setLogin(false);
+  //       console.log(error.response ? error.response.data : error.message);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   return (
     <>
       <BrowserRouter>
@@ -65,7 +65,7 @@ function Pages() {
               />
             </>
           ) : (
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
           )}
           <Route path="search/" element={<Search />} />
           <Route path="/*" element={<NotFound />} />
@@ -75,14 +75,8 @@ function Pages() {
   );
 }
 
-
-
-export  function Tpp() {
-  return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  )
+export function Tpp() {
+  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
 }
 
 function App() {
