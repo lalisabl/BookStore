@@ -16,7 +16,7 @@ import axios from "axios";
 import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
 function Pages() {
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,20 +75,6 @@ function Pages() {
   );
 }
 
-function TryMod() {
-  const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
-
-  return (
-    <>
-      <GenericModal
-        isOpen={showLoginPopup}
-        onClose={() => setShowLoginPopup(false)}
-        children={<Register />}
-      />
-    </>
-  );
-}
 
 
 export  function Tpp() {
@@ -102,7 +88,7 @@ export  function Tpp() {
 function App() {
   return (
     <div>
-      <Tpp />
+      <Pages />
     </div>
   );
 }

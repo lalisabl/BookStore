@@ -10,11 +10,11 @@
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  min-height: 400px;
+  min-height: 450px;
   max-height: 80vh;
   padding-right: 0;
-  min-width: 50vw;
-  max-width: 50vw;
+  min-width: 58vw;
+  max-width: 55vw;
   overflow: hidden;
   margin: auto;
 }
@@ -80,6 +80,7 @@
   justify-self: center;
   text-align: center;
   margin-bottom: 15px;
+  font-size: 2rem;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
     sans-serif;
 }
@@ -100,7 +101,7 @@
   font-size: 20px;
 }
 .form-content .with-google_btn {
-  font-size: 18px;
+  font-size: 1.6rem;
   display: flex;
   align-items: center;
   gap: 10px;
