@@ -89,7 +89,11 @@ function TryMod() {
 }
 
 function App() {
-  return <div>Hello from app </div>;
+  return (
+    <div>
+      <Pages />
+    </div>
+  );
 }
 
 export default App;
