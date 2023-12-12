@@ -15,7 +15,6 @@ import UserHome from "./components/user/user-home";
 import axios from "axios";
 import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
-axios.defaults.withCredentials = true;
 function Pages() {
   const [login, setLogin] = useState(false);
   const [loading, setLoading] = useState(false);
