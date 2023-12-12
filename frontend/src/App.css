@@ -5,6 +5,10 @@
 @import url("./assets/style/bookDisplayeType.css");
 @import url("./assets/style/BookForm.css");
 @import url("./assets/style/userHome.css");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;

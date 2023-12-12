@@ -90,10 +90,19 @@ function TryMod() {
   );
 }
 
+
+export  function Tpp() {
+  return (
+    <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
+  )
+}
+
 function App() {
   return (
     <div>
-      <Pages />
+      <Tpp />
     </div>
   );
 }
