@@ -15,6 +15,7 @@ import UserHome from "./components/user/user-home";
 import axios from "axios";
 import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
+axios.defaults.withCredentials = true;
 function Pages() {
   const [login, setLogin] = useState(false);
   useEffect(() => {
@@ -50,7 +51,7 @@ function Pages() {
           {login ? (
             <>
               {" "}
-              <Route path="/" element={<UserPage path={<UserHome />} />} />
+              <Route path="/" element={<UserPage SetLogin={()=>setLogin(true)} path={<UserHome />} />} />
               <Route
                 path="/Upload-book"
                 element={<UserPage path={<BookForm />} />}
@@ -65,7 +66,7 @@ function Pages() {
               />
             </>
           ) : (
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<LandingPage SetLogin={setLogin}/>} />
           )}
           <Route path="search/" element={<Search />} />
           <Route path="/*" element={<NotFound />} />
