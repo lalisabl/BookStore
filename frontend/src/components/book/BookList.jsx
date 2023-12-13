@@ -16,10 +16,10 @@ export function formatViews(views) {
 }
 export function BookList({ books }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-3">
       {books.length > 0 &&
         books.map((book) => (
-          <div key={book.id} className="bg-white border rounded-lg overflow-hidden shadow-sm">
+          <div key={book.id} className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md">
             <div className="flex">
               <img src={book.thumbnail} alt={book.title} className="w-24 h-32 object-cover" />
 
