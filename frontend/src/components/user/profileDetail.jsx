@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { apiurl } from "../../assets/constData";
-import { IoPencil } from "react-icons/io5";
-import { MdOutlineClear } from "react-icons/md";
-import GenericModal from "../../shared/GenericModal";
-import { BiHide } from "react-icons/bi";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { apiurl } from '../../assets/constData';
+import { IoPencil } from 'react-icons/io5';
+import { MdOutlineClear } from 'react-icons/md';
+import GenericModal from '../../shared/GenericModal';
+import { BiHide } from 'react-icons/bi';
 const ProfileDetail = () => {
   const [showFullNamePopup, setShowFullNamePopup] = useState(false);
   const [showPasswordPopup, setShowPasswordPopup] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-
+  const [fullName, setFullName] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  let apiUrl;
   const handleEditFullName = () => {
     setShowFullNamePopup(true);
   };
@@ -22,7 +22,7 @@ const ProfileDetail = () => {
   };
 
   const handleSaveFullName = () => {
-    const apiUrl = `${apiurl}/users/updateMe`;
+    apiUrl = `${apiurl}/users/updateMe`;
     axios
       .patch(apiUrl, { fullName }, { withCredentials: true })
       .then((response) => {
@@ -30,12 +30,25 @@ const ProfileDetail = () => {
         setShowFullNamePopup(false);
       })
       .catch((error) => {
-        console.error("Error updating Full Name:", error.response.data);
+        console.error('Error updating Full Name:', error.response.data);
       });
   };
   const handleSavePassword = () => {
-    // Add logic to save the new password
-    console.log("Saving Password:", newPassword);
+    apiUrl = `${apiurl}/users/updatePassword`;
+    axios
+      .patch(
+        apiUrl,
+        { currentPassword, newPassword },
+        { withCredentials: true },
+      )
+      .then((response) => {
+        console.log(response.data);
+        setShowPasswordPopup(false);
+      })
+      .catch((error) => {
+        console.error('Error updating Password', error.response.data);
+      });
+    console.log('Saving Password:', newPassword);
   };
   return (
     <div>
@@ -82,18 +95,17 @@ const ProfileDetail = () => {
           onClose={() => {
             setShowPasswordPopup(false);
           }}
-          children={
-            <PasswordUpdate
-              currentPassword={currentPassword}
-              setCurrentPassword={setCurrentPassword}
-              newPassword={newPassword}
-              setNewPassword={setNewPassword}
-              confirmNewPassword={confirmNewPassword}
-              setConfirmNewPassword={setConfirmNewPassword}
-              onSave={handleSavePassword}
-            />
-          }
-        />
+        >
+          <PasswordUpdate
+            currentPassword={currentPassword}
+            setCurrentPassword={setCurrentPassword}
+            newPassword={newPassword}
+            setNewPassword={setNewPassword}
+            confirmNewPassword={confirmNewPassword}
+            setConfirmNewPassword={setConfirmNewPassword}
+            onSave={handleSavePassword}
+          />
+        </GenericModal>
       )}
     </div>
   );
@@ -102,9 +114,9 @@ const FullNameUpdate = ({ fullName, setFullName, onSave }) => {
   const [error, setError] = useState(null);
   const handleSave = () => {
     if (!fullName.trim()) {
-      setError("Full Name cannot be empty");
+      setError('Full Name cannot be empty');
     } else if (!/^[a-zA-Z\s]+$/.test(fullName)) {
-      setError("Please enter a valid Full Name (only letters and spaces)");
+      setError('Please enter a valid Full Name (only letters and spaces)');
     } else {
       setError(null);
       onSave();
@@ -139,15 +151,15 @@ const PasswordUpdate = ({
   const [error, setError] = useState(null);
   const handleSave = () => {
     if (!currentPassword.trim()) {
-      setError("Current Password cannot be empty");
+      setError('Current Password cannot be empty');
     } else if (!newPassword.trim()) {
-      setError("New Password cannot be empty");
+      setError('New Password cannot be empty');
     } else if (newPassword.length < 6) {
-      setError("New Password must be at least 6 characters");
+      setError('New Password must be at least 6 characters');
     } else if (!/^(?=.*[A-Za-z])(?=.*\d).+$/.test(newPassword)) {
-      setError("New Password must contain both letters and numbers");
+      setError('New Password must contain both letters and numbers');
     } else if (newPassword !== confirmNewPassword) {
-      setError("Confirmation does not match the New Password");
+      setError('Confirmation does not match the New Password');
     } else {
       setError(null);
       onSave();

@@ -156,14 +156,12 @@ exports.restrictsto = (role) => {
     next();
   };
 };
-
 exports.updatePassword = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id).select("+password");
-  if (!(await user.validatePassword(req.body.passwordCurrent, user.password))) {
+  if (!(await user.validatePassword(req.body.currentPassword, user.password))) {
     return next(new AppError("Your current password is wrong.", 401));
   }
-  user.password = req.body.password;
-  user.passwordConfirm = req.body.passwordConfirm;
+  user.password = req.body.newPassword;
   await user.save();
   createSendToken(user, 200, res);
 });
