@@ -18,7 +18,7 @@ export default function UserNav() {
   return (
     <div>
       <div>
-  <div className="nav account-nav bg-light-white fixed top-0 left-0 w-full h-0 flex">
+  <div className="nav account-nav fixed top-0 left-0 w-full h-0 flex">
     <div className="nav-right flex items-center gap-0">
       <img className="logo w-16" src="/images/pre-logo.png" alt="logoPhoto" />
       <div className="upload cursor-pointer">upload</div>

@@ -30,12 +30,12 @@ const enumCategories = [
 const BookForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState('');
   const [formData, setFormData] = useState({
-    title: "",
-    category: "",
+    title: '',
+    category: '',
     file: null,
-    downloadable: "no",
+    downloadable: 'no',
   });
 
   const handleChange = (e) => {
@@ -46,7 +46,6 @@ const BookForm = () => {
   };
 
   const handleFileChange = (e) => {
-    console.log("Event:", e);
     setFormData({
       ...formData,
       [e.target.name]: e.target.files[0],
@@ -57,39 +56,31 @@ const BookForm = () => {
     e.preventDefault();
 
     const formDataToSend = new FormData();
-    formDataToSend.append("title", formData.title);
-    formDataToSend.append("category", formData.category);
-    formDataToSend.append("downloadable", formData.downloadable);
-    formDataToSend.append("file", formData.file);
-    console.log(formDataToSend);
+    formDataToSend.append('title', formData.title);
+    formDataToSend.append('category', formData.category);
+    formDataToSend.append('downloadable', formData.downloadable);
+    formDataToSend.append('file', formData.file);
+
     setLoading(true);
     try {
-      const response = await axios.post(
-        `${apiurl}/books/upload`,
-        formDataToSend
-      );
+      const response = await axios.post(`${apiurl}/books/upload`, formDataToSend);
       setLoading(false);
-      console.log("Response:", response.data);
       setMsg(response.data.message);
     } catch (error) {
       setLoading(false);
       setError(true);
       if (error.response.status === 401) {
-        //login first
-        setMsg("un Authorized");
-      } if (error.response.status === 401) {
-        //login first
-        setMsg("un Authorized");
-      } 
+        setMsg('un Authorized');
+      }
       setMsg(error.response);
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
   return (
-    <div className="book-form-container">
-      <form onSubmit={handleSubmit} className="book-form">
-        <div>
+    <div className="book-form-container mx-auto w-3/4 h-screen flex items-center justify-center ">
+      <form onSubmit={handleSubmit} className="w-full max-w-lg bg-gray-100 p-8 bg-light-white rounded shadow-md">
+        <div className="mb-4">
           <input
             placeholder="Title"
             type="text"
@@ -98,15 +89,17 @@ const BookForm = () => {
             value={formData.title}
             onChange={handleChange}
             required
+            className="w-full px-3 py-2 border border-gray-300 rounded"
           />
         </div>
-        <div>
+        <div className="mb-4">
           <select
             id="category"
             name="category"
             value={formData.category}
             onChange={handleChange}
             required
+            className="w-full px-3 py-2 border border-gray-300 rounded"
           >
             <option value="">Select Category</option>
             {enumCategories.map((category) => (
@@ -116,47 +109,48 @@ const BookForm = () => {
             ))}
           </select>
         </div>
-        {/* <div>
-          <label htmlFor="thumbnail">Thumbnail (jpeg, png, jpg):</label>
-          <input
-            type="file"
-            id="thumbnail"
-            name="thumbnail"
-            onChange={handleFileChange}
-          />
-        </div> */}
 
-        <CustomFileInput onChange={handleFileChange} />
-        <div className="check-download">
-          Downloadable:
-          <label>
-            <input
-              type="radio"
-              name="downloadable"
-              value="yes"
-              checked={formData.downloadable === "yes"}
-              onChange={handleChange}
-            />
-            Yes
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="downloadable"
-              value="no"
-              checked={formData.downloadable === "no"}
-              onChange={handleChange}
-            />
-            No
-          </label>
+        <div className="mb-4">
+          <CustomFileInput onChange={handleFileChange} />
         </div>
-        <button className="btn btn-primary-white" type="submit">
+
+        <div className="mb-4">
+          <div className="check-download">
+            Downloadable:
+            <label className="ml-2">
+              <input
+                type="radio"
+                name="downloadable"
+                value="yes"
+                checked={formData.downloadable === 'yes'}
+                onChange={handleChange}
+                className="mr-1"
+              />
+              Yes
+            </label>
+            <label className="ml-2">
+              <input
+                type="radio"
+                name="downloadable"
+                value="no"
+                checked={formData.downloadable === 'no'}
+                onChange={handleChange}
+                className="mr-1"
+              />
+              No
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" className="btn btn-primary-white">
           Submit
         </button>
       </form>
     </div>
   );
 };
+
+
 
 const CustomFileInput = ({ onChange }) => {
   const [selectedFileName, setSelectedFileName] = useState(null);

@@ -3,10 +3,10 @@
 }
 
 .grid-display {
-  font-size: 1.6rem;
+  position: relative;
   margin: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
   grid-gap: 20px;
   max-width: 98vw;
 }
@@ -32,7 +32,7 @@
   text-align: right;
 }
 .book-detail{
-  font-size: 1.3rem;
+  font-size: 13px;
 }
 .grid-item .book-owner {
   position: absolute;
@@ -70,7 +70,7 @@
   border-radius: 5px;
 }
 .book-owner{
-  font-size: 1.2rem;
+  font-size: 12px;
 }
 .list-view {
   margin: 20px;
@@ -109,7 +109,7 @@
 
 .book-detail .book-title {
   text-align: left;
-  font-size: 1.5rem;
+  font-size: 15px;
   font-weight: bold;
   color: #333;
 }
@@ -120,7 +120,7 @@
 }
 
 .category-container{
-  font-size: 1.2rem;
+  font-size: 12px;
 }
 .category-container h2{
   margin: 10px;
@@ -128,7 +128,7 @@
 .top-category {
   margin: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   grid-gap: 50px;
   max-width: 98vw;
 }
@@ -156,7 +156,7 @@
 @media screen and (max-width: 1200px) {
   .grid-display {
     margin: 5px;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     grid-gap: 5px;
   }
 }

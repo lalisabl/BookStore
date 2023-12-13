@@ -49,7 +49,7 @@ a {
   white-space: nowrap;
   vertical-align: middle;
   margin: 3px;
-  font-size: 1.4rem;
+  font-size: 14px;
   align-items: center;
   gap: 1rem;
   background: var(--color-light);
