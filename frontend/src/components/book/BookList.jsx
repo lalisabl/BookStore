@@ -25,7 +25,7 @@ export function BookList({ books }) {
 
               <div className="p-4 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold mb-2">
+                  <h3 className="text-sm font-semibold mb-1">
                     {window.innerWidth < 700 && book.title.length > 35
                       ? `${book.title.substring(0, 35)}...`
                       : window.innerWidth < 1000 && book.title.length > 75
@@ -34,26 +34,26 @@ export function BookList({ books }) {
                       ? `${book.title.substring(0, 95)}...`
                       : book.title}
                   </h3>
-                  <div className="flex items-center mb-2">
-                    <FontAwesomeIcon className="text-yellow-500 mr-2" icon={faStar} />
+                  <div className="flex items-center mb-1">
+                    <FontAwesomeIcon className="text-yellow-500 mr-1" icon={faStar} />
                     {book.rate}
                   </div>
                   <div className="flex items-center">
-                    <FontAwesomeIcon className="text-blue-500 mr-2" icon={faEye} />
+                    <FontAwesomeIcon className="text-blue-500 mr-1" icon={faEye} />
                     {formatViews(book.numberOfViews)}
                   </div>
                 </div>
 
-                <div className="flex items-center mt-4 book-owner">
+                <div className="flex items-center book-owner">
                   <img
                     src={book.uploader.image}
                     alt={book.uploader.username}
-                    className="w-8 rounded-full mr-2"
+                    className="w-8 rounded-full mr-1"
                   />
                   <div>
                     <span className="font-semibold">{book.uploader.username}</span>
-                    <button className="btn-primary ml-2">
-                      <FontAwesomeIcon className="mr-2" icon={faPlus} /> Follow
+                    <button className="btn-primary ml-1">
+                      <FontAwesomeIcon icon={faPlus} /> Follow
                     </button>
                   </div>
                 </div>

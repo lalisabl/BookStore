@@ -40,22 +40,23 @@ function Pages() {
       ) : (
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/account/profile"
-              element={<Account path={<ProfileDetail />} />}
-            />
-            <Route
-              path="/read-history"
-              element={<Account path={<ReadingHistory />} />}
-            />
-            <Route
-              path="/my-contributions"
-              element={<Account path={<MyContributions />} />}
-            />
+
 
             {login ? (
               <>
-                {" "}
+                
+                <Route
+                  path="/account/profile"
+                  element={<Account path={<ProfileDetail />} />}
+                />
+                <Route
+                  path="/read-history"
+                  element={<Account path={<ReadingHistory />} />}
+                />
+                <Route
+                  path="/my-contributions"
+                  element={<Account path={<MyContributions />} />}
+                />
                 <Route
                   path="/"
                   element={
