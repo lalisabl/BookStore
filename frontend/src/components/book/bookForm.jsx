@@ -3,6 +3,7 @@ import axios from "axios";
 import { apiurl } from "../../assets/constData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faFile } from "@fortawesome/free-solid-svg-icons";
+import { GenericLittleLoadingModal } from "../../shared/GenericModal";
 
 const enumCategories = [
   "Fiction",
@@ -30,12 +31,12 @@ const enumCategories = [
 const BookForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState("");
   const [formData, setFormData] = useState({
-    title: '',
-    category: '',
+    title: "",
+    category: "",
     file: null,
-    downloadable: 'no',
+    downloadable: "no",
   });
 
   const handleChange = (e) => {
@@ -56,30 +57,38 @@ const BookForm = () => {
     e.preventDefault();
 
     const formDataToSend = new FormData();
-    formDataToSend.append('title', formData.title);
-    formDataToSend.append('category', formData.category);
-    formDataToSend.append('downloadable', formData.downloadable);
-    formDataToSend.append('file', formData.file);
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("category", formData.category);
+    formDataToSend.append("downloadable", formData.downloadable);
+    formDataToSend.append("file", formData.file);
 
     setLoading(true);
     try {
-      const response = await axios.post(`${apiurl}/books/upload`, formDataToSend);
+      const response = await axios.post(
+        `${apiurl}/books/upload`,
+        formDataToSend,
+        { withCredentials: true }
+      );
       setLoading(false);
       setMsg(response.data.message);
     } catch (error) {
       setLoading(false);
       setError(true);
       if (error.response.status === 401) {
-        setMsg('un Authorized');
+        setMsg("un Authorized");
       }
       setMsg(error.response);
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   return (
     <div className="book-form-container mx-auto w-3/4 h-screen flex items-center justify-center ">
-      <form onSubmit={handleSubmit} className="w-full max-w-lg bg-gray-100 p-8 bg-light-white rounded shadow-md">
+      {loading && <GenericLittleLoadingModal isOpen={loading} />}
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-lg bg-gray-100 p-8 bg-light-white rounded shadow-md"
+      >
         <div className="mb-4">
           <input
             placeholder="Title"
@@ -122,7 +131,7 @@ const BookForm = () => {
                 type="radio"
                 name="downloadable"
                 value="yes"
-                checked={formData.downloadable === 'yes'}
+                checked={formData.downloadable === "yes"}
                 onChange={handleChange}
                 className="mr-1"
               />
@@ -133,7 +142,7 @@ const BookForm = () => {
                 type="radio"
                 name="downloadable"
                 value="no"
-                checked={formData.downloadable === 'no'}
+                checked={formData.downloadable === "no"}
                 onChange={handleChange}
                 className="mr-1"
               />
@@ -149,8 +158,6 @@ const BookForm = () => {
     </div>
   );
 };
-
-
 
 const CustomFileInput = ({ onChange }) => {
   const [selectedFileName, setSelectedFileName] = useState(null);

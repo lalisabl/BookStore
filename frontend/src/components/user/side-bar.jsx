@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/alt-text */
+
 import React, { useEffect, useState } from "react";
 import { FaHome, FaUser } from "react-icons/fa";
 import { FcDownload, FcReading } from "react-icons/fc";

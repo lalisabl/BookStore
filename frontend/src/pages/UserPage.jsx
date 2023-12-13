@@ -11,6 +11,5 @@ export function UserPage({ SetLogin, path }) {
         {path}
       </div>
     </div>
-
   );
 }
