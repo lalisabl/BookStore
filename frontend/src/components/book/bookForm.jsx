@@ -70,6 +70,7 @@ const BookForm = () => {
         { withCredentials: true }
       );
       setLoading(false);
+      setError(false);
       setMsg(response.data.message);
     } catch (error) {
       setLoading(false);
@@ -77,18 +78,32 @@ const BookForm = () => {
       if (error.response.status === 401) {
         setMsg("un Authorized");
       }
-      setMsg(error.response);
+      console.log(error);
+      setMsg(error);
       console.error("Error:", error);
     }
   };
 
   return (
-    <div className="book-form-container mx-auto w-3/4 h-screen flex items-center justify-center ">
+    <div className="book-form-container mx-auto flex items-center justify-center ">
       {loading && <GenericLittleLoadingModal isOpen={loading} />}
+
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-lg bg-gray-100 p-8 bg-light-white rounded shadow-md"
       >
+        {!loading && !error && msg !== "" ? (
+          <div className="text-green-600 bg-green-100 p-3 rounded-md mb-4">
+            {msg} You will be redirected to the home page in 2 seconds.
+          </div>
+        ) : !loading && error ? (
+          <div className="text-red-600 bg-red-100 p-3 rounded-md mb-4">
+            some thing wrong happen please try again
+          </div>
+        ) : (
+          <></>
+        )}
+
         <div className="mb-4">
           <input
             placeholder="Title"
