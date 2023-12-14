@@ -15,8 +15,9 @@ import UserHome from "./components/user/user-home";
 import axios from "axios";
 import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
+import BookDetailPage from "./pages/BookDetailPage";
 function Pages() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +27,7 @@ function Pages() {
         setLogin(true);
       } catch (error) {
         setLoading(true);
-        setLogin(false);
+        // setLogin(false);
         console.log(error.response ? error.response.data : error.message);
       }
     };
@@ -80,6 +81,7 @@ function Pages() {
               <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
             )}
             <Route path="search/" element={<Search />} />
+            <Route path="/books/:id" element={<BookDetailPage />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
