@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { FaHome, FaUser } from "react-icons/fa";
 import { FcDownload, FcReading } from "react-icons/fc";
@@ -14,43 +13,42 @@ import "../../assets/style/userHome.css";
 export function AccountSideBar() {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const [activeItem, setActiveItem] = useState(null);
   const isActive = (path) => {
     return location.pathname.includes(path);
   };
+  const handleClick = (naviTo) => {
+    navigate(`/${naviTo}`);
+  };
   return (
     <div>
-      <div className="account-sidebar">
-        <h3 className="item sidebar-header">My Account</h3>
-        <div
-          className={`item profile ${isActive("/account/profile") ? "active" : ""
-            }`}
-          onClick={() => {
-            navigate("/account/profile");
-          }}
-        >
-          <FaUser />
-          Profile
+      <div className="account-sidebar flex flex-col gap-2">
+        <h3 className=" sidebar-header">My Account</h3>
+        <div className={`${isActive("account/profile") ? "active" : ""}`}>
+          <SidebarComp HandleClick={() => handleClick("account/profile")}>
+            <>
+              <FaUser />
+              Profile
+            </>
+          </SidebarComp>
         </div>
-        <div
-          className={`item reading-history ${isActive("read-history") ? "active" : ""
-            }`}
-          onClick={() => {
-            navigate("/read-history");
-          }}
-        >
-          <FcReading />
-          Reading History
+
+        <div className={`${isActive("reading-history") ? "active" : ""}`}>
+          <SidebarComp HandleClick={() => handleClick("reading-history")}>
+            <>
+              <FcReading />
+              Reading History
+            </>
+          </SidebarComp>
         </div>
-        <div
-          className={`item books ${isActive("my-contributions") ? "active" : ""
-            }`}
-          onClick={() => {
-            navigate("/my-contributions");
-          }}
-        >
-          <SiBookstack />
-          My Contributions
+
+        <div className={`${isActive("my-contributions") ? "active" : ""}`}>
+          <SidebarComp HandleClick={() => handleClick("my-contributions")}>
+            <>
+              <SiBookstack />
+              My Contributions
+            </>
+          </SidebarComp>
         </div>
       </div>
     </div>
@@ -172,36 +170,52 @@ export function UserSideBar() {
     <div className="left-user-side-bar mt-14 text-center">
       <ul className="flex flex-col">
         <li
-          className={`side-bar-item ${location.pathname === "/" ? "active" : ""}`}
+          className={`side-bar-item ${
+            location.pathname === "/" ? "active" : ""
+          }`}
           onClick={() => navigate("/ ")}
         >
-          <BarItem name={'Home'} icon={<FaHome className="icon text-2xl" />}/>
+          <BarItem name={"Home"} icon={<FaHome className="icon text-2xl" />} />
         </li>
         <li
-          className={`side-bar-item ${isActive("/Upload-book") ? "active" : ""}`}
+          className={`side-bar-item ${
+            isActive("/Upload-book") ? "active" : ""
+          }`}
           onClick={() => navigate("/Upload-book")}
         >
-          
-          <BarItem name={'Create'} icon={<TiDocumentAdd className="icon text-2xl" />}/>
+          <BarItem
+            name={"Create"}
+            icon={<TiDocumentAdd className="icon text-2xl" />}
+          />
         </li>
         <li
           className={`side-bar-item ${isActive("/Account") ? "active" : ""}`}
           onClick={() => navigate("/Account/profile")}
         >
-       
-          <BarItem name={'Account'} icon={<FaUserGear className="icon text-2xl" />}/>
+          <BarItem
+            name={"Account"}
+            icon={<FaUserGear className="icon text-2xl" />}
+          />
         </li>
         <li
           className={`side-bar-item ${isActive("/My-books") ? "active" : ""}`}
           onClick={() => navigate("/My-books")}
-        > 
-          <BarItem name={'My Books'} icon={<SiBookstack className="icon text-2xl" />}/>
+        >
+          <BarItem
+            name={"My Books"}
+            icon={<SiBookstack className="icon text-2xl" />}
+          />
         </li>
         <li
-          className={`side-bar-item ${isActive("/My-favorites") ? "active" : ""}`}
+          className={`side-bar-item ${
+            isActive("/My-favorites") ? "active" : ""
+          }`}
           onClick={() => navigate("/My-favorites")}
         >
-          <BarItem name={'My Favors'} icon={<GoStarFill className="icon text-2xl" />} />
+          <BarItem
+            name={"My Favors"}
+            icon={<GoStarFill className="icon text-2xl" />}
+          />
         </li>
       </ul>
     </div>
@@ -210,8 +224,19 @@ export function UserSideBar() {
 
 function BarItem({ name, icon }) {
   return (
-    <div className="flex flex-col items-center cursor-pointer">
+    <div className="flex cursor-pointer flex-col items-center">
       {icon}
       <div className="text-sm">{name}</div>
-    </div>)
+    </div>
+  );
 }
+const SidebarComp = ({ children, HandleClick }) => {
+  return (
+    <div
+      className={`item text-md flex items-center gap-3 p-2`}
+      onClick={HandleClick}
+    >
+      {children}
+    </div>
+  );
+};
