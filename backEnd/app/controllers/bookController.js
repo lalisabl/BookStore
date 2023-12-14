@@ -28,7 +28,30 @@ exports.postBook = catchAsync(async (req, res, next) => {
     if (!req.file) {
       return next(new AppError("bad request: no file selected", 404));
     }
+    const fileExtension = req.file.originalname.split(".").pop().toLowerCase();
+
+    // Define allowed document extensions
+    const allowedDocumentExtensions = [
+      "pdf",
+      "doc",
+      "docx",
+      "txt",
+      "xls",
+      "rtf",
+      "odt",
+      "csv",
+      "ods",
+      "xlsx",
+      "ppt",
+      "pptx",
+    ];
+
     const filename = req.file.filename;
+    if (!allowedDocumentExtensions.includes(fileExtension)) {
+      const filePath = `uploads/${filename}`;
+      await fs.unlink(filePath);
+      return next(new AppError("Unsupported file type", 400));
+    }
 
     try {
       await Book.create({ title, user, filename, category });

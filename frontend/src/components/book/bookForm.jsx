@@ -27,7 +27,20 @@ const enumCategories = [
   "Sports",
   "Philosophy",
 ];
-
+const allowedDocumentExtensions = [
+  "pdf",
+  "doc",
+  "docx",
+  "txt",
+  "xls",
+  "rtf",
+  "odt",
+  "csv",
+  "ods",
+  "xlsx",
+  "ppt",
+  "pptx",
+];
 const BookForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -47,10 +60,38 @@ const BookForm = () => {
   };
 
   const handleFileChange = (e) => {
+    const file = event.target.files[0];
     setFormData({
       ...formData,
-      [e.target.name]: e.target.files[0],
+      [e.target.name]: file,
     });
+    // if (file) {
+    //   const fileExtension = file.name.split(".").pop().toLowerCase();
+
+    //   // Check if the file extension is in the allowed document extensions
+    //   if (allowedDocumentExtensions.includes(fileExtension)) {
+    //     setFormData({
+    //       ...formData,
+    //       [e.target.name]: file,
+    //     });
+    //   } else {
+    //     setError(true);
+    //     setMsg(`unsupported file type \n only the following allowed   "pdf",
+    //     "doc",
+    //     "docx",
+    //     "txt",
+    //     "xls",
+    //     "rtf",
+    //     "odt",
+    //     "csv",
+    //     "ods",
+    //     "xlsx",
+    //     "ppt",
+    //     "pptx",
+    //   `);
+    //     console.log("Unsupported file type");
+    //   }
+    // }
   };
 
   const handleSubmit = async (e) => {
@@ -76,10 +117,10 @@ const BookForm = () => {
       setLoading(false);
       setError(true);
       if (error.response.status === 401) {
-        setMsg("un Authorized");
+        setMsg("unAuthorized");
       }
-      console.log(error);
-      setMsg(error);
+      console.log(error.response.data.message);
+      setMsg(error.response.data.message);
       console.error("Error:", error);
     }
   };
@@ -98,7 +139,7 @@ const BookForm = () => {
           </div>
         ) : !loading && error ? (
           <div className="text-red-600 bg-red-100 p-3 rounded-md mb-4">
-            some thing wrong happen please try again
+            {msg}
           </div>
         ) : (
           <></>
@@ -166,7 +207,11 @@ const BookForm = () => {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary-white">
+        <button
+          disabled={error}
+          type="submit"
+          className="btn btn-primary-white"
+        >
           Submit
         </button>
       </form>
@@ -224,6 +269,7 @@ const CustomFileInput = ({ onChange }) => {
         type="file"
         id="file"
         name="file"
+        // accept=".pdf, .doc, .docx, .txt, .xls, .rtf, .odt, .csv, .ods, .xlsx, .ppt, .pptx"
         onChange={handleFileChange}
         style={{ display: "none" }}
       />
