@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { FaHome, FaUser } from 'react-icons/fa';
-import { FcDownload, FcReading } from 'react-icons/fc';
-import { SiBookstack } from 'react-icons/si';
-import { FaUserGear } from 'react-icons/fa6';
-import { AnimatePresence, motion } from 'framer-motion';
-import { MdClose, MdLogout } from 'react-icons/md';
-import { GoStarFill } from 'react-icons/go';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { TiDocumentAdd } from 'react-icons/ti';
-import '../../assets/style/userHome.css';
+import React, { useEffect, useState } from "react";
+import { FaHome, FaUser } from "react-icons/fa";
+import { FcDownload, FcReading } from "react-icons/fc";
+import { SiBookstack } from "react-icons/si";
+import { FaUserGear } from "react-icons/fa6";
+import { AnimatePresence, motion } from "framer-motion";
+import { MdClose, MdLogout } from "react-icons/md";
+import { GoStarFill } from "react-icons/go";
+import { useLocation, useNavigate } from "react-router-dom";
+import { TiDocumentAdd } from "react-icons/ti";
+import "../../assets/style/userHome.css";
 
 export function AccountSideBar() {
   const navigate = useNavigate();
@@ -24,8 +24,8 @@ export function AccountSideBar() {
     <div>
       <div className="account-sidebar flex flex-col gap-2">
         <h3 className=" sidebar-header">My Account</h3>
-        <div className={`${isActive('account/profile') ? 'active' : ''}`}>
-          <SidebarComp HandleClick={() => handleClick('account/profile')}>
+        <div className={`${isActive("account/profile") ? "active" : ""}`}>
+          <SidebarComp HandleClick={() => handleClick("account/profile")}>
             <>
               <FaUser />
               Profile
@@ -33,8 +33,8 @@ export function AccountSideBar() {
           </SidebarComp>
         </div>
 
-        <div className={`${isActive('reading-history') ? 'active' : ''}`}>
-          <SidebarComp HandleClick={() => handleClick('reading-history')}>
+        <div className={`${isActive("reading-history") ? "active" : ""}`}>
+          <SidebarComp HandleClick={() => handleClick("reading-history")}>
             <>
               <FcReading />
               Reading History
@@ -42,8 +42,8 @@ export function AccountSideBar() {
           </SidebarComp>
         </div>
 
-        <div className={`${isActive('my-contributions') ? 'active' : ''}`}>
-          <SidebarComp HandleClick={() => handleClick('my-contributions')}>
+        <div className={`${isActive("my-contributions") ? "active" : ""}`}>
+          <SidebarComp HandleClick={() => handleClick("my-contributions")}>
             <>
               <SiBookstack />
               My Contributions
@@ -69,10 +69,10 @@ export function RightSideBar({ closeBar, show }) {
             }}
           >
             <motion.div
-              initial={{ x: '100%' }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               onClick={(e) => e.stopPropagation()}
               className={`right-sideBar`}
             >
@@ -111,7 +111,7 @@ export function ProfileHeader({ close }) {
       <div className="profile-header">
         <img
           onClick={() => {
-            navigate('/account/profile');
+            navigate("/account/profile");
             close();
           }}
           src="/images/placeholder.jpg"
@@ -132,7 +132,7 @@ export function RightSideContent({ close }) {
       <ul>
         <li
           onClick={() => {
-            navigate('/account/profile');
+            navigate("/account/profile");
             close();
           }}
         >
@@ -171,49 +171,49 @@ export function UserSideBar() {
       <ul className="flex flex-col">
         <li
           className={`side-bar-item ${
-            location.pathname === '/' ? 'active' : ''
+            location.pathname === "/" ? "active" : ""
           }`}
-          onClick={() => navigate('/ ')}
+          onClick={() => navigate("/ ")}
         >
-          <BarItem name={'Home'} icon={<FaHome className="icon text-2xl" />} />
+          <BarItem name={"Home"} icon={<FaHome className="icon text-2xl" />} />
         </li>
         <li
           className={`side-bar-item ${
-            isActive('/Upload-book') ? 'active' : ''
+            isActive("/Upload-book") ? "active" : ""
           }`}
-          onClick={() => navigate('/Upload-book')}
+          onClick={() => navigate("/Upload-book")}
         >
           <BarItem
-            name={'Create'}
+            name={"Create"}
             icon={<TiDocumentAdd className="icon text-2xl" />}
           />
         </li>
         <li
-          className={`side-bar-item ${isActive('/Account') ? 'active' : ''}`}
-          onClick={() => navigate('/Account/profile')}
+          className={`side-bar-item ${isActive("/Account") ? "active" : ""}`}
+          onClick={() => navigate("/Account/profile")}
         >
           <BarItem
-            name={'Account'}
+            name={"Account"}
             icon={<FaUserGear className="icon text-2xl" />}
           />
         </li>
         <li
-          className={`side-bar-item ${isActive('/My-books') ? 'active' : ''}`}
-          onClick={() => navigate('/My-books')}
+          className={`side-bar-item ${isActive("/My-books") ? "active" : ""}`}
+          onClick={() => navigate("/My-books")}
         >
           <BarItem
-            name={'My Books'}
+            name={"My Books"}
             icon={<SiBookstack className="icon text-2xl" />}
           />
         </li>
         <li
           className={`side-bar-item ${
-            isActive('/My-favorites') ? 'active' : ''
+            isActive("/My-favorites") ? "active" : ""
           }`}
-          onClick={() => navigate('/My-favorites')}
+          onClick={() => navigate("/My-favorites")}
         >
           <BarItem
-            name={'My Favors'}
+            name={"My Favors"}
             icon={<GoStarFill className="icon text-2xl" />}
           />
         </li>
