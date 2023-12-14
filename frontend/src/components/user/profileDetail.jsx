@@ -52,28 +52,28 @@ const ProfileDetail = () => {
   };
   return (
     <div>
-      <div className="main-container">
-        <h3>Profile Detail</h3>
-        <div className="user-details">
-          <div className="detail-item fname">
+      <div className="main-container ml-72 mt-20 p-8 text-lg">
+        <h3 className=" mb-8 pl-8 pr-8">Profile Detail</h3>
+        <div className="user-details flex flex-col gap-4">
+          <div className="fname flex justify-between">
             <p>Full name</p>
             <button onClick={handleEditFullName} className="btn">
               Edit
             </button>
           </div>
-          <div className="detail-item username">
+          <div className=" username flex gap-20">
             <p>User name</p>
             <span>helloreact2933</span>
           </div>
-          <div className="detail-item password">
+          <div className=" password flex justify-between">
             <p>Password</p>
             <button onClick={handleEditPassword} className="btn">
               Edit
             </button>
           </div>
-          <div className="detail-item e-mail">
+          <div className="e-mail flex  gap-20">
             <p>Email</p>
-            <span>hello@gmail.com</span>
+            <span className="ml-9">hello@gmail.com</span>
           </div>
         </div>
       </div>
