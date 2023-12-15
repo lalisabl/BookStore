@@ -48,6 +48,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     data: { updatedUser },
   });
 });
+
 // get all users
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
@@ -59,6 +60,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     },
   });
 });
+
 exports.getMe = catchAsync(async (req, res, next) => {
   req.params.userId = req.user.id;
   next();
