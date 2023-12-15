@@ -15,7 +15,7 @@ import UserHome from "./components/user/user-home";
 import axios from "axios";
 import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
-import BookDetailPage from "./pages/BookDetailPage";
+import BookDetail from "./components/book/BookDetail";
 function Pages() {
   const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -76,12 +76,15 @@ function Pages() {
                   path="/My-favorites"
                   element={<UserPage path={<BookForm />} />}
                 />
+                <Route
+                  path="/books/:id"
+                  element={<UserPage path={<BookDetail />} />}
+                />
               </>
             ) : (
               <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
             )}
             <Route path="search/" element={<Search />} />
-            <Route path="/books/:id" element={<BookDetailPage />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

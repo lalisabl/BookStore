@@ -30,9 +30,9 @@ export function BookList({ books }) {
         books.map((book) => (
           <div
             onClick={() => {
-              navigate("/books/" + book.id);
+              navigate("/books/" + book._id);
             }}
-            key={book.id}
+            key={book._id}
             className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md"
           >
             <div className="flex w-full">
