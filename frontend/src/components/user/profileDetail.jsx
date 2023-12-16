@@ -1,22 +1,37 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { apiurl } from '../../assets/constData';
-import { IoPencil } from 'react-icons/io5';
-import { MdOutlineClear } from 'react-icons/md';
-import GenericModal from '../../shared/GenericModal';
-import { BiHide } from 'react-icons/bi';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { apiurl } from "../../assets/constData";
+import { IoPencil } from "react-icons/io5";
+import { MdOutlineClear } from "react-icons/md";
+import GenericModal from "../../shared/GenericModal";
+import { BiHide } from "react-icons/bi";
 const ProfileDetail = () => {
+  const [data, setData] = useState([]);
   const [showFullNamePopup, setShowFullNamePopup] = useState(false);
   const [showPasswordPopup, setShowPasswordPopup] = useState(false);
-  const [fullName, setFullName] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   let apiUrl;
   const handleEditFullName = () => {
     setShowFullNamePopup(true);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${apiurl}/users/me`, {
+          withCredentials: true,
+        });
+        setData(response.data);
+        console.log(response.data.user);
+      } catch (err) {
+        console.log("Error fetching data", err);
+      }
+    };
 
+    fetchData();
+  }, []);
   const handleEditPassword = () => {
     setShowPasswordPopup(true);
   };
@@ -30,7 +45,7 @@ const ProfileDetail = () => {
         setShowFullNamePopup(false);
       })
       .catch((error) => {
-        console.error('Error updating Full Name:', error.response.data);
+        console.error("Error updating Full Name:", error.response.data);
       });
   };
   const handleSavePassword = () => {
@@ -39,41 +54,45 @@ const ProfileDetail = () => {
       .patch(
         apiUrl,
         { currentPassword, newPassword },
-        { withCredentials: true },
+        { withCredentials: true }
       )
       .then((response) => {
         console.log(response.data);
         setShowPasswordPopup(false);
       })
       .catch((error) => {
-        console.error('Error updating Password', error.response.data);
+        console.error("Error updating Password", error.response.data);
       });
-    console.log('Saving Password:', newPassword);
+    console.log("Saving Password:", newPassword);
   };
   return (
     <div>
       <div className="main-container ml-72 mt-20 p-8 text-lg">
         <h3 className=" mb-8 pl-8 pr-8">Profile Detail</h3>
-        <div className="user-details flex flex-col gap-4">
-          <div className="fname flex justify-between">
+        <div className="user-details flex flex-col gap-12 ">
+          <div className="fname flex items-center justify-between">
             <p>Full name</p>
+            {data.user.fullName !== "" ? <div>{data.user.fullName}</div> : ""}
             <button onClick={handleEditFullName} className="btn">
               Edit
             </button>
           </div>
-          <div className=" username flex gap-20">
+          <div className=" username flex items-center justify-between">
             <p>User name</p>
-            <span>helloreact2933</span>
+            <div>{data.user.username}</div>
+            <span className="center"></span>
           </div>
-          <div className=" password flex justify-between">
-            <p>Password</p>
+          <div className=" password flex items-center justify-between">
+            <p>********</p>
+            <div></div>
             <button onClick={handleEditPassword} className="btn">
               Edit
             </button>
           </div>
-          <div className="e-mail flex  gap-20">
+          <div className="e-mail flex items-center justify-between">
             <p>Email</p>
-            <span className="ml-9">hello@gmail.com</span>
+            <div>{data.user.email}</div>
+            <span className="center"></span>
           </div>
         </div>
       </div>
@@ -114,9 +133,9 @@ const FullNameUpdate = ({ fullName, setFullName, onSave }) => {
   const [error, setError] = useState(null);
   const handleSave = () => {
     if (!fullName.trim()) {
-      setError('Full Name cannot be empty');
+      setError("Full Name cannot be empty");
     } else if (!/^[a-zA-Z\s]+$/.test(fullName)) {
-      setError('Please enter a valid Full Name (only letters and spaces)');
+      setError("Please enter a valid Full Name (only letters and spaces)");
     } else {
       setError(null);
       onSave();
@@ -151,15 +170,15 @@ const PasswordUpdate = ({
   const [error, setError] = useState(null);
   const handleSave = () => {
     if (!currentPassword.trim()) {
-      setError('Current Password cannot be empty');
+      setError("Current Password cannot be empty");
     } else if (!newPassword.trim()) {
-      setError('New Password cannot be empty');
+      setError("New Password cannot be empty");
     } else if (newPassword.length < 6) {
-      setError('New Password must be at least 6 characters');
+      setError("New Password must be at least 6 characters");
     } else if (!/^(?=.*[A-Za-z])(?=.*\d).+$/.test(newPassword)) {
-      setError('New Password must contain both letters and numbers');
+      setError("New Password must contain both letters and numbers");
     } else if (newPassword !== confirmNewPassword) {
-      setError('Confirmation does not match the New Password');
+      setError("Confirmation does not match the New Password");
     } else {
       setError(null);
       onSave();

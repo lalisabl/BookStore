@@ -19,8 +19,16 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: Inter, SF Pro Text, Roboto, Helvetica Neue, Helvetica, Tahoma,
-    Arial, PingFang SC, Microsoft YaHei !important;
+  font-family:
+    Inter,
+    SF Pro Text,
+    Roboto,
+    Helvetica Neue,
+    Helvetica,
+    Tahoma,
+    Arial,
+    PingFang SC,
+    Microsoft YaHei !important;
   max-width: 99vw;
   background-color: white;
 }
@@ -32,7 +40,7 @@ body {
   --secondary-color: #2ecc71;
   --accent-color: #e74c3c;
   --bg-light-white: #ececec;
-  --color-danger:rgb(156, 15, 15); 
+  --color-danger: rgb(156, 15, 15);
 }
 a {
   color: var(--color-white);
@@ -59,8 +67,11 @@ a {
   border-radius: var(--border-radius-2);
   border-radius: 2rem;
   cursor: pointer;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
 }
 .error-message {
   color: red;
@@ -91,7 +102,10 @@ a {
   background-size: 200% 100%;
   background-position: 0 0;
   border: 1px solid rgba(0, 0, 0);
-  transition: background-position 0.3s, border-color 0.3s, color 0.3s;
+  transition:
+    background-position 0.3s,
+    border-color 0.3s,
+    color 0.3s;
   position: relative; /* Ensure the button content is above the gradient */
 }
 

@@ -34,7 +34,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   const { fullName, username, bio, notifications, favorites, reading_history } =
     req.body;
-  const picture = req.file.filename;
+  let picture;
+  if (req.file) picture = req.file.filename;
   if (fullName) user.fullName = fullName;
   if (username) user.username = username;
   if (bio) user.profile.bio = bio;
@@ -54,9 +55,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     totalUser: users.length,
-    data: {
-      users: users,
-    },
+    users: users,
   });
 });
 exports.getMe = catchAsync(async (req, res, next) => {
@@ -73,9 +72,7 @@ exports.getOneUser = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    data: {
-      data: user,
-    },
+    user: user,
   });
 });
 // deleting a user

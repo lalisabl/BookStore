@@ -5,7 +5,6 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
 
-
 // authController.CreateGoogleStrategy();
 router.use(passport.initialize());
 router.post("/register", authController.createNewAccount);
