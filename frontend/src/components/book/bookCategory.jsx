@@ -59,7 +59,11 @@ export function BookCategory() {
           New Books
         </div>
       </div>
+<<<<<<< HEAD
+      {/* <BookCategoryDisplay books={BooksSample.books} /> */}
+=======
       <BookCategoryDisplay books={books} />
+>>>>>>> refs/remotes/origin/master
     </div>
   );
 }

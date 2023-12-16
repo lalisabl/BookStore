@@ -6,13 +6,14 @@ import { MdOutlineClear } from "react-icons/md";
 import GenericModal from "../../shared/GenericModal";
 import { BiHide } from "react-icons/bi";
 const ProfileDetail = () => {
-  const [data, setData] = useState([]);
+  const [user, setUser] = useState([]);
   const [showFullNamePopup, setShowFullNamePopup] = useState(false);
   const [showPasswordPopup, setShowPasswordPopup] = useState(false);
   const [fullName, setFullName] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [loading, setLoading] = useState(true);
   let apiUrl;
   const handleEditFullName = () => {
     setShowFullNamePopup(true);
@@ -23,10 +24,12 @@ const ProfileDetail = () => {
         const response = await axios.get(`${apiurl}/users/me`, {
           withCredentials: true,
         });
-        setData(response.data);
-        console.log(response.data.user);
+        setUser(response.data.data.user);
+        setLoading(false);
+        console.log(response.data.data.user);
       } catch (err) {
         console.log("Error fetching data", err);
+        setLoading(false);
       }
     };
 
@@ -36,7 +39,7 @@ const ProfileDetail = () => {
     setShowPasswordPopup(true);
   };
 
-  const handleSaveFullName = () => {
+  const handleProfileChange = () => {
     apiUrl = `${apiurl}/users/updateMe`;
     axios
       .patch(apiUrl, { fullName }, { withCredentials: true })
@@ -57,7 +60,7 @@ const ProfileDetail = () => {
         { withCredentials: true }
       )
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.data.user);
         setShowPasswordPopup(false);
       })
       .catch((error) => {
@@ -67,34 +70,45 @@ const ProfileDetail = () => {
   };
   return (
     <div>
-      <div className="main-container ml-72 mt-20 p-8 text-lg">
-        <h3 className=" mb-8 pl-8 pr-8">Profile Detail</h3>
-        <div className="user-details flex flex-col gap-12 ">
-          <div className="fname flex items-center justify-between">
-            <p>Full name</p>
-            {data.user.fullName !== "" ? <div>{data.user.fullName}</div> : ""}
-            <button onClick={handleEditFullName} className="btn">
-              Edit
-            </button>
+      <div className=" ml-56 mt-6 p-8 text-lg">
+        {loading ? (
+          <span>Loading...</span>
+        ) : (
+          <div className="user-detail">
+            <ProfilePhotoUploader user={user} />
+
+            <div className="user-details m-5 flex flex-col gap-12 p-8 ">
+              <div className="fname flex items-center justify-between">
+                <h4 className=" text-lg font-bold">Full name</h4>
+                {fullName !== "" ? (
+                  <p className="text-gray-600">{fullName}</p>
+                ) : (
+                  <p className="text-gray-600">{user.fullName}</p>
+                )}
+                <button onClick={handleEditFullName} className="btn">
+                  Edit
+                </button>
+              </div>
+              <div className=" username flex items-center justify-between">
+                <h4 className=" text-lg font-bold">User name</h4>
+                <p className="text-gray-600">{user.username}</p>
+                <span className="center"></span>
+              </div>
+              <div className=" password flex items-center justify-between">
+                <p>********</p>
+                <div></div>
+                <button onClick={handleEditPassword} className="btn">
+                  Edit
+                </button>
+              </div>
+              <div className="e-mail flex items-center justify-between">
+                <h4 className=" text-lg font-bold">Email</h4>
+                <div>{user?.email}</div>
+                <span className="center"></span>
+              </div>
+            </div>
           </div>
-          <div className=" username flex items-center justify-between">
-            <p>User name</p>
-            <div>{data.user.username}</div>
-            <span className="center"></span>
-          </div>
-          <div className=" password flex items-center justify-between">
-            <p>********</p>
-            <div></div>
-            <button onClick={handleEditPassword} className="btn">
-              Edit
-            </button>
-          </div>
-          <div className="e-mail flex items-center justify-between">
-            <p>Email</p>
-            <div>{data.user.email}</div>
-            <span className="center"></span>
-          </div>
-        </div>
+        )}
       </div>
       {showFullNamePopup && (
         <GenericModal
@@ -104,7 +118,7 @@ const ProfileDetail = () => {
           <FullNameUpdate
             fullName={fullName}
             setFullName={setFullName}
-            onSave={handleSaveFullName}
+            onSave={handleProfileChange}
           />
         </GenericModal>
       )}
@@ -230,5 +244,119 @@ const PasswordUpdate = ({
     </div>
   );
 };
+
+import Modal from "react-modal";
+
+// Set the root element for the modal
+Modal.setAppElement("#root");
+function ProfilePhotoUploader({ user }) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+  const uploadProfilePicture = async (file) => {
+    const apiUrl = `${apiurl}/users/updateMe`;
+    try {
+      const formData = new FormData();
+      formData.append("picture", file);
+      const response = await axios.patch(apiUrl, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Profile picture uploaded:", response.data);
+    } catch (error) {
+      console.error("Error uploading profile picture:", error.response.data);
+      // Handle error or display an error message to the user
+    }
+  };
+  const handlePictureChange = () => {
+    uploadProfilePicture(selectedFile);
+    closeModal();
+  };
+
+  return (
+    <div className="m-5 mb-20">
+      <div className=" h-20 bg-gradient-to-r from-fuchsia-500 to-violet-500 relative">
+        <button
+          onClick={openModal}
+          className="absolute left-8"
+          style={{ bottom: "-50%" }}
+        >
+          <img
+            src={`http://localhost:5000/images/users/${user.profile.picture}`}
+            alt="user-image"
+            className="rounded-full w-16 h-16 object-cover"
+          />
+        </button>
+        <div
+          className="pro ml-5 pl-8 text-sm absolute left-12"
+          style={{ bottom: "-70%" }}
+        >
+          <h4 className="text-lg font-bold">{user.fullName}</h4>
+          <p className="text-gray-600">{user.profile.bio}</p>
+        </div>
+      </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Profile Photo Upload Modal"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 1000,
+          },
+          content: {
+            width: "50%",
+            margin: "auto",
+            background: "#fff",
+            borderRadius: "8px",
+            outline: "none",
+          },
+        }}
+      >
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-bold mb-4">Upload Profile Photo</h2>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className="mb-4 py-10 px-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+          />
+        </div>
+        <div className="flex gap-4">
+          <button
+            onClick={handlePictureChange}
+            className="bg-blue-500 text-white py-2 px-4 rounded-md mr-2 hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
+          >
+            Upload
+          </button>
+
+          <button
+            onClick={closeModal}
+            className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:border-gray-500"
+          >
+            Close
+          </button>
+        </div>
+      </Modal>
+    </div>
+  );
+}
+
+// Example usage in a parent component:
+// <ProfilePhotoUploader onUpload={(file) => console.log('File uploaded:', file)} />
 
 export default ProfileDetail;

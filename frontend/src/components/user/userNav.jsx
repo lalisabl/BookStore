@@ -82,7 +82,7 @@ export default function UserNav() {
             <button onClick={handleClick} className="btn profile">
               <img
                 src="/images/male.png"
-                className="userProfilePhoto w-10 h-10 rounded-full overflow-hidden"
+                className="w-10 h-10 rounded-full overflow-hidden"
                 alt="userPhoto"
               />
             </button>
