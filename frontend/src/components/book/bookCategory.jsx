@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { BooksSample } from "../../assets/constData";
-import { BookList, formatViews } from "./BookList";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faPlus, faStar } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { apiurl } from "../../assets/constData";
+import { BookList } from "./BookList";
 
 export function BookCategory() {
   const [activeButton, setActiveButton] = useState("Most Popular");
@@ -10,6 +9,18 @@ export function BookCategory() {
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
   };
+  const [books, setBooks] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${apiurl}/books/get`)
+      .then((res) => {
+        setBooks(res.data.data.Books);
+        console.log();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="category-container">
@@ -48,7 +59,11 @@ export function BookCategory() {
           New Books
         </div>
       </div>
+<<<<<<< HEAD
       {/* <BookCategoryDisplay books={BooksSample.books} /> */}
+=======
+      <BookCategoryDisplay books={books} />
+>>>>>>> refs/remotes/origin/master
     </div>
   );
 }

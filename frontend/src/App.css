@@ -39,8 +39,11 @@ body {
   --primary-color-lighter: #5066ff;
   --secondary-color: #2ecc71;
   --accent-color: #e74c3c;
-  --bg-light-white: #ececec;
+  --bg-light-white: #f3f3f3;
   --color-danger: rgb(156, 15, 15);
+}
+.bg-light-white{
+  background-color: var(--bg-light-white);
 }
 a {
   color: var(--color-white);
@@ -77,6 +80,7 @@ a {
   color: red;
 }
 .btn-primary {
+  border: 1px solid transparent;
   color: white;
   background-color: var(--primary-color);
 }

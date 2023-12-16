@@ -6,7 +6,7 @@ export function UserPage({ SetLogin, path }) {
     <div className="flex">
       <UserNav setLogin={SetLogin} />
       <UserSideBar />
-      <div className="items-center flex-grow ml-20 user-main-container">
+      <div className="mt-14 items-center flex-grow p-0 ml-16 pl-2  w-5/6 overflow-hidden ">
         {path}
       </div>
     </div>

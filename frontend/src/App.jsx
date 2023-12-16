@@ -17,7 +17,7 @@ import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
 import BookDetail from "./components/book/BookDetail";
 function Pages() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +27,7 @@ function Pages() {
         setLogin(true);
       } catch (error) {
         setLoading(true);
-        setLogin(false);
+        // setLogin(false);
         console.log(error.response ? error.response.data : error.message);
       }
     };
