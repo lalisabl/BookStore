@@ -15,6 +15,7 @@ import UserHome from "./components/user/user-home";
 import axios from "axios";
 import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
+import BookDetail from "./components/book/BookDetail";
 function Pages() {
   const [login, setLogin] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -74,6 +75,10 @@ function Pages() {
                 <Route
                   path="/My-favorites"
                   element={<UserPage path={<BookForm />} />}
+                />
+                <Route
+                  path="/books/:id"
+                  element={<UserPage path={<BookDetail />} />}
                 />
               </>
             ) : (

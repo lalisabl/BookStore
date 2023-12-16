@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faPlus, faStar } from "@fortawesome/free-solid-svg-icons";
-import { BooksSample } from "../../assets/constData";
+import { useNavigate } from "react-router-dom";
 
 export function formatViews(views) {
   if (views >= 1000000000) {
@@ -15,43 +15,79 @@ export function formatViews(views) {
   }
 }
 export function BookList({ books }) {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-3">
-      {books.length > 0 &&
-        books.map((book) => (
-          <div key={book.id} className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md">
-            <div className="flex">
-              <img src={book.thumbnail} alt={book.title} className="w-24 h-32 object-cover" />
+  const navigate = useNavigate();
+  function fileType(filename) {
+    filename;
+    if (filename && typeof filename === "string") {
+      const fileExtension = filename.split(".").pop().toLowerCase();
+      return fileExtension;
+    }
+  }
 
-              <div className="p-4 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-sm font-semibold mb-1">
-                    {window.innerWidth < 700 && book.title.length > 35
-                      ? `${book.title.substring(0, 35)}...`
-                      : window.innerWidth < 1000 && book.title.length > 75
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-1 m-auto lg:grid-cols-1 gap-3 lg:w-5/6 sm:w-full">
+      {books?.length > 0 &&
+        books.map((book) => (
+          <div
+            onClick={() => {
+              navigate("/books/" + book._id);
+            }}
+            key={book._id}
+            className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md"
+          >
+            <div className="flex w-full">
+              <img
+                src={
+                  fileType(book.filename) === "pdf"
+                    ? "images/pdf.png"
+                    : fileType(book.filename) === "doc" ||
+                        fileType(book.filename) === "docx"
+                      ? "images/word.png"
+                      : "images/default.png"
+                }
+                alt={book.title}
+                className="w-20  h-auto object-contain bg-gray-100"
+              />
+
+              <div className="p-3 flex flex-col justify-between">
+                <h3 className="text-sm text-left font-semibold mb-1">
+                  {window.innerWidth < 700 && book.title.length > 35
+                    ? `${book.title.substring(0, 35)}...`
+                    : window.innerWidth < 1000 && book.title.length > 75
                       ? `${book.title.substring(0, 75)}...`
                       : book.title.length > 95
-                      ? `${book.title.substring(0, 95)}...`
-                      : book.title}
-                  </h3>
+                        ? `${book.title.substring(0, 95)}...`
+                        : book.title}
+                </h3>
+
+                <div className="flex text-xs text-gray-500 gap-2">
                   <div className="flex items-center mb-1">
-                    <FontAwesomeIcon className="text-yellow-500 mr-1" icon={faStar} />
-                    {book.rate}
+                    <FontAwesomeIcon
+                      className="text-yellow-500"
+                      icon={faStar}
+                    />
+                    {/* {book.rate} */} 3.5
                   </div>
                   <div className="flex items-center">
-                    <FontAwesomeIcon className="text-blue-500 mr-1" icon={faEye} />
-                    {formatViews(book.numberOfViews)}
+                    <FontAwesomeIcon className="text-blue-500" icon={faEye} />
+                    23k
                   </div>
                 </div>
 
-                <div className="flex items-center book-owner">
+                <div className="flex w-full items-center book-owner border-t pt-1">
                   <img
-                    src={book.uploader.image}
-                    alt={book.uploader.username}
+                    src={
+                      "http://localhost:5000/images/users/" +
+                      book.user.profile.picture +
+                      ".png"
+                    }
+                    alt={book.user.username}
                     className="w-8 rounded-full mr-1"
                   />
                   <div>
-                    <span className="font-semibold">{book.uploader.username}</span>
+                    <span className="font-semibold text-gray-500">
+                      {book.user.username}
+                    </span>
                     <button className="btn-primary ml-1">
                       <FontAwesomeIcon icon={faPlus} /> Follow
                     </button>
@@ -64,4 +100,3 @@ export function BookList({ books }) {
     </div>
   );
 }
-

@@ -217,7 +217,12 @@ exports.getAllBooks = async (req, res) => {
       .sort()
       .limiting()
       .paginatinating();
-    const Books = await features.query;
+
+    const Books = await features.query.populate({
+      path: "user",
+      select:
+        "email created_at username profile.picture profile.bio id fullName",
+    });
     res.status(200).json({
       status: "success",
       results: Books.length,
@@ -239,7 +244,10 @@ exports.getAllBooks = async (req, res) => {
 book by its ID. */
 exports.getEachBook = catchAsync(async (req, res, next) => {
   const id = req.params.id;
-  const book = await Book.findById(id);
+  const book = await Book.findById(id).populate({
+    path: "user",
+    select: "email created_at username profile.picture profile.bio id fullName",
+  });
 
   res.status(200).json({
     status: "success",
