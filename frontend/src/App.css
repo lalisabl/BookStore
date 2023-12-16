@@ -80,6 +80,7 @@ a {
   color: red;
 }
 .btn-primary {
+  border: 1px solid transparent;
   color: white;
   background-color: var(--primary-color);
 }

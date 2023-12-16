@@ -1,8 +1,9 @@
 import { BiSearch } from "react-icons/bi";
 import { BookGrid } from "../book/BookGrid";
 import GetBooks from "../book/getBooks";
-import { useEffect, useRef, useState } from "react";
-import { FaSortDown } from "react-icons/fa";
+import bgImage from "../../assets/images/Book-Banner.jpg";
+
+import Select from "react-select";
 
 export default function UserHome() {
   return (
@@ -13,22 +14,49 @@ export default function UserHome() {
 }
 
 export function HomeBanner() {
-
+  const handleSelectChange = (selectedOption) => {
+    // Handle the selected option
+    console.log("Selected option:", selectedOption);
+  };
+  const options = [
+    { value: "1", label: "Option 1" },
+    { value: "2", label: "Option 2" },
+    { value: "1", label: "Option 1" },
+    { value: "2", label: "Option 2" },
+  ];
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      marginRight: "3px",
+      padding: "6px",
+    }),
+  };
   return (
     <>
-      <div className="home-banner">
-        <div className="p-10 m-auto justify-center w-full flex">
-          <div className="flex items-center">
-            <form className="flex relative">
-              
-              <span className="flex items-center">
+      <div>
+        <div
+          className="bg-cover -z-50 top-10 left-16 ml-2 fixed inset-0 max-h-64 w-screen"
+          style={{ backgroundImage: `url(${bgImage})` }}
+        ></div>
+
+        <div className="p-10 m-auto justify-center flex">
+          <div className="items-center">
+            <form className="flex  relative items-center">
+              <Select
+                styles={customStyles}
+                options={options}
+                placeholder="Categories"
+                onChange={handleSelectChange}
+                className="z-100 mr-3"
+              />
+              <span className="items-center">
                 <input
-                  className="p-3 border rounded border-gray-300"
+                  className="p-3  banner-search border rounded rounded-r-none border-gray-300"
                   type="text"
                   title="text"
                   placeholder="Search book here"
                 />
-                <button className="p-3 bg-blue-500 text-white rounded-r-md">
+                <button className="p-3  btn-primary text-white rounded-r-md">
                   Search
                 </button>
               </span>
@@ -36,7 +64,9 @@ export function HomeBanner() {
           </div>
         </div>
       </div>
-      <Recommended />
+      <div className="bg-white">
+        <Recommended />
+      </div>
     </>
   );
 }
