@@ -48,7 +48,7 @@ export function BookCategory() {
           New Books
         </div>
       </div>
-      <BookCategoryDisplay books={BooksSample.books} />
+      {/* <BookCategoryDisplay books={BooksSample.books} /> */}
     </div>
   );
 }

@@ -21,35 +21,36 @@ export function AccountSideBar() {
     navigate(`/${naviTo}`);
   };
   return (
-    <div>
-      <div className="account-sidebar flex flex-col gap-2">
-        <h3 className=" sidebar-header">My Account</h3>
-        <div className={`${isActive("account/profile") ? "active" : ""}`}>
-          <SidebarComp HandleClick={() => handleClick("account/profile")}>
-            <>
-              <FaUser />
-              Profile
-            </>
-          </SidebarComp>
-        </div>
+    <div
+      className="account-sidebar flex flex-col gap-2 
+      fixed left-0 top-0 h-full w-14rem bg-gray-200 p-5 mt-16"
+    >
+      <h3 className=" sidebar-header">My Account</h3>
+      <div className={`${isActive("account/profile") ? "active" : ""}`}>
+        <SidebarComp HandleClick={() => handleClick("account/profile")}>
+          <>
+            <FaUser />
+            Profile
+          </>
+        </SidebarComp>
+      </div>
 
-        <div className={`${isActive("reading-history") ? "active" : ""}`}>
-          <SidebarComp HandleClick={() => handleClick("reading-history")}>
-            <>
-              <FcReading />
-              Reading History
-            </>
-          </SidebarComp>
-        </div>
+      <div className={`${isActive("reading-history") ? "active" : ""}`}>
+        <SidebarComp HandleClick={() => handleClick("reading-history")}>
+          <>
+            <FcReading />
+            Reading History
+          </>
+        </SidebarComp>
+      </div>
 
-        <div className={`${isActive("my-contributions") ? "active" : ""}`}>
-          <SidebarComp HandleClick={() => handleClick("my-contributions")}>
-            <>
-              <SiBookstack />
-              My Contributions
-            </>
-          </SidebarComp>
-        </div>
+      <div className={`${isActive("my-contributions") ? "active" : ""}`}>
+        <SidebarComp HandleClick={() => handleClick("my-contributions")}>
+          <>
+            <SiBookstack />
+            My Contributions
+          </>
+        </SidebarComp>
       </div>
     </div>
   );

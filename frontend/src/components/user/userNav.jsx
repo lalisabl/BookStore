@@ -56,7 +56,6 @@ const DropdownButton = ({ buttonTitle, dropDownContent }) => {
             d="m1 1 4 4 4-4"
           />
         </svg>
-        
       </button>
 
       {dropdownVisible && (
@@ -155,7 +154,7 @@ export default function UserNav() {
             <button onClick={handleClick} className="btn profile">
               <img
                 src="/images/male.png"
-                className="userProfilePhoto w-10 h-10 rounded-full overflow-hidden"
+                className="w-10 h-10 rounded-full overflow-hidden"
                 alt="userPhoto"
               />
             </button>
