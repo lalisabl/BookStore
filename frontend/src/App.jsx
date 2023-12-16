@@ -80,6 +80,11 @@ function Pages() {
                   path="/books/:id"
                   element={<UserPage path={<BookDetail />} />}
                 />
+
+                <Route
+                  path="search/"
+                  element={<UserPage path={<Search />} />}
+                />
               </>
             ) : (
               <Route path="/" element={<LandingPage SetLogin={setLogin} />} />

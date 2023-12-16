@@ -1,32 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { apiurl } from "../../assets/constData";
+import { apiurl, enumCategories, enumCategoriesOptions } from "../../assets/constData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faFile } from "@fortawesome/free-solid-svg-icons";
 import { GenericLittleLoadingModal } from "../../shared/GenericModal";
+import CreatableSelect from "react-select/creatable";
+import { KeyboardEventHandler } from "react";
 
-const enumCategories = [
-  "Fiction",
-  "Non-Fiction",
-  "Poetry",
-  "Drama",
-  "Children's Books",
-  "Religion/Spirituality",
-  "Science Fiction/Fantasy",
-  "Mystery/Thriller",
-  "Romance",
-  "History",
-  "Reference",
-  "Humor/Satire",
-  "Graphic Novels/Comics",
-  "Science",
-  "Travel",
-  "Art/Photography",
-  "Education",
-  "Politics/Social Sciences",
-  "Sports",
-  "Philosophy",
-];
 const allowedDocumentExtensions = [
   "pdf",
   "doc",
@@ -158,21 +138,14 @@ const BookForm = () => {
           />
         </div>
         <div className="mb-4">
-          <select
-            id="category"
-            name="category"
-            value={formData.category}
+          <CreatableSelect
+            isClearable
+            options={enumCategoriesOptions}
+            placeholder="Categories"
             onChange={handleChange}
-            required
-            className="w-full px-3 py-2 border border-gray-300 rounded"
-          >
-            <option value="">Select Category</option>
-            {enumCategories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
+            className="z-100 mr-3 w-full"
+          />
+         
         </div>
 
         <div className="mb-4">
@@ -205,6 +178,10 @@ const BookForm = () => {
               No
             </label>
           </div>
+        </div>
+
+        <div className="mb-4">
+          <YourTagCreatorComponent />
         </div>
 
         <button
@@ -274,6 +251,60 @@ const CustomFileInput = ({ onChange }) => {
         style={{ display: "none" }}
       />
     </div>
+  );
+};
+
+const YourTagCreatorComponent = () => {
+  const enumCategoriesOptions = enumCategories.map((category, index) => ({
+    value: category,
+    label: category,
+  }));
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      marginRight: "3px",
+      padding: "6px",
+    }),
+  };
+
+  const handleCreateOption = (inputValue) => {
+    // Handle the creation of a new tag here
+    const newTag = {
+      value: inputValue,
+      label: inputValue,
+    };
+
+    // Add the new tag to the array or dispatch an action to update state
+    console.log("Created tag:", newTag);
+  };
+  const NoOptionsMessage = ({ inputValue }) => (
+    <div className="react-select-no-options">
+      No matching options found for `{inputValue}`.
+    </div>
+  );
+  return (
+    <CreatableSelect
+      isMulti
+      styles={customStyles}
+      options={enumCategoriesOptions}
+      placeholder="Create or select tags"
+      onChange={(selectedOptions, { action, removedValue }) => {
+        if (action === "create-option") {
+          handleCreateOption(selectedOptions[selectedOptions.length - 1].value);
+        } else if (action === "remove-value" && removedValue.__isNew__) {
+          // Handle the removal of a newly created tag
+          console.log("Removed tag:", removedValue.value);
+        } else {
+          // Handle other actions like selecting existing tags
+          console.log("Selected options:", selectedOptions);
+        }
+      }}
+      isSearchable
+      components={{ NoOptionsMessage }}
+      isCreatable={false}
+      className="z-100 mr-3 w-full"
+    />
   );
 };
 
