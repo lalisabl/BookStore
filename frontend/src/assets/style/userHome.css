@@ -157,11 +157,9 @@
 
 .banner-search {
   width: auto;
-  min-width: 650px;
+  min-width: 40vw;
 }
 
 @media screen and (max-width: 780px) {
-  .banner-search {
-    min-width: 300px;
-  }
+ 
 }
