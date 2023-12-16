@@ -28,7 +28,7 @@ function BookNav() {
   ];
 
   return (
-    <div className="fixed top-12 right-0 p-4 bg-gray-50 text-left">
+    <div className="fixed top-12 -right-3 p-4  text-left">
       {navItems.map((text, index) => (
         <BookNavItem key={index} text={text} />
       ))}
