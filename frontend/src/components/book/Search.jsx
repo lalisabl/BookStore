@@ -83,11 +83,12 @@ function Filter() {
         <div className="absolute z-50 w-60 mt-1 p-2 bg-white border rounded-md shadow-md">
           {/* Add your dropdown content here */}
           <label className="block mb-1">Filter 1</label>
-          <input type="checkbox" className="mr-1" /> Option 1
+          <input type="checkbox" className="mr-1" /> 
           <br />
           <input type="checkbox" className="mr-1" /> Option 2
           <br />
           {/* Add more filter options as needed */}
+          <button className="rounded-md btn-primary">Submit</button>
         </div>
       )}
     </div>
