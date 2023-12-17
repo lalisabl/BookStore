@@ -23,7 +23,6 @@ export function AccountSideBar() {
     return location.pathname.includes(path);
   };
   const handleClick = (naviTo) => {
-    setShowSidebar(!showSidebar);
     navigate(`/${naviTo}`);
   };
   const toggleSidebar = () => {
