@@ -74,7 +74,7 @@ export function BookList({ books }) {
                   </div>
                 </div>
 
-                <div className="flex w-full items-center book-owner border-t pt-1">
+                <div className="flex w-full items-center text-xs  border-t pt-1">
                   <img
                     src={
                       "http://localhost:5000/images/users/" +
@@ -82,13 +82,13 @@ export function BookList({ books }) {
                       ".png"
                     }
                     alt={book.user.username}
-                    className="w-8 rounded-full mr-1"
+                    className="w-8 rounded-full border mr-1"
                   />
                   <div>
                     <span className="font-semibold text-gray-500">
                       {book.user.username}
                     </span>
-                    <button className="btn-primary ml-1">
+                    <button className="btn-primary rounded-md ml-1">
                       <FontAwesomeIcon icon={faPlus} /> Follow
                     </button>
                   </div>
