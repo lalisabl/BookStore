@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { HomeBanner } from "../user/user-home";
 import axios from "axios";
@@ -32,7 +32,7 @@ export function Search() {
   return (
     <div>
       <HomeBanner />
-      <div className="bg-white max-h-fit">
+      <div style={{ minHeight: "50vh" }} className="bg-white w-full">
         <Filter />
         <BookList books={books} />
       </div>
@@ -42,14 +42,55 @@ export function Search() {
 
 function Filter() {
   const isScrolled = useSelector((state) => state.scroll.isScrolled);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const buttonRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  const handleClickOutside = (event) => {
+    if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div
-      className={`p-1 flex rounded-md bg-gray-100 mb-3 w-24 border ${
-        isScrolled ? " shadow-none fixed flex border-b top-12" : ""
-      }`}
+      ref={buttonRef}
+      className={`mb-3 w-24 ${isScrolled ? "fixed top-12" : ""}`}
     >
-      Filters
-      <BiFilter className="text-2xl cursor-pointer" />
+      <div
+        className={`p-1 flex rounded-md bg-gray-100 border ${
+          isScrolled ? "shadow-none border-b" : ""
+        }`}
+      >
+        <div onClick={toggleDropdown} className="relative flex">
+          Filters
+          <BiFilter className="text-2xl cursor-pointer ml-1" />
+        </div>
+      </div>
+
+      {isDropdownOpen && (
+        <div className="absolute z-50 w-60 mt-1 p-2 bg-white border rounded-md shadow-md">
+          {/* Add your dropdown content here */}
+          <label className="block mb-1">Filter 1</label>
+          <input type="checkbox" className="mr-1" /> 
+          <br />
+          <input type="checkbox" className="mr-1" /> Option 2
+          <br />
+          {/* Add more filter options as needed */}
+          <button className="rounded-md btn-primary">Submit</button>
+        </div>
+      )}
     </div>
   );
 }

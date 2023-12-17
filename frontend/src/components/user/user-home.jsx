@@ -36,18 +36,16 @@ export function HomeBanner() {
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     searchParams.set("q", searchQ);
-    setSearchParams(...searchParams.toString());
-    //  const updatedSearchParams = searchParams.toString();
-    navigate("/search?" + SearchParams);
+    // Add category parameter if it exists
+    if (searchParams.has("category")) {
+      navigate(`/search?${searchParams.toString()}`);
+    } else {
+      navigate("/search?q=" + searchQ);
+    }
   };
 
   const handleSelectChange = (selectedOption) => {
-    console.log("Selected option:", selectedOption);
-
     searchParams.set("category", selectedOption.value);
-    setSearchParams(...searchParams.toString());
-    //  const updatedSearchParams = searchParams.toString();
-    //  navigate("/search?" + updatedSearchParams);
   };
 
   const options = [
