@@ -3,8 +3,7 @@ export const BooksSample = {
   books: [
     {
       id: 1,
-      title:
-        "The Catcher in the Rye longer text",
+      title: "The Catcher in the Rye longer text",
       thumbnail: "/images/the catcher.jpeg",
       rate: 4.5,
       uploader: {
@@ -56,3 +55,31 @@ export const BooksSample = {
     },
   ],
 };
+
+export const enumCategories = [
+  "Fiction",
+  "Non-Fiction",
+  "Poetry",
+  "Drama",
+  "Children's Books",
+  "Religion/Spirituality",
+  "Science Fiction/Fantasy",
+  "Mystery/Thriller",
+  "Romance",
+  "History",
+  "Reference",
+  "Humor/Satire",
+  "Graphic Novels/Comics",
+  "Science",
+  "Travel",
+  "Art/Photography",
+  "Education",
+  "Politics/Social Sciences",
+  "Sports",
+  "Philosophy",
+];
+
+export const enumCategoriesOptions = enumCategories.map((category, index) => ({
+  value: category,
+  label: category,
+}));

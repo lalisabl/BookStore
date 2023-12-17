@@ -155,7 +155,7 @@ class APIfeatures {
     this.queryString = queryString;
   }
   multfilter() {
-    const searchQuery = this.queryString.search || "";
+    const searchQuery = this.queryString.q || "";
     if (typeof searchQuery === "string") {
       const regexSearch = {
         $or: [
@@ -170,7 +170,7 @@ class APIfeatures {
   filter() {
     //1 build query
     const queryObj = { ...this.queryString };
-    const excludedFields = ["page", "limit", "sort", "fields", "search"];
+    const excludedFields = ["page", "limit", "sort", "fields", "q"];
     excludedFields.forEach((el) => delete queryObj[el]);
     // advanced query
     let queryStr = JSON.stringify(queryObj);

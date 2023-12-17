@@ -28,7 +28,7 @@ function BookNav() {
   ];
 
   return (
-    <div className="fixed top-12 -right-3 p-4  text-left">
+    <div className="fixed top-12 -right-3 p-4 shadow  text-left">
       {navItems.map((text, index) => (
         <BookNavItem key={index} text={text} />
       ))}
@@ -42,7 +42,7 @@ export default function BookDetail() {
 
   return (
     <div className="mr-14">
-      <div className="flex m-auto w-5/6 h-auto border-b bg-white rounded-md overflow-hidden shadow px-2">
+      <div className="flex m-auto w-4/6 h-auto border-t-o border-b bg-white rounded-md overflow-hidden shadow px-2">
         <div className="flex mb-4">
           <img src={book.thumbnail} alt={book.title} className="w-80 h-auto" />
         </div>
