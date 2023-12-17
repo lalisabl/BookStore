@@ -31,16 +31,23 @@ export function HomeBanner() {
   const setSearch = (e) => {
     setSearchQ(e.target.value);
   };
+  const [SearchParams, setSearchParams] = useState("");
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     searchParams.set("q", searchQ);
-    const updatedSearchParams = searchParams.toString();
-    navigate("/search?" + updatedSearchParams);
+    setSearchParams(...searchParams.toString());
+    //  const updatedSearchParams = searchParams.toString();
+    navigate("/search?" + SearchParams);
   };
 
   const handleSelectChange = (selectedOption) => {
     console.log("Selected option:", selectedOption);
+
+    searchParams.set("category", selectedOption.value);
+    setSearchParams(...searchParams.toString());
+    //  const updatedSearchParams = searchParams.toString();
+    //  navigate("/search?" + updatedSearchParams);
   };
 
   const options = [
