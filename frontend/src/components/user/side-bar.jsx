@@ -20,37 +20,56 @@ export function AccountSideBar() {
   const handleClick = (naviTo) => {
     navigate(`/${naviTo}`);
   };
+  const [showSidebar, setShowSidebar] = useState(false);
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
+
   return (
     <div
-      className="account-sidebar flex flex-col gap-2 
-      fixed left-0 top-0 h-full w-14rem bg-gray-200 p-5 mt-16"
+      className={`flex flex-col gap-2 fixed left-0 top-0 bottom-0 bg-gray-200 p-5 mt-16 ${
+        showSidebar ? "w-14rem" : "w-2/12"
+      } left-10 h-12 w-full pr-20 right-0`}
     >
-      <h3 className=" sidebar-header">My Account</h3>
-      <div className={`${isActive("account/profile") ? "active" : ""}`}>
-        <SidebarComp HandleClick={() => handleClick("account/profile")}>
-          <>
-            <FaUser />
-            Profile
-          </>
-        </SidebarComp>
+      <div
+        className="top-toggle flex justify-between sm:hidden cursor-pointer"
+        onClick={toggleSidebar}
+      >
+        <h4>profile</h4>
+        {showSidebar ? "🡸" : "🡺"}
       </div>
 
-      <div className={`${isActive("reading-history") ? "active" : ""}`}>
-        <SidebarComp HandleClick={() => handleClick("reading-history")}>
-          <>
-            <FcReading />
-            Reading History
-          </>
-        </SidebarComp>
-      </div>
+      {/* Sidebar Header */}
+      <h3 className="sm:block hidden sidebar-header">My Account</h3>
 
-      <div className={`${isActive("my-contributions") ? "active" : ""}`}>
-        <SidebarComp HandleClick={() => handleClick("my-contributions")}>
-          <>
-            <SiBookstack />
-            My Contributions
-          </>
-        </SidebarComp>
+      {/* Sidebar Items */}
+      <div className={`${showSidebar ? "block" : "hidden"} sm:block`}>
+        <div className={`${isActive("account/profile") ? "active" : ""}`}>
+          <SidebarComp HandleClick={() => handleClick("account/profile")}>
+            <>
+              <FaUser />
+              Profile
+            </>
+          </SidebarComp>
+        </div>
+
+        <div className={`${isActive("reading-history") ? "active" : ""}`}>
+          <SidebarComp HandleClick={() => handleClick("reading-history")}>
+            <>
+              <FcReading />
+              Reading History
+            </>
+          </SidebarComp>
+        </div>
+
+        <div className={`${isActive("my-contributions") ? "active" : ""}`}>
+          <SidebarComp HandleClick={() => handleClick("my-contributions")}>
+            <>
+              <SiBookstack />
+              My Contributions
+            </>
+          </SidebarComp>
+        </div>
       </div>
     </div>
   );
