@@ -70,7 +70,10 @@ const ProfileDetail = () => {
   };
   return (
     <div>
-      <div className=" ml-56 mt-6 p-8 text-lg">
+      <div
+        className=" ml-4  sm:mt-6 p-8 text-lg"
+        style={{ marginLeft: "16.66667%" }}
+      >
         {loading ? (
           <span>Loading...</span>
         ) : (
@@ -286,7 +289,12 @@ function ProfilePhotoUploader({ user }) {
     uploadProfilePicture(selectedFile);
     closeModal();
   };
-
+  const handleGetFollowers = () => {
+    console.log("followers clicked");
+  };
+  const handleGetFollowing = () => {
+    console.log("following clicked");
+  };
   return (
     <div className="m-5 mb-20">
       <div className=" h-20 bg-gradient-to-r from-fuchsia-500 to-violet-500 relative">
@@ -306,7 +314,16 @@ function ProfilePhotoUploader({ user }) {
           style={{ bottom: "-70%" }}
         >
           <h4 className="text-lg font-bold">{user.fullName}</h4>
-          <p className="text-gray-600">{user.profile.bio}</p>
+          <p className="text-gray-600 flex gap-4">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start">
+              <p className="mr-4 cursor-pointer" onClick={handleGetFollowers}>
+                <span className="font-bold text-lg">10K</span> Followers
+              </p>
+              <p className="cursor-pointer" onClick={handleGetFollowing}>
+                <span className="font-bold text-lg">1K</span> Following
+              </p>
+            </div>
+          </p>
         </div>
       </div>
 
