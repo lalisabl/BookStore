@@ -62,12 +62,22 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.getMe = catchAsync(async (req, res, next) => {
-  req.params.userId = req.user.id;
+  req.params.userId = req.params;
+  // req.params.userId = req.user.id;
   next();
 });
 // get eachuser
 exports.getOneUser = catchAsync(async (req, res, next) => {
-  let query = User.findById(req.params.userId);
+  let query = User.findById(req.params.userId)
+    .populate({
+      path: "followers",
+      select: "username fullName profile.picture",
+    })
+    .populate({
+      path: "following",
+      select: "username fullName profile.picture",
+    })
+    .exec();
   const user = await query;
   if (!user) {
     return next(new AppError("No User found with that ID", 404));
