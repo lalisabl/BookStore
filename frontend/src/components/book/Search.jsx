@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { HomeBanner } from "../user/user-home";
 import axios from "axios";
 import { apiurl } from "../../assets/constData";
-import { BookGrid } from "./BookGrid";
 import { BookList } from "./BookList";
 import { BiFilter } from "react-icons/bi";
 import { useSelector } from "react-redux";
+import { BsFillGrid1X2Fill } from "react-icons/bs";
 
 export function Search() {
   const location = useLocation();
@@ -41,7 +41,7 @@ export function Search() {
 }
 
 function Filter() {
-  const isScrolled = useSelector((state) => state.scroll.isScrolled);
+  const isScrolled = useSelector((state) => state.store.isScrolled);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const buttonRef = useRef(null);
@@ -66,31 +66,36 @@ function Filter() {
   return (
     <div
       ref={buttonRef}
-      className={`mb-3 w-24 ${isScrolled ? "fixed top-12" : ""}`}
+      className={`pl-2 pr-2 flex items-center mb-3  rounded-md bg-gray-100 border ${
+        isScrolled ? "fixed top-12 shadow-none border-b" : ""
+      }`}
     >
-      <div
-        className={`p-1 flex rounded-md bg-gray-100 border ${
-          isScrolled ? "shadow-none border-b" : ""
-        }`}
-      >
-        <div onClick={toggleDropdown} className="relative flex">
-          Filters
-          <BiFilter className="text-2xl cursor-pointer ml-1" />
-        </div>
+      <div className="flex cursor-pointer items-center mr-1 hover:text-primary">
+        <BsFillGrid1X2Fill className="mr-1" />
+        view
       </div>
-
-      {isDropdownOpen && (
-        <div className="absolute z-50 w-60 mt-1 p-2 bg-white border rounded-md shadow-md">
-          {/* Add your dropdown content here */}
-          <label className="block mb-1">Filter 1</label>
-          <input type="checkbox" className="mr-1" /> 
-          <br />
-          <input type="checkbox" className="mr-1" /> Option 2
-          <br />
-          {/* Add more filter options as needed */}
-          <button className="rounded-md btn-primary">Submit</button>
+      <div className={`p-1 flex cursor-pointer  ${isScrolled ? "" : ""}`}>
+        <div
+          onClick={toggleDropdown}
+          className="relative hover:text-primary flex"
+        >
+          <BiFilter className="text-2xl" />
+          Filters
         </div>
-      )}
+
+        {isDropdownOpen && (
+          <div className="absolute z-50 w-60 mt-7 p-2 bg-gray-100 border rounded-md shadow-md">
+            {/* Add your dropdown content here */}
+            <label className="block mb-1">Filter 1</label>
+            <input type="checkbox" className="mr-1" />
+            <br />
+            <input type="checkbox" className="mr-1" /> Option 2
+            <br />
+            {/* Add more filter options as needed */}
+            <button className="rounded-md btn-primary">Submit</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

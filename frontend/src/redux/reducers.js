@@ -1,9 +1,9 @@
-// reducers.js
+
 const initialState = {
   isScrolled: false,
 };
 
-const scrollReducer = (state = initialState, action) => {
+const Reducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_SCROLL_STATE":
       return {
@@ -15,4 +15,4 @@ const scrollReducer = (state = initialState, action) => {
   }
 };
 
-export default scrollReducer;
+export default Reducer;

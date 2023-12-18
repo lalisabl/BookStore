@@ -64,7 +64,7 @@ export function HomeBanner() {
   };
 
   const dispatch = useDispatch();
-  const isScrolled = useSelector((state) => state.scroll.isScrolled);
+  const isScrolled = useSelector((state) => state.store.isScrolled);
 
   const handleScroll = () => {
     const scrolled = window.scrollY > 100;

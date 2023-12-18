@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 
 export default function UserNav() {
   const [language, setLanguage] = useState("en");
-  const isScrolled = useSelector((state) => state.scroll.isScrolled);
+  const isScrolled = useSelector((state) => state.store.isScrolled);
   const handleChangeLanguage = (newLanguage) => {
     setLanguage(newLanguage);
   };
