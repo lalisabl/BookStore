@@ -1,9 +1,9 @@
 // store.js
 import { createStore, combineReducers } from "redux";
-import scrollReducer from "./reducers";
+import Reducer from "./reducers";
 
 const rootReducer = combineReducers({
-  scroll: scrollReducer,
+  store: Reducer,
 });
 
 const store = createStore(rootReducer);

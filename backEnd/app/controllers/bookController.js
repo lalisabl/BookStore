@@ -244,6 +244,7 @@ exports.getAllBooks = async (req, res) => {
 book by its ID. */
 exports.getEachBook = catchAsync(async (req, res, next) => {
   const id = req.params.id;
+  
   const book = await Book.findById(id).populate({
     path: "user",
     select: "email created_at username profile.picture profile.bio id fullName",

@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#ff9900', // Replace with your desired primary color code
+        primary: '#646cff', // Replace with your desired primary color code
         primaryBackground: '#ffcc00', // Replace with your desired primary background color code
       },
       backgroundColor: {
