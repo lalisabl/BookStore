@@ -1,6 +1,6 @@
-
 const initialState = {
   isScrolled: false,
+  isList: false,
 };
 
 const Reducer = (state = initialState, action) => {
@@ -9,6 +9,11 @@ const Reducer = (state = initialState, action) => {
       return {
         ...state,
         isScrolled: action.payload,
+      };
+    case "SET_VIEW_TYPE":
+      return {
+        ...state,
+        isList: action.payload,
       };
     default:
       return state;

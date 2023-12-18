@@ -5,8 +5,10 @@ import axios from "axios";
 import { apiurl } from "../../assets/constData";
 import { BookList } from "./BookList";
 import { BiFilter } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BsFillGrid1X2Fill } from "react-icons/bs";
+import { setListView } from "../../redux/actions";
+import { BookGrid } from "./BookGrid";
 
 export function Search() {
   const location = useLocation();
@@ -29,21 +31,25 @@ export function Search() {
         setError(true);
       });
   }, [newURL]);
+
+  const isList = useSelector((state) => state.store.isList);
   return (
-    <div>
+    <div className="pl-3 pr-3">
       <HomeBanner />
       <div style={{ minHeight: "50vh" }} className="bg-white w-full">
-        <Filter />
-        <BookList books={books} />
+        <Filter_View />
+        {isList ? <BookList books={books} /> : <BookGrid books={books} />}
       </div>
     </div>
   );
 }
 
-function Filter() {
+export function Filter_View() {
+  const dispatch = useDispatch();
   const isScrolled = useSelector((state) => state.store.isScrolled);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const isList = useSelector((state) => state.store.isList);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const buttonRef = useRef(null);
 
   const toggleDropdown = () => {
@@ -63,6 +69,10 @@ function Filter() {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(isList);
+  }, [isList]);
+
   return (
     <div
       ref={buttonRef}
@@ -70,7 +80,10 @@ function Filter() {
         isScrolled ? "fixed top-12 shadow-none border-b" : ""
       }`}
     >
-      <div className="flex cursor-pointer items-center mr-1 hover:text-primary">
+      <div
+        onClick={() => dispatch(setListView(!isList))}
+        className="flex cursor-pointer items-center mr-1 hover:text-primary"
+      >
         <BsFillGrid1X2Fill className="mr-1" />
         view
       </div>

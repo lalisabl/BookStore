@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { apiurl } from "../../assets/constData";
 import { BookList } from "./BookList";
+import { useSelector } from "react-redux";
+import { BookGrid } from "./BookGrid";
 
 export default function GetBooks() {
   const [books, setBooks] = useState();
@@ -10,15 +12,17 @@ export default function GetBooks() {
       .get(`${apiurl}/books/get`)
       .then((res) => {
         setBooks(res.data.data.Books);
-         console.log();
+        console.log();
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const isList = useSelector((state) => state.store.isList);
   return (
-    <div>
-      <BookList books={books} />
+    <div className="pl-3 pr-3">
+      {isList ? <BookList books={books} /> : <BookGrid books={books} />}
     </div>
   );
 }

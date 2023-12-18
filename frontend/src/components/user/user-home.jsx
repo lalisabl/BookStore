@@ -10,12 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setScrollState } from "../../redux/actions";
 import { FaSearch } from "react-icons/fa";
 import { enumCategoriesOptions } from "../../assets/constData";
+import { Filter_View } from "../book/Search";
 
 export default function UserHome() {
   return (
     <div>
       <HomeBanner />
       <div className="bg-white">
+        <Filter_View />
         <Recommended />
       </div>
     </div>
@@ -64,7 +66,6 @@ export function HomeBanner() {
   };
 
   const dispatch = useDispatch();
-  const isScrolled = useSelector((state) => state.store.isScrolled);
 
   const handleScroll = () => {
     const scrolled = window.scrollY > 100;
@@ -142,7 +143,6 @@ function SearchRecommenderTag() {
 function Recommended() {
   return (
     <>
-      <BookGrid />
       <GetBooks />
     </>
   );
