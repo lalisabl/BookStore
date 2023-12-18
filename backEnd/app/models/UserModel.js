@@ -20,10 +20,20 @@ const userSchema = new Schema({
     },
     select: false,
   },
-  fullName: {
-    type: String,
-    default: "",
-  },
+  followers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: [],
+    },
+  ],
+  following: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: [],
+    },
+  ],
   isLocked: {
     type: Boolean,
     default: false,
@@ -45,6 +55,10 @@ const userSchema = new Schema({
     default: Date.now,
   },
   profile: {
+    fullName: {
+      type: String,
+      default: "",
+    },
     picture: {
       type: String,
       default: "profile_picture_url",
