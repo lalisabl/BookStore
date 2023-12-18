@@ -112,8 +112,6 @@ userSchema.pre("save", function (next) {
       return next(err);
     }
     this.password = hash;
-    this.numFollowers = this.followers.length;
-    this.numFollowing = this.following.length;
     next();
   });
 });
@@ -133,11 +131,6 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
-userSchema.pre("save", function (next) {
-  this.numFollowers = this.followers.length;
-  this.numFollowing = this.following.length;
-  next();
-});
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
