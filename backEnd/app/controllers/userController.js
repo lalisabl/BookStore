@@ -122,19 +122,36 @@ exports.signupValidation = catchAsync(async (req, res) => {
     respondAvailabilty(existingEmail);
   }
 });
+// const updateFollowerFollowingCounts=async(followingId,followerId){
 
+// }
 exports.followUser = async (req, res) => {
   try {
     const { userId } = req.params;
     // change to user.id after connected to
     const { followerId } = req.body;
-    await User.findByIdAndUpdate(userId, {
-      $addToSet: { followers: followerId },
-    });
-    await User.findByIdAndUpdate(followerId, {
-      $addToSet: { following: userId },
-    });
+    const followedUser = await User.findById(userId);
+    const numFollowers = followedUser ? followedUser.followers.length : 0;
+    const followingUser = await User.findById(followerId);
+    const numFollowing = followingUser ? followingUser.following.length : 0;
+    await User.findByIdAndUpdate(
+      userId,
+      {
+        $addToSet: { followers: followerId },
+        $set: { numFollowers: numFollowers + 1 },
+      },
+      { new: true }
+    );
+    await User.findByIdAndUpdate(
+      followerId,
+      {
+        $addToSet: { following: userId },
+        $set: { numFollowing: numFollowing + 1 },
+      },
+      { new: true }
+    );
 
+    // await updateFollowerFollowingCounts(userId,followerId);
     res
       .status(200)
       .json({ success: true, message: "User followed successfully." });
@@ -148,9 +165,26 @@ exports.unfollowUser = async (req, res) => {
   try {
     const { userId } = req.params;
     const { followerId } = req.body;
-
-    await User.findByIdAndUpdate(userId, { $pull: { followers: followerId } });
-    await User.findByIdAndUpdate(followerId, { $pull: { following: userId } });
+    const followedUser = await User.findById(userId);
+    const numFollowers = followedUser ? followedUser.followers.length : 0;
+    const followingUser = await User.findById(followerId);
+    const numFollowing = followingUser ? followingUser.following.length : 0;
+    await User.findByIdAndUpdate(
+      userId,
+      {
+        $pull: { followers: followerId },
+        $set: { numFollowers: numFollowers - 1 },
+      },
+      { new: true }
+    );
+    await User.findByIdAndUpdate(
+      followerId,
+      {
+        $pull: { following: userId },
+        $set: { numFollowing: numFollowing - 1 },
+      },
+      { new: true }
+    );
 
     res
       .status(200)
