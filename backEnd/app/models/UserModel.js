@@ -27,6 +27,10 @@ const userSchema = new Schema({
       default: [],
     },
   ],
+  numFollowers: {
+    type: Number,
+    default: 0,
+  },
   following: [
     {
       type: Schema.Types.ObjectId,
@@ -34,6 +38,10 @@ const userSchema = new Schema({
       default: [],
     },
   ],
+  numFollowing: {
+    type: Number,
+    default: 0,
+  },
   isLocked: {
     type: Boolean,
     default: false,
@@ -104,6 +112,8 @@ userSchema.pre("save", function (next) {
       return next(err);
     }
     this.password = hash;
+    this.numFollowers = this.followers.length;
+    this.numFollowing = this.following.length;
     next();
   });
 });
@@ -122,6 +132,12 @@ userSchema.methods.createPasswordResetToken = function () {
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
   return resetToken;
 };
+
+userSchema.pre("save", function (next) {
+  this.numFollowers = this.followers.length;
+  this.numFollowing = this.following.length;
+  next();
+});
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
