@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaHome, FaUser } from "react-icons/fa";
 import { FcDownload, FcReading } from "react-icons/fc";
 import { SiBookstack } from "react-icons/si";
 import { FaUserGear } from "react-icons/fa6";
+import { FaSortDown } from "react-icons/fa";
+import { BiSolidUpArrow } from "react-icons/bi";
+import { RiArrowUpSFill } from "react-icons/ri";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose, MdLogout } from "react-icons/md";
 import { GoStarFill } from "react-icons/go";
@@ -14,33 +18,33 @@ export function AccountSideBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeItem, setActiveItem] = useState(null);
+  const [showSidebar, setShowSidebar] = useState(false);
   const isActive = (path) => {
     return location.pathname.includes(path);
   };
   const handleClick = (naviTo) => {
     navigate(`/${naviTo}`);
   };
-  const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
 
   return (
     <div
-      className={`flex flex-col gap-2 fixed left-0 top-0 bottom-0 bg-gray-200 p-5 mt-16 ${
-        showSidebar ? "w-14rem" : "w-2/12"
-      } left-10 h-12 w-full pr-20 right-0`}
+      className={`flex-col gap-2 sm:bg-gray-200 sm:p-5 sm:mt-16 
+      ${!showSidebar ? "sm:fixed sm:w-2/12 sm:flex top-0 bottom-0" : " "}
+       `}
     >
       <div
-        className="top-toggle flex justify-between sm:hidden cursor-pointer"
+        className="top-toggle shadow-lg flex ml-8 mr-8 justify-between sm:hidden cursor-pointer"
         onClick={toggleSidebar}
       >
         <h4>profile</h4>
-        {showSidebar ? "🡸" : "🡺"}
+        {showSidebar ? <RiArrowUpSFill /> : <FaSortDown />}
       </div>
 
       {/* Sidebar Header */}
-      <h3 className="sm:block hidden sidebar-header">My Account</h3>
+      <h3 className="sm:block sm: hidden sidebar-header">My Account</h3>
 
       {/* Sidebar Items */}
       <div className={`${showSidebar ? "block" : "hidden"} sm:block`}>
@@ -57,7 +61,7 @@ export function AccountSideBar() {
           <SidebarComp HandleClick={() => handleClick("reading-history")}>
             <>
               <FcReading />
-              Reading History
+              Reads
             </>
           </SidebarComp>
         </div>
@@ -66,7 +70,7 @@ export function AccountSideBar() {
           <SidebarComp HandleClick={() => handleClick("my-contributions")}>
             <>
               <SiBookstack />
-              My Contributions
+              MyUploads
             </>
           </SidebarComp>
         </div>
@@ -253,7 +257,7 @@ function BarItem({ name, icon }) {
 const SidebarComp = ({ children, HandleClick }) => {
   return (
     <div
-      className={`item text-md flex items-center gap-3 p-2`}
+      className={`item text-md flex items-center gap-3 p-2 w-1/2 sm:w-auto sm:mx-0 mx-auto`}
       onClick={HandleClick}
     >
       {children}

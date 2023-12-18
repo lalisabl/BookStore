@@ -71,8 +71,8 @@ const ProfileDetail = () => {
   return (
     <div>
       <div
-        className=" ml-4  sm:mt-6 p-8 text-lg"
-        style={{ marginLeft: "16.66667%" }}
+        className=" ml-4  sm:mt-6 pl-2 pr-2 text-lg m-0
+        sm:ml-[16.66667%]"
       >
         {loading ? (
           <span>Loading...</span>
