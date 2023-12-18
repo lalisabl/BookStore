@@ -86,7 +86,7 @@ const ProfileDetail = () => {
                 {fullName !== "" ? (
                   <p className="text-gray-600">{fullName}</p>
                 ) : (
-                  <p className="text-gray-600">{user.fullName}</p>
+                  <p className="text-gray-600">{user.profile.fullName}</p>
                 )}
                 <button onClick={handleEditFullName} className="btn">
                   Edit
