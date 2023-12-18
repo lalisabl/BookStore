@@ -39,6 +39,7 @@ export function BookGrid({ books }) {
                 className="bg-gray-100"
               />
             </span>
+            
             <div  className=" text-sm p-1">
               <div className="font-bold text-left">
                 {book.title.length > 35
