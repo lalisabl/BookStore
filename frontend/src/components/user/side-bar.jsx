@@ -159,7 +159,7 @@ export function RightSideContent({ close }) {
 
     if (isConfirmed) {
       try {
-        await axios.get(`${apiurl}/users/logout`);
+        await axios.get(`${apiurl}/users/logout`, { withCredentials: true });
         navigate("/");
       } catch (error) {
         console.error("Logout failed", error);
