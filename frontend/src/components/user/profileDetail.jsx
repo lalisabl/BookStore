@@ -313,14 +313,16 @@ function ProfilePhotoUploader({ user }) {
           className="pro ml-5 pl-8 text-sm absolute left-12"
           style={{ bottom: "-70%" }}
         >
-          <h4 className="text-lg font-bold">{user.fullName}</h4>
+          <h4 className="text-lg font-bold">{user.profile.fullName}</h4>
           <p className="text-gray-600 flex gap-4">
             <div className="flex flex-col sm:flex-row items-center sm:items-start">
               <p className="mr-4 cursor-pointer" onClick={handleGetFollowers}>
-                <span className="font-bold text-lg">10K</span> Followers
+                <span className="font-bold text-lg">{user.numFollowers}</span>{" "}
+                Followers
               </p>
               <p className="cursor-pointer" onClick={handleGetFollowing}>
-                <span className="font-bold text-lg">1K</span> Following
+                <span className="font-bold text-lg">{user.numFollowing}</span>{" "}
+                Following
               </p>
             </div>
           </p>

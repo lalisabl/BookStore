@@ -27,6 +27,10 @@ const userSchema = new Schema({
       default: [],
     },
   ],
+  numFollowers: {
+    type: Number,
+    default: 0,
+  },
   following: [
     {
       type: Schema.Types.ObjectId,
@@ -34,6 +38,10 @@ const userSchema = new Schema({
       default: [],
     },
   ],
+  numFollowing: {
+    type: Number,
+    default: 0,
+  },
   isLocked: {
     type: Boolean,
     default: false,
@@ -122,6 +130,7 @@ userSchema.methods.createPasswordResetToken = function () {
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
   return resetToken;
 };
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

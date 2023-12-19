@@ -223,7 +223,7 @@ exports.getAllBooks = async (req, res) => {
     const Books = await features.query.select("-reviews -reports").populate({
       path: "user",
       select:
-        "email created_at username profile.picture profile.bio id fullName",
+        "email created_at username profile.picture profile.bio id profile.fullName",
     });
     res.status(200).json({
       status: "success",
