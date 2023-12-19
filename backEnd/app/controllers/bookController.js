@@ -1,4 +1,6 @@
 const Book = require("../models/bookModel");
+const Notification = require("../models/notificationModel");
+const User = require("../models/UserModel");
 const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
@@ -218,7 +220,7 @@ exports.getAllBooks = async (req, res) => {
       .limiting()
       .paginatinating();
 
-    const Books = await features.query.populate({
+    const Books = await features.query.select("-reviews -reports").populate({
       path: "user",
       select:
         "email created_at username profile.picture profile.bio id profile.fullName",
@@ -245,11 +247,18 @@ book by its ID. */
 exports.getEachBook = catchAsync(async (req, res, next) => {
   const id = req.params.id;
 
-  const book = await Book.findById(id).populate({
-    path: "user",
-    select: "email created_at username profile.picture profile.bio id fullName",
-  });
-  console.log(book);
+  const book = await Book.findById(id)
+    .select("-reports")
+    .populate({
+      path: "user",
+      select:
+        "email created_at username profile.picture profile.bio  fullName",
+    })
+    .populate({
+      path: "reviews.user_id",
+      select: "username profile.picture id fullName",
+    });
+
   res.status(200).json({
     status: "success",
     data: {
@@ -259,11 +268,10 @@ exports.getEachBook = catchAsync(async (req, res, next) => {
 });
 
 // reaction on books
-
 // API endpoint for setting rating and review
 exports.setRate_review = catchAsync(async (req, res, next) => {
-  const { bookId, user_id /*need to be updated */, rating, comment } = req.body;
-
+  const { bookId, rating, comment } = req.body;
+  const user_id = req.user.id;
   if (!bookId || !user_id) {
     return res.status(400).json({ error: "Book ID and user ID are required." });
   }
@@ -280,7 +288,6 @@ exports.setRate_review = catchAsync(async (req, res, next) => {
   }
   // Create a notification for the user who uploaded the book for the review
 
-  console.log(book.title);
   if (book && book.user) {
     const notification = await Notification.create({
       message: `${req.user.username} wrote a review for your book.`,
