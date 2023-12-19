@@ -13,6 +13,8 @@ import { GoStarFill } from "react-icons/go";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TiDocumentAdd } from "react-icons/ti";
 import "../../assets/style/userHome.css";
+import axios from "axios";
+import { apiurl } from "../../assets/constData";
 
 export function AccountSideBar() {
   const navigate = useNavigate();
@@ -151,6 +153,20 @@ export function ProfileHeader({ close }) {
 
 export function RightSideContent({ close }) {
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const isConfirmed = window.confirm("Are you sure you want to log out?");
+
+    if (isConfirmed) {
+      try {
+        await axios.get(`${apiurl}/users/logout`);
+        navigate("/");
+      } catch (error) {
+        console.error("Logout failed", error);
+      }
+    }
+  };
+
   return (
     <>
       <ul>
@@ -174,7 +190,7 @@ export function RightSideContent({ close }) {
           <FcDownload className="icon" />
           Downloads
         </li>
-        <li>
+        <li onClick={handleLogout}>
           <MdLogout className="icon" />
           Log out
         </li>
@@ -183,7 +199,7 @@ export function RightSideContent({ close }) {
   );
 }
 
-export function UserSideBar() {
+export function UserSideBar({ setLogin }) {
   const location = useLocation();
   const navigate = useNavigate();
   const isActive = (path) => {

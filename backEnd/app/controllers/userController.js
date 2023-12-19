@@ -62,8 +62,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.getMe = catchAsync(async (req, res, next) => {
-  req.params.userId = req.params;
-  // req.params.userId = req.user.id;
+  req.params.userId = req.user.id;
   next();
 });
 // get eachuser
