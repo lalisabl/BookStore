@@ -266,7 +266,7 @@ function BarItem({ name, icon }) {
   return (
     <div className="flex cursor-pointer flex-col items-center">
       {icon}
-      <div className="text-sm">{name}</div>
+      <div className="text-sm lg:flex md:flex hidden">{name}</div>
     </div>
   );
 }

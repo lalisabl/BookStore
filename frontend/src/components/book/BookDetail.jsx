@@ -7,8 +7,6 @@ import { useEffect, useState } from "react";
 import Rating from "react-rating";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
-
-import { MdStarBorder, MdStar } from "react-icons/md";
 import { formatViews } from "./BookList";
 
 function BookNavItem({ text }) {
@@ -44,6 +42,7 @@ function BookNav() {
 
 export default function BookDetail() {
   const { id } = useParams();
+  const [update, setUpdate] = useState(false);
   // const book = BooksSample.books.filter((n) => n.id === 1)[0];
 
   const [book, setBook] = useState();
@@ -52,7 +51,7 @@ export default function BookDetail() {
     axios.get(`${apiurl}/books/get/${id}`).then((res) => {
       setBook(res.data.data.book);
     });
-  }, [id]);
+  }, [id, update]);
   function fileType(filename) {
     filename;
     if (filename && typeof filename === "string") {
@@ -114,7 +113,7 @@ export default function BookDetail() {
               </div>
             </div>
           </div>
-          <ReviewRate bookId={id} />
+          <ReviewRate update={() => setUpdate(!update)} bookId={id} />
           <ReviewRateDisplay reviews={book.reviews} />
         </>
       )}
@@ -124,7 +123,7 @@ export default function BookDetail() {
   );
 }
 
-const ReviewRate = ({ bookId }) => {
+const ReviewRate = ({ update, bookId }) => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
@@ -145,7 +144,7 @@ const ReviewRate = ({ bookId }) => {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log(res.data);
+          update();
         })
         .catch((err) => {
           console.log(err);
