@@ -105,7 +105,30 @@ export function BookList({ books }) {
   );
 }
 const Follow = () => {
-  <button className="btn-primary rounded-md ml-1">
-    <FontAwesomeIcon icon={faPlus} /> Follow
-  </button>;
+  const [isFollow, setIsfollow] = true;
+  const handlefollow = () => {
+    if (isFollow) {
+      setIsfollow(false);
+    } else {
+      setIsfollow(true);
+    }
+  };
+  return (
+    <button
+      className={`btn-primary rounded-md ml-1 ${
+        isFollow ? "follow" : "unfollow"
+      }`}
+      onClick={() => handlefollow(isFollow)}
+    >
+      {isFollow ? (
+        <div>
+          <FontAwesomeIcon icon={faPlus} /> Follow{" "}
+        </div>
+      ) : (
+        <div>
+          <FontAwesomeIcon icon={faPlus} /> unFollow{" "}
+        </div>
+      )}
+    </button>
+  );
 };
