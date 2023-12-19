@@ -1,11 +1,15 @@
 import { useParams } from "react-router-dom";
 import { BiInfoCircle, BiStar } from "react-icons/bi";
 import { GoDiscussionDuplicate } from "react-icons/go";
-import { BooksSample, apiurl } from "../../assets/constData";
-import { formatViews } from "./BookList";
+import { apiurl } from "../../assets/constData";
 import { FaUser } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import Rating from "react-rating";
+import { FaStar } from "react-icons/fa";
 import axios from "axios";
+
+import { MdStarBorder, MdStar } from "react-icons/md";
+import { formatViews } from "./BookList";
 
 function BookNavItem({ text }) {
   const icons = {
@@ -57,50 +61,62 @@ export default function BookDetail() {
     }
   }
   return (
-    <div className="mr-14">
+    <div className="pb-3">
       {book && (
-        <div className="flex m-auto w-4/6 h-auto border-t-o border-b bg-white rounded-md overflow-hidden shadow px-2">
-          <div className="flex mb-4">
-            <span>
-              <img
-                src={
-                  fileType(book?.filename) === "pdf"
-                    ? "images/pdf.png"
-                    : fileType(book?.filename) === "doc" ||
-                        fileType(book?.filename) === "docx"
-                      ? "images/word.png"
-                      : "images/default.png"
-                }
-                className="bg-gray-100"
-              />
-            </span>
-          </div>
-
-          <div className="text-left">
-            <div className="text-lg font-semibold mb-2">{book?.title}</div>
-            <div className="text-gray-600 mb-2">Views: {6780372}</div>
-            <div className="text-yellow-500 mb-2">Rating: {book?.rate}</div>
-            <div className="flex flex-col items-start">
-              <div className="flex items-center">
+        <>
+          <div className="flex m-auto md:w-4/6 shadow sm:w-full     bg-white rounded-md overflow-hidden  px-2">
+            <div className="flex mb-4">
+              <span>
                 <img
                   src={
-                    "http://localhost:5000/images/users/" +
-                    book?.user.profile?.picture +
-                    ".png"
+                    fileType(book?.filename) === "pdf"
+                      ? "/images/pdf.png"
+                      : fileType(book?.filename) === "doc" ||
+                          fileType(book?.filename) === "docx"
+                        ? "/images/word.png"
+                        : "/images/default.png"
                   }
-
-                  className="w-8 h-8 rounded-full mr-2"
+                  className="bg-gray-100 w-24 mr-2"
                 />
-                <div>{book?.user.username}</div>
+              </span>
+            </div>
+
+            <div className="text-left">
+              <div className="text-lg font-semibold mb-2">{book?.title}</div>
+              <div className="text-gray-600 mb-2">
+                Views: {formatViews(6780372)}
               </div>
-              <div className="mt-2">
-                <button className=" btn btn-primary text-white px-1 py-1">
-                  Follow
-                </button>
+              {book?.rating.length > 0 && (
+                <div className=" flex flex-col gap-1">
+                  <span className="text-sm text-gray-600">
+                    {formatViews(book?.rating[0]?.numRates)} reviews
+                  </span>
+                  <RatingDisplay avgRate={book?.rating[0]?.avgRate} />
+                </div>
+              )}
+              <div className="flex flex-col items-center mb-2">
+                <div className="flex items-center">
+                  <img
+                    src={
+                      "http://localhost:5000/images/users/" +
+                      book?.user.profile?.picture +
+                      ".png"
+                    }
+                    className="w-10 h-10 border mr-1 rounded-full"
+                  />
+                  <div className="flex flex-col">
+                    {book?.user.username}{" "}
+                    <button className=" text-sm  rounded-lg p-0 btn-primary text-white">
+                      Follow
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          <ReviewRate bookId={id} />
+          <ReviewRateDisplay reviews={book.reviews} />
+        </>
       )}
 
       <BookNav />
@@ -108,15 +124,106 @@ export default function BookDetail() {
   );
 }
 
-function ReviewRate() {
-  return (
-    <div className="bg-white w-full sm:w-1/3 md:w-1/3 lg:w-2/6 xl:w-64 rounded-md overflow-hidden shadow p-4">
-      <div className="text-lg font-semibold mb-2">Your Rating</div>
+const ReviewRate = ({ bookId }) => {
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
 
-      <div className="flex-col items-center">
-        <div className="mr-2 text-2xl">⭐️⭐️⭐️⭐️⭐️</div>
-        <div>Your Review</div>
+  const handleRatingChange = (value) => {
+    setRating(value);
+  };
+
+  const handleReviewChange = (event) => {
+    setReview(event.target.value);
+  };
+
+  const handleSaveReview = () => {
+    if (rating && review) {
+      axios
+        .post(
+          `${apiurl}/books/setRate_review`,
+          { bookId: bookId, rating: rating, comment: review },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      setRating(0);
+      setReview("");
+    }
+  };
+
+  return (
+    <div className="flex flex-col m-auto md:w-4/6 sm:w-full   mt-3 shadow bg-white rounded-md p-4">
+      <div className="mb-4">
+        <Rating
+          initialRating={rating}
+          emptySymbol={<FaStar size={32} color="#ddd" />}
+          fullSymbol={<FaStar size={32} color="#f8ce0b" />}
+          onChange={handleRatingChange}
+        />
+      </div>
+      <div className="text-right">
+        <textarea
+          className="w-full p-2 border rounded-md"
+          placeholder="Write your review..."
+          value={review}
+          onChange={handleReviewChange}
+        />
+        <button
+          className="mt-4  px-4 py-2 btn-primary text-white rounded-md"
+          onClick={handleSaveReview}
+        >
+          submit Review
+        </button>
       </div>
     </div>
   );
-}
+};
+
+const RatingDisplay = ({ avgRate, className }) => {
+  return (
+    <div className="flex text-lg ">
+      <Rating
+        className={className}
+        readonly
+        initialRating={avgRate}
+        emptySymbol={<FaStar color="#ddd" />}
+        fullSymbol={<FaStar color="#f8ce0b" />}
+      />
+      <span className={"ml-1" + " " + className}>{avgRate}</span>
+    </div>
+  );
+};
+
+const ReviewRateDisplay = ({ reviews }) => {
+  return (
+    <div className="flex flex-col m-auto md:w-4/6 sm:w-full  mt-3 shadow bg-gray-100 rounded-md p-4">
+      <h2 className="text-lg font-semibold mb-4">User Reviews</h2>
+      {reviews?.map((review) => (
+        <div key={review.id} className="mb-4 text-gray-700">
+          <div className="flex items-center mb-2 border-b">
+            <img
+              src={
+                "http://localhost:5000/images/users/" +
+                review.user_id.profile.picture
+              }
+              className="w-7 h-7 border  cursor-pointer mr-1 rounded-full"
+            />
+            <span className="text-xs cursor-pointer font-semibold ">
+              {review.user_id.fullName}
+            </span>
+          </div>
+          <div className="text-xl">
+            <RatingDisplay className={"text-sm"} avgRate={review.rating} />
+          </div>
+          <p className="pl-4">{review.comment}</p>
+          <hr className="my-2 border-t" />
+        </div>
+      ))}
+    </div>
+  );
+};
