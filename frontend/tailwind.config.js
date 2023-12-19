@@ -8,7 +8,7 @@ export default {
         primaryBackground: '#ffcc00', // Replace with your desired primary background color code
       },
       backgroundColor: {
-        primary: '#ffcc00', // Repeat the primary background color code here
+        primary_bg: '#f3f3f3', // Repeat the primary background color code here
       },
     },
 

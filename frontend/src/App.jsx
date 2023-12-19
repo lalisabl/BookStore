@@ -1,7 +1,6 @@
 import "./App.css";
-import { Register } from "./components/user/login-registration";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import GenericModal, { GenericLittleLoadingModal } from "./shared/GenericModal";
+import { GenericLittleLoadingModal } from "./shared/GenericModal";
 import { useState, useEffect } from "react";
 import { Search } from "./components/book/Search";
 import { LandingPage } from "./pages/landing";
