@@ -93,9 +93,7 @@ export function BookList({ books }) {
                       <span className="font-semibold text-gray-500">
                         {book.user.username}
                       </span>
-                      <button className="btn-primary rounded-md ml-1">
-                        <FontAwesomeIcon icon={faPlus} /> Follow
-                      </button>
+                      <Follow />
                     </div>
                   </div>
                 </div>
@@ -106,3 +104,31 @@ export function BookList({ books }) {
     </>
   );
 }
+const Follow = () => {
+  const [isFollow, setIsfollow] = true;
+  const handlefollow = () => {
+    if (isFollow) {
+      setIsfollow(false);
+    } else {
+      setIsfollow(true);
+    }
+  };
+  return (
+    <button
+      className={`btn-primary rounded-md ml-1 ${
+        isFollow ? "follow" : "unfollow"
+      }`}
+      onClick={() => handlefollow(isFollow)}
+    >
+      {isFollow ? (
+        <div>
+          <FontAwesomeIcon icon={faPlus} /> Follow{" "}
+        </div>
+      ) : (
+        <div>
+          <FontAwesomeIcon icon={faPlus} /> unFollow{" "}
+        </div>
+      )}
+    </button>
+  );
+};
