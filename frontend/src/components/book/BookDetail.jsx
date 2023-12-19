@@ -202,27 +202,31 @@ const ReviewRateDisplay = ({ reviews }) => {
   return (
     <div className="flex flex-col m-auto md:w-4/6 sm:w-full  mt-3 shadow bg-gray-100 rounded-md p-4">
       <h2 className="text-lg font-semibold mb-4">User Reviews</h2>
-      {reviews?.map((review) => (
-        <div key={review.id} className="mb-4 text-gray-700">
-          <div className="flex items-center mb-2 border-b">
-            <img
-              src={
-                "http://localhost:5000/images/users/" +
-                review.user_id.profile.picture
-              }
-              className="w-7 h-7 border  cursor-pointer mr-1 rounded-full"
-            />
-            <span className="text-xs cursor-pointer font-semibold ">
-              {review.user_id.fullName}
-            </span>
+      {reviews.length > 0 ? (
+        reviews?.map((review) => (
+          <div key={review.id} className="mb-4 text-gray-700">
+            <div className="flex items-center mb-2 border-b">
+              <img
+                src={
+                  "http://localhost:5000/images/users/" +
+                  review.user_id.profile.picture
+                }
+                className="w-7 h-7 border  cursor-pointer mr-1 rounded-full"
+              />
+              <span className="text-xs cursor-pointer font-semibold ">
+                {review.user_id.fullName}
+              </span>
+            </div>
+            <div className="text-xl">
+              <RatingDisplay className={"text-sm"} avgRate={review.rating} />
+            </div>
+            <p className="pl-4">{review.comment}</p>
+            <hr className="my-2 border-t" />
           </div>
-          <div className="text-xl">
-            <RatingDisplay className={"text-sm"} avgRate={review.rating} />
-          </div>
-          <p className="pl-4">{review.comment}</p>
-          <hr className="my-2 border-t" />
-        </div>
-      ))}
+        ))
+      ) : (
+        <>there is no reviews yet</>
+      )}
     </div>
   );
 };

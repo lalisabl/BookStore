@@ -146,7 +146,6 @@
 }
 .side-bar-item:hover {
   background-color: var(--bg-light-white);
-
   border-left: 3px solid var(--primary-color);
   color: black;
 }
@@ -161,5 +160,28 @@
 }
 
 @media screen and (max-width: 780px) {
- 
+  .left-user-side-bar {
+    min-width: 50px;
+    width: max-content;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .left-user-side-bar {
+    width: 100vw;
+    height: max-content;
+    bottom: 0;
+  }
+  .left-user-side-bar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .side-bar-item:hover ,
+  .side-bar-item.active {
+    color: black;
+    background-color: transparent;
+    border-top: 3px solid var(--primary-color);
+    border-left: none;
+  }
 }

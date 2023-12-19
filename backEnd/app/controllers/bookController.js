@@ -244,8 +244,11 @@ exports.getAllBooks = async (req, res) => {
 // GET EACH book by it's id
 /* The code `exports.getEachBook` is defining a function that handles the request to get a specific
 book by its ID. */
+
 exports.getEachBook = catchAsync(async (req, res, next) => {
   const id = req.params.id;
+  const page = parseInt(req.query.page) || 1; 
+  const pageSize = 10; 
 
   const book = await Book.findById(id)
     .select("-reports")
@@ -257,6 +260,10 @@ exports.getEachBook = catchAsync(async (req, res, next) => {
     .populate({
       path: "reviews.user_id",
       select: "username profile.picture id fullName",
+      options: {
+        skip: (page - 1) * pageSize, 
+        limit: pageSize, 
+      },
     });
 
   res.status(200).json({
@@ -266,6 +273,7 @@ exports.getEachBook = catchAsync(async (req, res, next) => {
     },
   });
 });
+
 
 // reaction on books
 // API endpoint for setting rating and review
