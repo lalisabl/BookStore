@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
+import { formatViews } from "../components/book/BookList";
 export const Books = ({ book, isGrid }) => {
   const [isFollow, setIsfollow] = useState(true);
 
@@ -63,7 +64,7 @@ export const Books = ({ book, isGrid }) => {
           <div className={`flex items-center text-xs text-gray-500 gap-2`}>
             <div className={`flex items-center mb-1"`}>
               <FontAwesomeIcon className="text-yellow-500" icon={faStar} />
-              {/* {book.rate} */} 3.5
+               {formatViews(book.rating[0]?.numRates)}
             </div>
             <div className={`flex items-center"`}>
               <FontAwesomeIcon className="text-blue-500" icon={faEye} />
