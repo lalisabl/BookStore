@@ -16,6 +16,7 @@ export default function UserHome() {
   return (
     <div>
       <HomeBanner />
+
       <div className="bg-white">
         <Filter_View />
         <Recommended />
@@ -85,7 +86,7 @@ export function HomeBanner() {
     <>
       <div>
         <div
-          className="bg-cover -z-50 top-10 left-0 sm:left-10 md:left-16 ml-0 sm:ml-2 fixed inset-0 max-h-64 w-screen"
+          className="bg-cover -z-50 top-10 left-0 sm:left-10 md:left-16 ml-0 sm:ml-2 fixed inset-0 max-h-64 w-screen banner-bg"
           style={{ backgroundImage: `url(${bgImage})` }}
         ></div>
 
