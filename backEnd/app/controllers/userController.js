@@ -141,8 +141,8 @@ exports.followUser = async (req, res) => {
     const { followerId } = req.body;
     const followedUser = await User.findById(userId);
     const numFollowers = followedUser ? followedUser.followers.length : 0;
-    const followingUser = await User.findById(followerId);
-    const numFollowing = followingUser ? followingUser.following.length : 0;
+    const followerUser = await User.findById(followerId);
+    const numFollowing = followerUser ? followerUser.following.length : 0;
     await User.findByIdAndUpdate(
       userId,
       {

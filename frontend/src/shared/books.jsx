@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
 export const Books = ({ book, isGrid }) => {
   const [isFollow, setIsfollow] = useState(true);
+
   const handlefollow = () => {
     if (isFollow) {
       setIsfollow(false);
