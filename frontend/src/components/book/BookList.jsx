@@ -27,8 +27,7 @@ export function BookList({ books }) {
 
   return (
     <>
-      <h1>List view</h1>
-      <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full">
+      <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full list-view">
         {books?.length > 0 &&
           books.map((book) => (
             <div
@@ -36,7 +35,7 @@ export function BookList({ books }) {
                 navigate("/books/" + book._id);
               }}
               key={book._id}
-              className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md"
+              className="bg-white w-auto border rounded-lg overflow-hidden shadow-sm hover:shadow-md"
             >
               <div className="flex w-full">
                 <img

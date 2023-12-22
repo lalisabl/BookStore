@@ -17,17 +17,16 @@ import { NotFound } from "./pages/NotFoundPage";
 import BookDetail from "./components/book/BookDetail";
 import { useDispatch } from "react-redux";
 import { setLoginStatus } from "./redux/actions";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 function Pages() {
   const dispatch = useDispatch();
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
         await axios.get(`${apiurl}/users/me`, { withCredentials: true });
         setLoading(true);
-        // setLogin(true);
+        setLogin(true);
         dispatch(setLoginStatus(true));
       } catch (error) {
         setLoading(true);

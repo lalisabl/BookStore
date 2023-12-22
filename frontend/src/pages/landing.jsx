@@ -11,8 +11,7 @@ export function LandingPage({ SetLogin }) {
         <HomeBanner />
       </div>
 
-      <div className="items-center flex-grow p-0  overflow-hidden ">
-        <BookCategory />
+      <div className="items-center flex-grow p-0  bg-white overflow-hidden ">
         <BookCategory />
         <BookCategory />
       </div>

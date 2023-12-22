@@ -24,10 +24,10 @@ export function BookCategory() {
 
   return (
     <div className="category-container">
-      <h2>Explore Exciting Book Categories</h2>
-      <div className="category-nav">
+      <h2 className=" text-3xl">Explore Exciting Book Categories</h2>
+      <div className="category-nav flex flex-row gap-3">
         <div
-          className={`btn btn-transparent ${
+          className={` rounded-lg text- p-1 cursor-pointer btn-transparent ${
             activeButton === "Most Popular" ? "active" : ""
           }`}
           onClick={() => handleButtonClick("Most Popular")}
@@ -35,7 +35,7 @@ export function BookCategory() {
           Most Popular
         </div>
         <div
-          className={`btn btn-transparent ${
+          className={` rounded-lg text- p-1 cursor-pointer btn-transparent ${
             activeButton === "Best Viewed" ? "active" : ""
           }`}
           onClick={() => handleButtonClick("Best Viewed")}
@@ -43,7 +43,7 @@ export function BookCategory() {
           Best Viewed
         </div>
         <div
-          className={`btn btn-transparent ${
+          className={` rounded-lg text- p-1 cursor-pointer btn-transparent ${
             activeButton === "Top Rated" ? "active" : ""
           }`}
           onClick={() => handleButtonClick("Top Rated")}
@@ -51,7 +51,7 @@ export function BookCategory() {
           Top Rated
         </div>
         <div
-          className={`btn btn-transparent ${
+          className={` rounded-lg text- p-1 cursor-pointer btn-transparent ${
             activeButton === "New Books" ? "active" : ""
           }`}
           onClick={() => handleButtonClick("New Books")}
@@ -68,19 +68,19 @@ function BookCategoryDisplay({ books }) {
   return (
     <div className="top-category">
       <div className="category-item">
-        <h1>Fiction</h1>
+        <h1 className="text-2xl mb-3">Fiction</h1>
         <BookList books={books.slice(0, 3)} />
-        <span className="btn-transparent btn">...more</span>
+        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">...more</span>
       </div>
       <div className="category-item">
-        <h1>Novels</h1>
+        <h1 className=" text-2xl mb-3">Novels</h1>
         <BookList books={books.slice(0, 3)} />
-        <span className="btn-transparent btn">...more</span>
+        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">...more</span>
       </div>
       <div className="category-item">
-        <h1>Academic</h1>
+        <h1 className=" text-2xl mb-3">Academic</h1>
         <BookList books={books.slice(0, 3)} />
-        <span className="btn-transparent btn">...more</span>
+        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">...more</span>
       </div>
     </div>
   );
