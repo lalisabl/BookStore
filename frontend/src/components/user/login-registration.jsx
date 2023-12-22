@@ -12,9 +12,12 @@ import {
 import { apiurl } from "../../assets/constData";
 import { CLIENT_ID } from "../../hidden";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoginStatus } from "../../redux/actions";
 
-export function Login({ HandleRegister, SetLogin }) {
+export function Login({ HandleRegister, success }) {
   const [identifier, setIdentifier] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const handleLoginSubmit = async (e) => {
@@ -28,10 +31,13 @@ export function Login({ HandleRegister, SetLogin }) {
         },
         { withCredentials: true }
       );
-      SetLogin(true);
-      navigate("/account/profile");
+      // SetLogin(true);
+      dispatch(setLoginStatus(true));
+      success();
+      navigate("/");
       console.log("Login successful", response.data);
     } catch (error) {
+      dispatch(setLoginStatus(false));
       console.error(
         "Login failed",
         error.response ? error.response.data : error.message
@@ -115,7 +121,8 @@ export function Login({ HandleRegister, SetLogin }) {
   );
 }
 
-export function Register({ HandleLogin }) {
+export function Register({ HandleLogin, success }) {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -154,7 +161,8 @@ export function Register({ HandleLogin }) {
     try {
       if (emailAvailability) {
         const response = await axios.post(`${apiurl}/users/register`, formData);
-
+        dispatch(setLoginStatus(true));
+        success();
         console.log("Registration successful:", response.data);
       } else {
         setFocusedInput("email");
@@ -162,13 +170,13 @@ export function Register({ HandleLogin }) {
       // Add any additional logic for successful registration (e.g., redirect)
     } catch (error) {
       console.error("Registration failed:", error.response.data);
-      // Handle registration failure (e.g., display an error message to the user)
+      dispatch(setLoginStatus(false));
     }
   };
+
   const handleWithGoogle = async () => {
     try {
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fapi%2Fv1%2Fusers%2Fauth%2Fgoogle%2Fcallback&scope=profile%20email&client_id=${CLIENT_ID}`;
-      // await axios.get(`${apiurl}/users/auth/google`, { withCredentials: true });
     } catch (err) {
       console.log("Registration field");
     }

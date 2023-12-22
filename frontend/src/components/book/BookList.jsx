@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faPlus, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function formatViews(views) {
   if (views >= 1000000000) {
@@ -105,7 +106,7 @@ export function BookList({ books }) {
   );
 }
 const Follow = () => {
-  const [isFollow, setIsfollow] = true;
+  const [isFollow, setIsfollow] = useState(true);
   const handlefollow = () => {
     if (isFollow) {
       setIsfollow(false);

@@ -73,6 +73,7 @@ export function HomeBanner() {
   };
 
   useEffect(() => {
+    dispatch(setScrollState(false));
     window.addEventListener("scroll", handleScroll);
 
     return () => {
