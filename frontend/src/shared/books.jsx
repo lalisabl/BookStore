@@ -1,17 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
+import { apiurl } from "../assets/constData";
+import axios from "axios";
 export const Books = ({ book, isGrid }) => {
   const [isFollow, setIsfollow] = useState(true);
+  const [currentUser, setCurrentUser] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${apiurl}/users/me`, {
+          withCredentials: true,
+        });
+        setCurrentUser(response.data.data.user);
+        console.log(response.data.data.user);
+      } catch (err) {
+        console.log("Error fetching data", err);
+      }
+    };
 
-  const handlefollow = () => {
+    fetchData();
+    setIsfollow(currentUser && currentUser.following.includes(book.user._id));
+  }, [currentUser, book.user._id]);
+
+  const handlefollow = (isFollow, uploaderId) => {
+    console.log(uploaderId);
     if (isFollow) {
-      setIsfollow(false);
-    } else {
-      setIsfollow(true);
+      try {
+        axios.post(`${apiurl}/users/uploaderId`, { withCredentials: true });
+        setIsfollow(false);
+      } catch (err) {
+        setIsfollow(true);
+      }
     }
   };
+
   const navigate = useNavigate();
   function fileType(filename) {
     filename;
@@ -95,9 +119,9 @@ export const Books = ({ book, isGrid }) => {
                 className={`btn-primary rounded-md ml-1 ${
                   isFollow ? "follow" : "unfollow"
                 }`}
-                onClick={() => handlefollow(isFollow)}
+                onClick={() => handlefollow(isFollow, book.user._id)}
               >
-                {isFollow ? <div>Follow </div> : <div>unFollow </div>}
+                {isFollow ? <p>Follow </p> : <p>unFollow </p>}
               </button>
             </div>
           </div>
