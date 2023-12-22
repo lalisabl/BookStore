@@ -8,10 +8,16 @@ import DropdownButton from "../../shared/dropdown";
 import Select from "react-select";
 import { BiSearch } from "react-icons/bi";
 import { useSelector } from "react-redux";
+import GenericModal from "../../shared/GenericModal";
+import { Login, Register } from "./login-registration";
 
 export default function UserNav() {
+  const isLogin = useSelector((state) => state.store.isLogin);
   const [language, setLanguage] = useState("en");
   const isScrolled = useSelector((state) => state.store.isScrolled);
+
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
   const handleChangeLanguage = (newLanguage) => {
     setLanguage(newLanguage);
   };
@@ -37,7 +43,23 @@ export default function UserNav() {
       link: "/My-favorites",
     },
   ];
+  const handleSignInClick = (param) => {
+    if (param) {
+      setShowLoginPopup(true);
+    } else {
+      setShowLoginPopup(false);
+      setShowRegisterPopup(true);
+    }
+  };
 
+  const handleSignUpClick = (param) => {
+    if (param) {
+      setShowRegisterPopup(true);
+    } else {
+      setShowRegisterPopup(false);
+      setShowLoginPopup(true);
+    }
+  };
   return (
     <div>
       <div>
@@ -50,7 +72,9 @@ export default function UserNav() {
             />
             <DropdownButton buttonTitle={"Books"} dropDownContent={dropdown} />
           </div>
-          {isScrolled && <SearchInp /> }
+
+          {isScrolled && <SearchInp />}
+
           <div className="nav-left flex items-center">
             <div
               className=" flex items-center cursor-pointer"
@@ -59,13 +83,16 @@ export default function UserNav() {
               <FaHome className="icon text-lg" />
               Home
             </div>
-            <div
-              onClick={() => navigate("/My-favorites")}
-              className="favorites flex items-center cursor-pointer"
-            >
-              <GoStarFill className="mr-1" />
-              Fav
-            </div>
+
+            {isLogin && (
+              <div
+                onClick={() => navigate("/My-favorites")}
+                className="favorites flex items-center cursor-pointer"
+              >
+                <GoStarFill className="mr-1" />
+                Fav
+              </div>
+            )}
 
             <div className="langueges flex items-center">
               <PiGlobe className="mr-1" />
@@ -79,21 +106,70 @@ export default function UserNav() {
                 <option value="fr">amh</option>
               </select>
             </div>
-            <button onClick={handleClick} className="btn profile">
-              <img
-                src="/images/male.png"
-                className="w-10 h-10 rounded-full overflow-hidden"
-                alt="userPhoto"
-              />
-            </button>
+            {isLogin ? (
+              <div>
+                <img
+                  onClick={handleClick}
+                  src="/images/male.png"
+                  className="w-10 cursor-pointer h-10 rounded-full overflow-hidden hover:border"
+                  alt="userPhoto"
+                />
+              </div>
+            ) : (
+              <div>
+                <button
+                  onClick={() => handleSignUpClick(true)}
+                  className="m-1 btn-primary rounded-lg p-1"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => handleSignInClick(true)}
+                  className="m-1 btn-primary-white rounded-lg p-1"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
 
-            {isRightSideBarVisible && (
+            {isRightSideBarVisible && isLogin && (
               <RightSideBar
                 closeBar={() => {
                   setRightSideBarVisibility(false);
                 }}
                 show={isRightSideBarVisible}
               />
+            )}
+
+            {showLoginPopup && (
+              <>
+                <GenericModal
+                  isOpen={showLoginPopup}
+                  onClose={() => setShowLoginPopup(false)}
+                >
+                  <Login
+                    success={() => {
+                      setShowLoginPopup(false);
+                    }}
+                    HandleRegister={() => handleSignInClick(false)}
+                  />
+                </GenericModal>
+              </>
+            )}
+            {showRegisterPopup && (
+              <>
+                <GenericModal
+                  isOpen={showRegisterPopup}
+                  onClose={() => setShowRegisterPopup(false)}
+                >
+                  <Register
+                    success={() => {
+                      setShowRegisterPopup(false);
+                    }}
+                    HandleLogin={() => handleSignUpClick(false)}
+                  />
+                </GenericModal>
+              </>
             )}
           </div>
         </div>

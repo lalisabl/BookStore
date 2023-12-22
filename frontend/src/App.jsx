@@ -15,8 +15,12 @@ import axios from "axios";
 import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
 import BookDetail from "./components/book/BookDetail";
+import { useDispatch } from "react-redux";
+import { setLoginStatus } from "./redux/actions";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 function Pages() {
-  const [login, setLogin] = useState(false);
+  const dispatch = useDispatch();
+  const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -24,9 +28,11 @@ function Pages() {
         await axios.get(`${apiurl}/users/me`, { withCredentials: true });
         setLoading(true);
         setLogin(true);
+        dispatch(setLoginStatus(true));
       } catch (error) {
         setLoading(true);
-        setLogin(false);
+        dispatch(setLoginStatus(false));
+        // setLogin(false);
         console.log(error.response ? error.response.data : error.message);
       }
     };
@@ -88,6 +94,7 @@ function Pages() {
             ) : (
               <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
             )}
+            <Route path="/books/:id" element={<BookDetail />} />
             <Route path="search/" element={<Search />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
