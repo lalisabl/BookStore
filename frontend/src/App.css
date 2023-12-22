@@ -42,7 +42,7 @@ body {
   --bg-light-white: #f3f3f3;
   --color-danger: rgb(156, 15, 15);
 }
-.bg-light-white{
+.bg-light-white {
   background-color: var(--bg-light-white);
 }
 
@@ -99,29 +99,20 @@ a {
   background-color: #d6d5d5;
 }
 .btn-transparent {
-  background: linear-gradient(
-    to right,
-    transparent 50%,
-    var(--accent-color) 50%
-  );
-  background-size: 200% 100%;
-  background-position: 0 0;
+  background-color: transparent;
+  transition: background-color 0.3s ease-in-out;
   border: 1px solid rgba(0, 0, 0);
-  transition:
-    background-position 0.3s,
-    border-color 0.3s,
-    color 0.3s;
-  position: relative; /* Ensure the button content is above the gradient */
+  cursor: pointer;
 }
 
 .btn-transparent:hover {
-  background-position: 100% 0;
-  border: var(--accent-color);
   color: white;
+  background-color: var(--primary-color-lighter);
+  border: 1px solid var(--primary-color);
 }
 .btn-transparent.active {
-  background-position: 100%;
-  border: var(--accent-color);
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
   color: white;
 }
 
@@ -134,7 +125,24 @@ body {
   background-color: white;
   margin: 0;
 }
-
+.landing-pg .banner-bg {
+  margin-left: 0;
+  left: 0;
+}
+.top-category .list-view {
+  width: 100%;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+@media screen and (min-width: 640) {
+  .landing-pg .banner-bg {
+    margin-left: 0;
+    left: 0;
+  }
+  .top-category .list-view {
+    width: 100%;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
 @media screen and (max-width: 768px) {
   .mobile-hidden {
     display: none;
