@@ -106,7 +106,7 @@ const BookForm = () => {
   };
 
   return (
-    <div className="book-form-container mx-auto flex items-center justify-center ">
+    <div className="m-auto flex items-center justify-center">
       {loading && <GenericLittleLoadingModal isOpen={loading} />}
 
       <form
@@ -222,7 +222,7 @@ const CustomFileInput = ({ onChange }) => {
 
   return (
     <div
-      className="custom-file-input"
+      className="custom-file-input w-full"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >

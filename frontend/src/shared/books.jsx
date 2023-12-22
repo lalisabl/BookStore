@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
 import { apiurl } from "../assets/constData";
 import axios from "axios";
+import { formatViews } from "../components/book/BookList";
 export const Books = ({ book, isGrid }) => {
   const [isFollow, setIsfollow] = useState(true);
   const [currentUser, setCurrentUser] = useState([]);
@@ -65,7 +66,7 @@ export const Books = ({ book, isGrid }) => {
           }
           alt={book.title}
           className={`${
-            !isGrid ? "w-20  h-auto object-contai" : ""
+            !isGrid ? "w-24  h-auto object-contai" : ""
           } bg-gray-100`}
         />
 
@@ -87,7 +88,7 @@ export const Books = ({ book, isGrid }) => {
           <div className={`flex items-center text-xs text-gray-500 gap-2`}>
             <div className={`flex items-center mb-1"`}>
               <FontAwesomeIcon className="text-yellow-500" icon={faStar} />
-              {/* {book.rate} */} 3.5
+              {formatViews(book.rating[0]?.numRates)}
             </div>
             <div className={`flex items-center"`}>
               <FontAwesomeIcon className="text-blue-500" icon={faEye} />

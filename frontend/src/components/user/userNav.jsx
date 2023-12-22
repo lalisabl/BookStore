@@ -118,13 +118,13 @@ export default function UserNav() {
             ) : (
               <div>
                 <button
-                  onClick={() => handleSignUpClick(true)}
+                  onClick={() => handleSignInClick(true)}
                   className="m-1 btn-primary rounded-lg p-1"
                 >
                   Login
                 </button>
                 <button
-                  onClick={() => handleSignInClick(true)}
+                  onClick={() => handleSignUpClick(true)}
                   className="m-1 btn-primary-white rounded-lg p-1"
                 >
                   Sign Up
