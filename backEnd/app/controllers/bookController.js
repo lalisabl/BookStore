@@ -212,6 +212,7 @@ class APIfeatures {
 // get all Books
 exports.getAllBooks = async (req, res) => {
   try {
+    
     //4 excute query
     const features = new APIfeatures(Book.find(), req.query)
       .multfilter()
@@ -225,6 +226,7 @@ exports.getAllBooks = async (req, res) => {
       select:
         "email created_at username profile.picture profile.bio id profile.fullName",
     });
+
     res.status(200).json({
       status: "success",
       results: Books.length,

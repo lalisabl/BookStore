@@ -147,7 +147,7 @@
   padding-bottom: 13px;
 }
 .side-bar-item:hover {
-  background-color:#d6d5d5;
+  background-color: #d6d5d5;
   color: black;
 }
 .side-bar-item.active::before {
@@ -163,9 +163,11 @@
   height: 100%;
   width: 5px;
   background-color: transparent;
-  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
   transform-origin: center;
-  transform: scaleY(0); 
+  transform: scaleY(0);
 }
 
 .side-bar-item:hover::before {
@@ -195,12 +197,19 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    gap: 3px;
   }
-  .side-bar-item:hover,
-  .side-bar-item.active {
-    color: black;
-    background-color: transparent;
-    border-top: 3px solid var(--primary-color);
-    border-left: none;
+  .side-bar-item {
+    width: 70%;
+    max-width: 80%;
+   
+  }
+  .side-bar-item::before {
+    width: 100%;
+    height: 5px;
+    transform: scaleX(0);
+  }
+  .side-bar-item:hover::before {
+    transform: scaleX(1);
   }
 }

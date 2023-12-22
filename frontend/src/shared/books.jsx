@@ -41,7 +41,7 @@ export const Books = ({ book, isGrid }) => {
           }
           alt={book.title}
           className={`${
-            !isGrid ? "w-20  h-auto object-contai" : ""
+            !isGrid ? "w-24  h-auto object-contai" : ""
           } bg-gray-100`}
         />
 
