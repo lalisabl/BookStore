@@ -5,9 +5,11 @@ import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
 import { apiurl } from "../assets/constData";
 import axios from "axios";
 import { formatViews } from "../components/book/BookList";
+import { useSelector } from "react-redux";
 export const Books = ({ book, isGrid }) => {
   const [isFollow, setIsfollow] = useState(true);
   const [currentUser, setCurrentUser] = useState([]);
+  const userInfo = useSelector((state) => state.store.userInfo);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -15,7 +17,7 @@ export const Books = ({ book, isGrid }) => {
           withCredentials: true,
         });
         setCurrentUser(response.data.data.user);
-        console.log(response.data.data.user);
+        // console.log(response.data.data.user);
       } catch (err) {
         console.log("Error fetching data", err);
       }
@@ -26,7 +28,7 @@ export const Books = ({ book, isGrid }) => {
   }, [currentUser, book.user._id]);
 
   const handlefollow = (isFollow, uploaderId) => {
-    console.log(uploaderId);
+    // console.log(uploaderId);
     if (isFollow) {
       try {
         axios.post(`${apiurl}/users/uploaderId`, { withCredentials: true });

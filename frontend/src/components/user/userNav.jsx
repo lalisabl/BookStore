@@ -13,7 +13,7 @@ import { Login, Register } from "./login-registration";
 
 export default function UserNav() {
   const isLogin = useSelector((state) => state.store.isLogin);
-  const userInfo = useSelector((state) => state.store.userInfo);
+  
 
   const [language, setLanguage] = useState("en");
   const isScrolled = useSelector((state) => state.store.isScrolled);
