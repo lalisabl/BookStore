@@ -24,7 +24,7 @@ export const Books = ({ book, isGrid }) => {
     };
 
     fetchData();
-    setIsfollow(currentUser && currentUser.following.includes(book.user._id));
+    // setIsfollow(currentUser && currentUser.following.includes(book.user._id));
   }, [currentUser, book.user._id]);
 
   const handlefollow = (isFollow, uploaderId) => {

@@ -1,13 +1,15 @@
 import { useParams } from "react-router-dom";
-import { BiInfoCircle, BiStar } from "react-icons/bi";
+import { BiDownload, BiInfoCircle, BiStar } from "react-icons/bi";
 import { GoDiscussionDuplicate } from "react-icons/go";
 import { apiurl } from "../../assets/constData";
-import { FaUser } from "react-icons/fa";
+import { FaReadme, FaUser } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Rating from "react-rating";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { formatViews } from "./BookList";
+import { LoadingCardVert } from "../../shared/LoadingCard";
+import { MdRateReview } from "react-icons/md";
 
 function BookNavItem({ text }) {
   const icons = {
@@ -43,14 +45,19 @@ function BookNav() {
 export default function BookDetail() {
   const { id } = useParams();
   const [update, setUpdate] = useState(false);
-  // const book = BooksSample.books.filter((n) => n.id === 1)[0];
-
+  const [loading, setLoading] = useState(true);
   const [book, setBook] = useState();
 
   useEffect(() => {
-    axios.get(`${apiurl}/books/get/${id}`).then((res) => {
-      setBook(res.data.data.book);
-    });
+    axios
+      .get(`${apiurl}/books/get/${id}`)
+      .then((res) => {
+        setBook(res.data.data.book);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, [id, update]);
   function fileType(filename) {
     filename;
@@ -61,60 +68,84 @@ export default function BookDetail() {
   }
   return (
     <div className="pb-3">
-      {book && (
+      {loading ? (
+        <div className="flex m-auto md:w-4/6 shadow sm:w-full     bg-white rounded-md overflow-hidden  px-2">
+          <LoadingCardVert />
+        </div>
+      ) : (
         <>
-          <div className="flex m-auto md:w-4/6 shadow sm:w-full     bg-white rounded-md overflow-hidden  px-2">
-            <div className="flex mb-4">
-              <span>
-                <img
-                  src={
-                    fileType(book?.filename) === "pdf"
-                      ? "/images/pdf.png"
-                      : fileType(book?.filename) === "doc" ||
-                          fileType(book?.filename) === "docx"
-                        ? "/images/word.png"
-                        : "/images/default.png"
-                  }
-                  className="bg-gray-100 w-24 mr-2"
-                />
-              </span>
-            </div>
-
-            <div className="text-left">
-              <div className="text-lg font-semibold mb-2">{book?.title}</div>
-              <div className="text-gray-600 mb-2">
-                Views: {formatViews(6780372)}
-              </div>
-              {book?.rating.length > 0 && (
-                <div className=" flex flex-col gap-1">
-                  <span className="text-sm text-gray-600">
-                    {formatViews(book?.rating[0]?.numRates)} reviews
+          {book && (
+            <>
+              <div className="flex m-auto md:w-4/6 shadow sm:w-full     bg-white rounded-md overflow-hidden  px-2">
+                <div className="flex mb-4">
+                  <span>
+                    <img
+                      src={
+                        fileType(book?.filename) === "pdf"
+                          ? "/images/pdf.png"
+                          : fileType(book?.filename) === "doc" ||
+                              fileType(book?.filename) === "docx"
+                            ? "/images/word.png"
+                            : "/images/default.png"
+                      }
+                      className="bg-gray-100 w-24 mr-2"
+                    />
                   </span>
-                  <RatingDisplay avgRate={book?.rating[0]?.avgRate} />
                 </div>
-              )}
-              <div className="flex flex-col items-center mb-2">
-                <div className="flex items-center">
-                  <img
-                    src={
-                      "http://localhost:5000/images/users/" +
-                      book?.user.profile?.picture +
-                      ".png"
-                    }
-                    className="w-10 h-10 border mr-1 rounded-full"
-                  />
-                  <div className="flex flex-col">
-                    {book?.user.username}{" "}
-                    <button className=" text-sm  rounded-lg p-0 btn-primary text-white">
-                      Follow
-                    </button>
+
+                <div className="text-left">
+                  <div className="text-lg font-semibold mb-2">
+                    {book?.title}
+                  </div>
+                  <div className="text-gray-600 mb-2">
+                    Views: {formatViews(6780372)}
+                  </div>
+                  {book?.rating.length > 0 && (
+                    <div className=" flex flex-col gap-1">
+                      <span className="text-sm text-gray-600">
+                        {formatViews(book?.rating[0]?.numRates)} reviews
+                      </span>
+                      <RatingDisplay avgRate={book?.rating[0]?.avgRate} />
+                    </div>
+                  )}
+                  <div className="flex flex-col items-center mb-2">
+                    <div className="flex items-center">
+                      <img
+                        src={
+                          "http://localhost:5000/images/users/" +
+                          book?.user.profile?.picture +
+                          ".png"
+                        }
+                        className="w-10 h-10 border mr-1 rounded-full"
+                      />
+                      <div className="flex flex-col">
+                        {book?.user.username}{" "}
+                        <button className=" text-sm  rounded-lg p-0 btn-primary text-white">
+                          Follow
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <div className=" ml-24 mb-4 flex gap-3 items-end justify-right text-right">
+                  <button className="m-1 flex items-center bg-gray-200 border rounded-lg p-1 hover:bg-gray-300">
+                    <BiDownload className="text-xl" />
+                    <span>Download</span>
+                  </button>
+                  <button className="m-1 flex items-center bg-gray-200 border rounded-lg p-1 hover:bg-gray-300">
+                    <FaReadme />
+                    Read Online
+                  </button>
+                  <button className="m-1 flex items-center bg-gray-200 border rounded-lg p-1 hover:bg-gray-300">
+                    <MdRateReview />
+                    Give rate
+                  </button>
+                </div>
               </div>
-            </div>
-          </div>
-          <ReviewRate update={() => setUpdate(!update)} bookId={id} />
-          <ReviewRateDisplay reviews={book.reviews} />
+              <ReviewRate update={() => setUpdate(!update)} bookId={id} />
+              <ReviewRateDisplay reviews={book.reviews} />
+            </>
+          )}
         </>
       )}
 
