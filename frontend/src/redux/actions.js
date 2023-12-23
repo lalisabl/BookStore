@@ -12,3 +12,7 @@ export const setLoginStatus = (isLogin) => ({
   type: "SET_LOGIN_STATUS",
   payload: isLogin,
 });
+export const setUserInfo = (userInfo) => ({
+  type: "SET_USER_INFO",
+  payload: userInfo,
+});

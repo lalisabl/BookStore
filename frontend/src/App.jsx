@@ -16,7 +16,7 @@ import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
 import BookDetail from "./components/book/BookDetail";
 import { useDispatch } from "react-redux";
-import { setLoginStatus } from "./redux/actions";
+import { setLoginStatus, setUserInfo } from "./redux/actions";
 function Pages() {
   const dispatch = useDispatch();
   const [login, setLogin] = useState(true);
@@ -24,10 +24,13 @@ function Pages() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await axios.get(`${apiurl}/users/me`, { withCredentials: true });
+        const res = await axios.get(`${apiurl}/users/me`, {
+          withCredentials: true,
+        });
         setLoading(true);
         setLogin(true);
         dispatch(setLoginStatus(true));
+        dispatch(setUserInfo(res.data.data.user));
       } catch (error) {
         setLoading(true);
         dispatch(setLoginStatus(false));

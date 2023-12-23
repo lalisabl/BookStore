@@ -2,6 +2,7 @@ const initialState = {
   isScrolled: false,
   isList: false,
   isLogin: false,
+  userInfo: [],
 };
 
 const Reducer = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const Reducer = (state = initialState, action) => {
       return {
         ...state,
         isLogin: action.payload,
+      };
+    case "SET_USER_INFO":
+      return {
+        ...state,
+        userInfo: action.payload,
       };
     default:
       return state;
