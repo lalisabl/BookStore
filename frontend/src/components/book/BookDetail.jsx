@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BiDownload, BiInfoCircle, BiStar } from "react-icons/bi";
 import { GoDiscussionDuplicate } from "react-icons/go";
 import { apiurl } from "../../assets/constData";
@@ -66,6 +66,7 @@ export default function BookDetail() {
       return fileExtension;
     }
   }
+  const navigate = useNavigate();
   return (
     <div className="pb-3">
       {loading ? (
@@ -119,7 +120,7 @@ export default function BookDetail() {
                         className="w-10 h-10 border mr-1 rounded-full"
                       />
                       <div className="flex flex-col">
-                        {book?.user.username}{" "}
+                        {book?.user.username}
                         <button className=" text-sm  rounded-lg p-0 btn-primary text-white">
                           Follow
                         </button>
@@ -132,17 +133,26 @@ export default function BookDetail() {
                     <BiDownload className="text-xl" />
                     <span>Download</span>
                   </button>
-                  <button className="m-1 flex items-center bg-gray-200 border rounded-lg p-1 hover:bg-gray-300">
+                  <button
+                    onClick={() => navigate("./read")}
+                    className="m-1 flex items-center bg-gray-200 border rounded-lg p-1 hover:bg-gray-300"
+                  >
                     <FaReadme />
                     Read Online
                   </button>
-                  <button className="m-1 flex items-center bg-gray-200 border rounded-lg p-1 hover:bg-gray-300">
+                  <a
+                    href="#give_rate"
+                    className="m-1 flex items-center bg-gray-200 border rounded-lg p-1 hover:bg-gray-300"
+                  >
                     <MdRateReview />
                     Give rate
-                  </button>
+                  </a>
                 </div>
               </div>
-              <ReviewRate update={() => setUpdate(!update)} bookId={id} />
+
+              <div className="flex flex-col m-auto md:w-4/6 sm:w-full   mt-3 shadow bg-white rounded-md p-4">
+                <ReviewRate update={() => setUpdate(!update)} bookId={id} />
+              </div>
               <ReviewRateDisplay reviews={book.reviews} />
             </>
           )}
@@ -187,7 +197,7 @@ const ReviewRate = ({ update, bookId }) => {
   };
 
   return (
-    <div className="flex flex-col m-auto md:w-4/6 sm:w-full   mt-3 shadow bg-white rounded-md p-4">
+    <div id="give_rate">
       <div className="mb-4">
         <Rating
           initialRating={rating}

@@ -17,7 +17,7 @@ export function BookList({ books }) {
   return (
     <>
       <h1>List view</h1>
-      <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full">
+      <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full mb-10">
         {books?.length > 0 &&
           books.map((book) => (
             <Books key={book._id} book={book} isGrid={false} />

@@ -88,6 +88,10 @@ function Pages() {
                   path="/books/:id"
                   element={<UserPage path={<BookDetail />} />}
                 />
+                <Route
+                  path="/books/:id/read"
+                  element={<UserPage path={<PDFViewer />} />}
+                />
 
                 <Route
                   path="search/"
@@ -98,6 +102,7 @@ function Pages() {
               <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
             )}
             <Route path="/books/:id" element={<BookDetail />} />
+            <Route path="/books/:id/read" element={<PDFViewer />} />
             <Route path="search/" element={<Search />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
@@ -111,7 +116,6 @@ function App() {
   return (
     <div>
       <Pages />
-      {/* <PDFViewer/> */}
     </div>
   );
 }
