@@ -76,7 +76,7 @@ export default function BookDetail() {
         <>
           {book && (
             <>
-              <div className="flex m-auto md:w-4/6 shadow sm:w-full     bg-white rounded-md overflow-hidden  px-2">
+              <div className="flex flex-wrap m-auto md:w-4/6 shadow sm:w-full     bg-white rounded-md overflow-hidden  px-2">
                 <div className="flex mb-4">
                   <span>
                     <img
@@ -108,7 +108,7 @@ export default function BookDetail() {
                       <RatingDisplay avgRate={book?.rating[0]?.avgRate} />
                     </div>
                   )}
-                  <div className="flex flex-col items-center mb-2">
+                  <div className="flex flex-col items-start mb-2">
                     <div className="flex items-center">
                       <img
                         src={
