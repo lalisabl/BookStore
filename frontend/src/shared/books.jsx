@@ -8,23 +8,6 @@ import { formatViews } from "../components/book/BookList";
 export const Books = ({ book, isGrid }) => {
   const [isFollow, setIsfollow] = useState(true);
   const [currentUser, setCurrentUser] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${apiurl}/users/me`, {
-          withCredentials: true,
-        });
-        setCurrentUser(response.data.data.user);
-        console.log(response.data.data.user);
-      } catch (err) {
-        console.log("Error fetching data", err);
-      }
-    };
-
-    fetchData();
-    setIsfollow(currentUser && currentUser.following.includes(book.user._id));
-  }, [currentUser, book.user._id]);
-
   const handlefollow = (isFollow, uploaderId) => {
     console.log(uploaderId);
     if (isFollow) {
