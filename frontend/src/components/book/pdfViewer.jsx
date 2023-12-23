@@ -17,7 +17,7 @@ export default function PDFViewer() {
     axios
       .get(`${apiurl}/books/getLocation/${id}`)
       .then((res) => {
-        console.log(res.data.fileLocation);
+        // console.log(res.data.fileLocation);
         setFileUrl(res.data.fileLocation);
       })
       .catch((err) => {});
