@@ -131,38 +131,38 @@ exports.signupValidation = catchAsync(async (req, res) => {
     respondAvailabilty(existingEmail);
   }
 });
-// const updateFollowerFollowingCounts=async(followingId,followerId){
-
-// }
 exports.followUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { followerId } = req.user.id;
+    const followerId = req.user.id;
     const followedUser = await User.findById(userId);
-    const numFollowers = followedUser ? followedUser.followers.length : 0;
     const followerUser = await User.findById(followerId);
-    const numFollowing = followerUser ? followerUser.following.length : 0;
-    await User.findByIdAndUpdate(
-      userId,
-      {
-        $addToSet: { followers: followerId },
-        $set: { numFollowers: numFollowers + 1 },
-      },
-      { new: true }
-    );
-    await User.findByIdAndUpdate(
-      followerId,
-      {
-        $addToSet: { following: userId },
-        $set: { numFollowing: numFollowing + 1 },
-      },
-      { new: true }
-    );
 
-    // await updateFollowerFollowingCounts(userId,followerId);
-    res
-      .status(200)
-      .json({ success: true, message: "User followed successfully." });
+    if (followedUser && followerUser) {
+      const numFollowers = followedUser.followers.length;
+      const numFollowing = followerUser.following.length;
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          $addToSet: { followers: followerId },
+          $set: { numFollowers: numFollowers + 1 },
+        },
+        { new: true }
+      );
+      await User.findByIdAndUpdate(
+        followerId,
+        {
+          $addToSet: { following: userId },
+          $set: { numFollowing: numFollowing + 1 },
+        },
+        { new: true }
+      );
+      res
+        .status(200)
+        .json({ success: true, message: "User followed successfully." });
+    } else {
+      res.status(404).json({ success: false, error: "no user with this id" });
+    }
   } catch (error) {
     console.error("Error following user:", error);
     res.status(500).json({ success: false, error: "Internal Server Error" });

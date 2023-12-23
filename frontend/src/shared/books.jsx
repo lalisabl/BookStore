@@ -8,10 +8,17 @@ import { formatViews } from "../components/book/BookList";
 import { useSelector } from "react-redux";
 export const Books = ({ book, isGrid }) => {
   const [isFollow, setIsFollow] = useState(false);
+  const [loading, setLoading] = useState(true);
   const userInfo = useSelector((state) => state.store.userInfo);
   useEffect(() => {
     if (userInfo && userInfo.following) {
-      setIsFollow(userInfo.following.includes(book.user._id));
+      setIsFollow(
+        userInfo.following.some((item) => item._id === book.user._id)
+      );
+      setLoading(false);
+    } else {
+      setIsFollow(false);
+      setLoading(false);
     }
   }, [userInfo, book.user._id]);
   const handleFollow = async (isFollow, uploaderId) => {
@@ -23,6 +30,16 @@ export const Books = ({ book, isGrid }) => {
         setIsFollow(true);
       } catch (err) {
         setIsFollow(false);
+        console.error("Error following user:", err);
+      }
+    } else {
+      try {
+        await axios.post(`${apiurl}/users/unfollow/${uploaderId}`, null, {
+          withCredentials: true,
+        });
+        setIsFollow(false);
+      } catch (err) {
+        setIsFollow(true);
         console.error("Error following user:", err);
       }
     }
@@ -107,14 +124,18 @@ export const Books = ({ book, isGrid }) => {
                 {book.user.username}
               </span>
 
-              <button
-                className={`btn-primary rounded-md ml-1 ${
-                  !isFollow ? "follow" : "unfollow"
-                }`}
-                onClick={() => handleFollow(isFollow, book.user._id)}
-              >
-                {!isFollow ? <p>Follow </p> : <p>unFollow </p>}
-              </button>
+              {loading ? (
+                <span>...</span>
+              ) : (
+                <button
+                  className={`btn-primary rounded-md ml-1 ${
+                    !isFollow ? "follow" : "unfollow"
+                  }`}
+                  onClick={() => handleFollow(isFollow, book.user._id)}
+                >
+                  {!isFollow ? <p>Follow </p> : <p>unFollow </p>}
+                </button>
+              )}
             </div>
           </div>
         </div>
