@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { apiurl, enumCategories, enumCategoriesOptions } from "../../assets/constData";
+import {
+  apiurl,
+  enumCategories,
+  enumCategoriesOptions,
+} from "../../assets/constData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faFile } from "@fortawesome/free-solid-svg-icons";
 import { GenericLittleLoadingModal } from "../../shared/GenericModal";
@@ -32,13 +36,20 @@ const BookForm = () => {
     downloadable: "no",
   });
 
+  const handleChangeCategory = (selectedOption) => {
+    const categoryValue = selectedOption ? selectedOption.value : ""; // Use an empty string if no category selected
+
+    setFormData({
+      ...formData,
+      category: categoryValue,
+    });
+  };
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
-
   const handleFileChange = (e) => {
     const file = event.target.files[0];
     setFormData({
@@ -142,10 +153,9 @@ const BookForm = () => {
             isClearable
             options={enumCategoriesOptions}
             placeholder="Categories"
-            onChange={handleChange}
+            onChange={handleChangeCategory}
             className="z-100 mr-3 w-full"
           />
-         
         </div>
 
         <div className="mb-4">

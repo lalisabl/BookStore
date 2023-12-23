@@ -17,6 +17,7 @@ import { NotFound } from "./pages/NotFoundPage";
 import BookDetail from "./components/book/BookDetail";
 import { useDispatch } from "react-redux";
 import { setLoginStatus, setUserInfo } from "./redux/actions";
+import PDFViewer from "./components/book/pdfViewer";
 function Pages() {
   const dispatch = useDispatch();
   const [login, setLogin] = useState(true);
@@ -109,7 +110,8 @@ function Pages() {
 function App() {
   return (
     <div>
-      <Pages />
+      {/* <Pages /> */}
+      <PDFViewer/>
     </div>
   );
 }

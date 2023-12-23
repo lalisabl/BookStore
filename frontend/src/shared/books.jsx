@@ -67,8 +67,9 @@ export const Books = ({ book, isGrid }) => {
           } p-1`}
         >
           <div className="text-sm text-left font-semibold mb-1">
-            {window.innerWidth < 700 && book.title.length > 35
-              ? `${book.title.substring(0, 35)}...`
+
+            {window.innerWidth < 700 || isGrid && book.title.length > 35
+              ? `${book.title.substring(0, 35)}...` 
               : window.innerWidth < 1000 && book.title.length > 75
                 ? `${book.title.substring(0, 75)}...`
                 : book.title.length > 95

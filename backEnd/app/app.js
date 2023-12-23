@@ -30,6 +30,6 @@ app.use("/api/v1/favorites", favoriteRoute);
 app.use("/api/v1/notification", notificationRoute);
 
 app.use(express.static("public"));
-
+app.use(express.static("uploads"));
 app.use(globalErrorHandler);
 module.exports = app;
