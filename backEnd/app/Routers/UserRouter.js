@@ -39,11 +39,8 @@ router.get(
   passport.authenticate("google", { failureRedirect: "/", session: false }),
   authController.googleSignInRedirect
 );
-router.post(
-  "/follow/:userId",
-  authController.protect,
-  userController.followUser
-);
+router.use(authController.protect);
+router.post("/follow/:userId", userController.followUser);
 router.post("/unfollow/:userId", userController.unfollowUser);
 router.get("/followers/:userId", userController.getFollowers);
 router.get("/following/:userId", userController.getFollowing);

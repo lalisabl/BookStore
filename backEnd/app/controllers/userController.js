@@ -131,7 +131,7 @@ exports.signupValidation = catchAsync(async (req, res) => {
     respondAvailabilty(existingEmail);
   }
 });
-exports.followUser = async (req, res) => {
+const followUnfollowUser = async (req, res, action) => {
   try {
     const { userId } = req.params;
     const followerId = req.user.id;
@@ -141,67 +141,59 @@ exports.followUser = async (req, res) => {
     if (followedUser && followerUser) {
       const numFollowers = followedUser.followers.length;
       const numFollowing = followerUser.following.length;
-      await User.findByIdAndUpdate(
-        userId,
-        {
-          $addToSet: { followers: followerId },
-          $set: { numFollowers: numFollowers + 1 },
-        },
-        { new: true }
-      );
-      await User.findByIdAndUpdate(
-        followerId,
-        {
-          $addToSet: { following: userId },
-          $set: { numFollowing: numFollowing + 1 },
-        },
-        { new: true }
-      );
-      res
-        .status(200)
-        .json({ success: true, message: "User followed successfully." });
+
+      const updateFollowedUser =
+        action === "follow"
+          ? {
+              $addToSet: { followers: followerId },
+              $set: { numFollowers: numFollowers + 1 },
+            }
+          : {
+              $pull: { followers: followerId },
+              $set: { numFollowers: numFollowers - 1 },
+            };
+
+      const updateFollowerUser =
+        action === "follow"
+          ? {
+              $addToSet: { following: userId },
+              $set: { numFollowing: numFollowing + 1 },
+            }
+          : {
+              $pull: { following: userId },
+              $set: { numFollowing: numFollowing - 1 },
+            };
+
+      await User.findByIdAndUpdate(userId, updateFollowedUser, { new: true });
+      await User.findByIdAndUpdate(followerId, updateFollowerUser, {
+        new: true,
+      });
+
+      const successMessage =
+        action === "follow"
+          ? "User followed successfully."
+          : "User unfollowed successfully.";
+      res.status(200).json({ success: true, message: successMessage });
     } else {
-      res.status(404).json({ success: false, error: "no user with this id" });
+      res.status(404).json({ success: false, error: "No user with this id" });
     }
   } catch (error) {
-    console.error("Error following user:", error);
+    console.error(
+      `Error ${action === "follow" ? "following" : "unfollowing"} user:`,
+      error
+    );
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
+};
+
+exports.followUser = async (req, res) => {
+  await followUnfollowUser(req, res, "follow");
 };
 
 exports.unfollowUser = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const { followerId } = req.body;
-    const followedUser = await User.findById(userId);
-    const numFollowers = followedUser ? followedUser.followers.length : 0;
-    const followingUser = await User.findById(followerId);
-    const numFollowing = followingUser ? followingUser.following.length : 0;
-    await User.findByIdAndUpdate(
-      userId,
-      {
-        $pull: { followers: followerId },
-        $set: { numFollowers: numFollowers - 1 },
-      },
-      { new: true }
-    );
-    await User.findByIdAndUpdate(
-      followerId,
-      {
-        $pull: { following: userId },
-        $set: { numFollowing: numFollowing - 1 },
-      },
-      { new: true }
-    );
-
-    res
-      .status(200)
-      .json({ success: true, message: "User unfollowed successfully." });
-  } catch (error) {
-    console.error("Error unfollowing user:", error);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
-  }
+  await followUnfollowUser(req, res, "unfollow");
 };
+
 exports.getFollowers = async (req, res) => {
   try {
     const { userId } = req.params;
