@@ -7,35 +7,25 @@ import axios from "axios";
 import { formatViews } from "../components/book/BookList";
 import { useSelector } from "react-redux";
 export const Books = ({ book, isGrid }) => {
-  const [isFollow, setIsfollow] = useState(true);
-  const [currentUser, setCurrentUser] = useState([]);
+  const [isFollow, setIsFollow] = useState(true);
   const userInfo = useSelector((state) => state.store.userInfo);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${apiurl}/users/me`, {
-          withCredentials: true,
-        });
-        setCurrentUser(response.data.data.user);
-        // console.log(response.data.data.user);
-      } catch (err) {
-        console.log("Error fetching data", err);
-      }
-    };
-
-    fetchData();
-    // setIsfollow(currentUser && currentUser.following.includes(book.user._id));
-  }, [currentUser, book.user._id]);
-
-  const handlefollow = (isFollow, uploaderId) => {
-    // console.log(uploaderId);
+    if (userInfo.length > 0) {
+      setIsFollow(userInfo.following.includes(book.user._id));
+    }
+  }, [userInfo, book.user._id]);
+  const handleFollow = (isFollow, uploaderId) => {
     if (isFollow) {
-      try {
-        axios.post(`${apiurl}/users/uploaderId`, { withCredentials: true });
-        setIsfollow(false);
-      } catch (err) {
-        setIsfollow(true);
-      }
+      axios
+        .post(`${apiurl}/users/${uploaderId}`, { withCredentials: true })
+        .then(() => {
+          setIsFollow(false);
+          console.log("Followed successfully");
+        })
+        .catch((err) => {
+          setIsFollow(true);
+          console.error("Error following user:", err);
+        });
     }
   };
 
@@ -122,7 +112,7 @@ export const Books = ({ book, isGrid }) => {
                 className={`btn-primary rounded-md ml-1 ${
                   isFollow ? "follow" : "unfollow"
                 }`}
-                onClick={() => handlefollow(isFollow, book.user._id)}
+                onClick={() => handleFollow(isFollow, book.user._id)}
               >
                 {isFollow ? <p>Follow </p> : <p>unFollow </p>}
               </button>

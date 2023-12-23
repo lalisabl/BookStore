@@ -137,8 +137,7 @@ exports.signupValidation = catchAsync(async (req, res) => {
 exports.followUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    // change to user.id after connected to
-    const { followerId } = req.body;
+    const { followerId } = req.user.id;
     const followedUser = await User.findById(userId);
     const numFollowers = followedUser ? followedUser.followers.length : 0;
     const followerUser = await User.findById(followerId);
