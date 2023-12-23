@@ -1,60 +1,70 @@
 import { Viewer, Worker } from "@react-pdf-viewer/core";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import { toolbarPlugin } from "@react-pdf-viewer/toolbar";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
+import { themePlugin } from "@react-pdf-viewer/theme";
+import { fullScreenPlugin } from "@react-pdf-viewer/full-screen";
+import "@react-pdf-viewer/full-screen/lib/styles/index.css";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { apiurl } from "../../assets/constData";
 
 export default function PDFViewer() {
-  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  const { id } = useParams();
+  const [fileUrl, setFileUrl] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`${apiurl}/books/getLocation/${id}`)
+      .then((res) => {
+        console.log(res.data.fileLocation);
+        setFileUrl(res.data.fileLocation);
+      })
+      .catch((err) => {});
+  }, [id]);
+
+  const themePluginInstance = themePlugin();
+  const { SwitchThemeButton } = themePluginInstance;
   const toolbarPluginInstance = toolbarPlugin();
+  const fullScreenPluginInstance = fullScreenPlugin();
   const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
-  const fileUrl = `http://localhost:5000/file-1703320013937.pdf`;
+  // const fileUrl = `http://localhost:5000/file-1703320013937.pdf`;
   const transformToolbarSlot = (slot) => ({
     ...slot,
     Download: () => <></>,
     DownloadMenuItem: () => <></>,
-    EnterFullScreen: () => <></>,
-    EnterFullScreenMenuItem: () => <></>,
-    SwitchTheme: () => <></>,
-    SwitchThemeMenuItem: () => <></>,
+    Open: () => <></>,
+    OpenMenuItem: () => <></>,
+    Print: () => <></>,
+    PrintMenuItem: () => <></>,
   });
   return (
-    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
-      {/* <div style={{ height: "750px" }}>
-        <Viewer
-          fileUrl={`http://localhost:5000/file-1703320013937.pdf`}
-          plugins={[defaultLayoutPluginInstance]}
-        />
-      </div> */}
-      <div
-        className="rpv-core__viewer"
-        style={{
-          border: "1px solid rgba(0, 0, 0, 0.3)",
-          display: "flex",
-          flexDirection: "column",
-          height: "100%",
-        }}
-      >
-        <div
-          style={{
-            alignItems: "center",
-            backgroundColor: "#eeeeee",
-            borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            padding: "0.25rem",
-          }}
-        >
-          <Toolbar>{renderDefaultToolbar(transformToolbarSlot)}</Toolbar>
-        </div>
-        <div
-          style={{
-            flex: 1,
-            overflow: "hidden",
-          }}
-        >
-          <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
-        </div>
-      </div>
-    </Worker>
+    <>
+      {fileUrl && (
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
+          <div style={{height:"100vh"}} className="rpv-core__viewer flex flex-col border">
+            <div className="absolute top-0 right-0 flex flex-col z-40  bg-primary_bg p-1.5">
+              <Toolbar>{renderDefaultToolbar(transformToolbarSlot)}</Toolbar>
+            </div>
+            <div
+              style={{
+                flex: 1,
+                overflow: "hidden",
+              }}
+            >
+              <Viewer
+                theme="auto"
+                fileUrl={fileUrl}
+                plugins={[
+                  themePluginInstance,
+                  toolbarPluginInstance,
+                  fullScreenPluginInstance,
+                ]}
+              />
+            </div>
+          </div>
+        </Worker>
+      )}
+    </>
   );
 }

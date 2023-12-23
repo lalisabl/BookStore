@@ -212,7 +212,6 @@ class APIfeatures {
 // get all Books
 exports.getAllBooks = async (req, res) => {
   try {
-    
     //4 excute query
     const features = new APIfeatures(Book.find(), req.query)
       .multfilter()
@@ -249,22 +248,21 @@ book by its ID. */
 
 exports.getEachBook = catchAsync(async (req, res, next) => {
   const id = req.params.id;
-  const page = parseInt(req.query.page) || 1; 
-  const pageSize = 10; 
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 10;
 
   const book = await Book.findById(id)
     .select("-reports")
     .populate({
       path: "user",
-      select:
-        "email created_at username profile.picture profile.bio  fullName",
+      select: "email created_at username profile.picture profile.bio  fullName",
     })
     .populate({
       path: "reviews.user_id",
       select: "username profile.picture id fullName",
       options: {
-        skip: (page - 1) * pageSize, 
-        limit: pageSize, 
+        skip: (page - 1) * pageSize,
+        limit: pageSize,
       },
     });
 
@@ -275,7 +273,6 @@ exports.getEachBook = catchAsync(async (req, res, next) => {
     },
   });
 });
-
 
 // reaction on books
 // API endpoint for setting rating and review
@@ -359,7 +356,8 @@ exports.getFileLocation = async (req, res, next) => {
     }
 
     // Construct the complete file location URL
-    const fileLocationURL = `${process.env.BASE_URL}/uploads/${book.filename}`;
+    //need to be edited
+    const fileLocationURL = `http://localhost:5000/${book.filename}`;
 
     // Return the file location URL
     return res.status(200).json({ fileLocation: fileLocationURL });
