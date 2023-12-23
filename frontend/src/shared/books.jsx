@@ -7,24 +7,24 @@ import axios from "axios";
 import { formatViews } from "../components/book/BookList";
 import { useSelector } from "react-redux";
 export const Books = ({ book, isGrid }) => {
-  const [isFollow, setIsFollow] = useState(true);
+  const [isFollow, setIsFollow] = useState(false);
   const userInfo = useSelector((state) => state.store.userInfo);
   useEffect(() => {
     if (userInfo && userInfo.following) {
       setIsFollow(userInfo.following.includes(book.user._id));
     }
   }, [userInfo, book.user._id]);
-  const handleFollow = (isFollow, uploaderId) => {
-    if (isFollow) {
-      axios
-        .post(`${apiurl}/users/follow/${uploaderId}`, { withCredentials: true })
-        .then(() => {
-          setIsFollow(false);
-        })
-        .catch((err) => {
-          setIsFollow(true);
-          console.error("Error following user:", err);
+  const handleFollow = async (isFollow, uploaderId) => {
+    if (!isFollow) {
+      try {
+        await axios.post(`${apiurl}/users/follow/${uploaderId}`, null, {
+          withCredentials: true,
         });
+        setIsFollow(true);
+      } catch (err) {
+        setIsFollow(false);
+        console.error("Error following user:", err);
+      }
     }
   };
 
@@ -109,11 +109,11 @@ export const Books = ({ book, isGrid }) => {
 
               <button
                 className={`btn-primary rounded-md ml-1 ${
-                  isFollow ? "follow" : "unfollow"
+                  !isFollow ? "follow" : "unfollow"
                 }`}
                 onClick={() => handleFollow(isFollow, book.user._id)}
               >
-                {isFollow ? <p>Follow </p> : <p>unFollow </p>}
+                {!isFollow ? <p>Follow </p> : <p>unFollow </p>}
               </button>
             </div>
           </div>
