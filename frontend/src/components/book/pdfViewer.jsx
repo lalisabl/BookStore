@@ -42,16 +42,14 @@ export default function PDFViewer() {
     <>
       {fileUrl && (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
-          <div style={{height:"100vh"}} className="rpv-core__viewer flex flex-col border">
-            <div className="absolute top-0 right-0 flex flex-col z-40  bg-primary_bg p-1.5">
+          <div
+            style={{ height: "100vh", maxWidth: "100%" }}
+            className="rpv-core__viewer overflow-y-scroll overflow-x-hidden"
+          >
+            <div className="absolute top-0 left-96  z-40  bg-primary_bg p-1.5">
               <Toolbar>{renderDefaultToolbar(transformToolbarSlot)}</Toolbar>
             </div>
-            <div
-              style={{
-                flex: 1,
-                overflow: "hidden",
-              }}
-            >
+            <div>
               <Viewer
                 theme="auto"
                 fileUrl={fileUrl}

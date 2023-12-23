@@ -207,7 +207,7 @@ export function UserSideBar({ setLogin }) {
   };
 
   return (
-    <div className="left-user-side-bar mt-14 text-center">
+    <div className="left-user-side-bar mt-14 text-center z-50">
       <ul className="flex flex-col">
         <li
           className={`side-bar-item ${
