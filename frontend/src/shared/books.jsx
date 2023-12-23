@@ -17,7 +17,7 @@ export const Books = ({ book, isGrid }) => {
   const handleFollow = (isFollow, uploaderId) => {
     if (isFollow) {
       axios
-        .post(`${apiurl}/users/${uploaderId}`, { withCredentials: true })
+        .post(`${apiurl}/users/follow/${uploaderId}`, { withCredentials: true })
         .then(() => {
           setIsFollow(false);
           console.log("Followed successfully");
