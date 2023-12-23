@@ -2,7 +2,7 @@ const initialState = {
   isScrolled: false,
   isList: false,
   isLogin: false,
-  userInfo: [],
+  userInfo: {},
 };
 
 const Reducer = (state = initialState, action) => {

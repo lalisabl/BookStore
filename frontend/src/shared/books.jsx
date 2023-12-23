@@ -10,17 +10,16 @@ export const Books = ({ book, isGrid }) => {
   const [isFollow, setIsFollow] = useState(true);
   const userInfo = useSelector((state) => state.store.userInfo);
   useEffect(() => {
-    if (userInfo.length > 0) {
+    if (userInfo && userInfo.following) {
       setIsFollow(userInfo.following.includes(book.user._id));
     }
   }, [userInfo, book.user._id]);
   const handleFollow = (isFollow, uploaderId) => {
     if (isFollow) {
       axios
-        .post(`${apiurl}/users/${uploaderId}`, { withCredentials: true })
+        .post(`${apiurl}/users/follow/${uploaderId}`, { withCredentials: true })
         .then(() => {
           setIsFollow(false);
-          console.log("Followed successfully");
         })
         .catch((err) => {
           setIsFollow(true);
