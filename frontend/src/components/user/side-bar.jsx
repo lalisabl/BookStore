@@ -6,7 +6,7 @@ import { FaUserGear } from "react-icons/fa6";
 import { FaSortDown } from "react-icons/fa";
 import { BiSolidUpArrow } from "react-icons/bi";
 import { RiArrowUpSFill } from "react-icons/ri";
-
+import GenericModal from "../../shared/GenericModal";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose, MdLogout } from "react-icons/md";
 import { GoStarFill } from "react-icons/go";
@@ -154,17 +154,14 @@ export function ProfileHeader({ close }) {
 
 export function RightSideContent({ close }) {
   const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
 
-  const handleLogout = async () => {
-    const isConfirmed = window.confirm("Are you sure you want to log out?");
-
-    if (isConfirmed) {
-      try {
-        await axios.get(`${apiurl}/users/logout`, { withCredentials: true });
-        navigate("/");
-      } catch (error) {
-        console.error("Logout failed", error);
-      }
+  const handleLogoutConfirmed = async () => {
+    try {
+      await axios.get(`${apiurl}/users/logout`, { withCredentials: true });
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed", error);
     }
   };
 
@@ -191,11 +188,17 @@ export function RightSideContent({ close }) {
           <FcDownload className="icon" />
           Downloads
         </li>
-        <li onClick={handleLogout}>
-          <MdLogout className="icon" />
-          Log out
-        </li>
+        <li onClick={() => setShowPopup(true)}>Logout</li>
       </ul>
+      {showPopup && (
+        <GenericModal isOpen={showPopup} onClose={() => setShowPopup(false)}>
+          <Popup
+            message="Are you sure you want to log out?"
+            onConfirm={handleLogoutConfirmed}
+            onCancel={() => setShowPopup(false)}
+          />
+        </GenericModal>
+      )}
     </>
   );
 }
@@ -278,6 +281,15 @@ const SidebarComp = ({ children, HandleClick }) => {
       onClick={HandleClick}
     >
       {children}
+    </div>
+  );
+};
+const Popup = ({ message, onConfirm, onCancel }) => {
+  return (
+    <div className="popup">
+      <p>{message}</p>
+      <button onClick={onConfirm}>Yes</button>
+      <button onClick={onCancel}>No</button>
     </div>
   );
 };
