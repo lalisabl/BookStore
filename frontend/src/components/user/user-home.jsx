@@ -89,7 +89,7 @@ export function HomeBanner() {
           className="bg-cover bg-center -z-50 top-10 left-0 sm:left-10 md:left-16 ml-0 sm:ml-2 fixed inset-0 h-96  w-screen banner-bg"
           style={{ backgroundImage: `url("/images/searchb1.jpg")` }}
         >
-          <div className="absolute top-0 left-0 h-full w-full bg-black bg-opacity-60"></div>
+          <div className="absolute top-0 left-0 h-full w-full bg-primary  bg-opacity-50"></div>
         </div>
 
         <div

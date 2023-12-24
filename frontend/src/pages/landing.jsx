@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookCategory } from "../components/book/bookCategory";
+import { BookCategory, FeaturedBooks } from "../components/book/bookCategory";
 import { NavBarLanding } from "../components/common/navBar";
 import { HomeBanner } from "../components/user/user-home";
 import UserNav from "../components/user/userNav";
@@ -14,9 +14,10 @@ export function LandingPage({ SetLogin }) {
         <HomeBanner />
       </div>
 
-      <div className="items-center gap-24 flex flex-col flex-grow p-0  bg-white overflow-hidden ">
+      <div className="items-center gap-20 flex flex-col flex-grow p-0  bg-white overflow-hidden ">
         <BookCategory />
         <LandingBanner1 />
+        <FeaturedBooks />
       </div>
       <Footer />
     </>
@@ -51,7 +52,7 @@ function LandingBanner1() {
           backgroundImage: 'url("/images/servicebg3.jpg")',
         }}
       >
-        <div className="absolute top-0 bottom-0 inset-0 bg-black opacity-60"></div>
+        <div className="absolute top-0 bottom-0 inset-0 bg-primary opacity-40"></div>
         <div className="flex flex-col gap-2  w-full h-full  relative">
           <div className="ml-4 lg:ml-24 text-gray-100 text-4xl sm:text-7xl font-semibold ">
             Dive into a World of Stories at Tome Readers!
