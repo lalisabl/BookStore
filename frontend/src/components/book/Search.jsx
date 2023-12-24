@@ -72,9 +72,6 @@ export function Filter_View() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(isList);
-  }, [isList]);
 
   return (
     <div

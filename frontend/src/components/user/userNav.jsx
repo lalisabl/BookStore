@@ -3,7 +3,7 @@ import { PiGlobe } from "react-icons/pi";
 import { ProfileHeader, RightSideBar } from "./side-bar";
 import { FaBars, FaHome } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DropdownButton from "../../shared/dropdown";
 import Select from "react-select";
 import { BiSearch } from "react-icons/bi";
