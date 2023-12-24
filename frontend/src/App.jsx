@@ -20,7 +20,7 @@ import { setLoginStatus, setUserInfo } from "./redux/actions";
 import PDFViewer from "./components/book/pdfViewer";
 function Pages() {
   const dispatch = useDispatch();
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +35,7 @@ function Pages() {
       } catch (error) {
         setLoading(true);
         dispatch(setLoginStatus(false));
-        // setLogin(false);
+        setLogin(false);
         console.log(error.response ? error.response.data : error.message);
       }
     };

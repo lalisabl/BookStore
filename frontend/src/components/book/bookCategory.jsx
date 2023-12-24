@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { apiurl } from "../../assets/constData";
 import { BookList } from "./BookList";
+import { LoadingCardList } from "../../shared/LoadingCard";
 
 export function BookCategory() {
   const [activeButton, setActiveButton] = useState("Most Popular");
-
+  const [loading, setLoading] = useState(true);
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
   };
@@ -15,10 +16,12 @@ export function BookCategory() {
       .get(`${apiurl}/books/get`)
       .then((res) => {
         setBooks(res.data.data.Books);
-        console.log();
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -59,28 +62,65 @@ export function BookCategory() {
           New Books
         </div>
       </div>
-      <BookCategoryDisplay books={books} />
+      <BookCategoryDisplay books={books} loading={loading} />
     </div>
   );
 }
 
-function BookCategoryDisplay({ books }) {
+function BookCategoryDisplay({ books, loading }) {
   return (
     <div className="top-category">
       <div className="category-item">
         <h1 className="text-2xl mb-3">Fiction</h1>
-        <BookList books={books.slice(0, 3)} />
-        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">...more</span>
+        {loading ? (
+          <div className="grid grid-cols-1 m-auto">
+            <LoadingCardList />
+            <LoadingCardList />
+            <LoadingCardList />
+          </div>
+        ) : (
+          <>
+            <BookList books={books.slice(0, 3)} />
+          </>
+        )}
+
+        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">
+          ...more
+        </span>
       </div>
       <div className="category-item">
         <h1 className=" text-2xl mb-3">Novels</h1>
-        <BookList books={books.slice(0, 3)} />
-        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">...more</span>
+        {loading ? (
+          <div className="grid grid-cols-1 m-auto">
+            <LoadingCardList />
+            <LoadingCardList />
+            <LoadingCardList />
+          </div>
+        ) : (
+          <>
+            <BookList books={books.slice(0, 3)} />
+          </>
+        )}
+        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">
+          ...more
+        </span>
       </div>
       <div className="category-item">
         <h1 className=" text-2xl mb-3">Academic</h1>
-        <BookList books={books.slice(0, 3)} />
-        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">...more</span>
+        {loading ? (
+          <div className="grid grid-cols-1 m-auto">
+            <LoadingCardList />
+            <LoadingCardList />
+            <LoadingCardList />
+          </div>
+        ) : (
+          <>
+            <BookList books={books.slice(0, 3)} />
+          </>
+        )}
+        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">
+          ...more
+        </span>
       </div>
     </div>
   );
