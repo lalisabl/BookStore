@@ -34,8 +34,6 @@ export function HomeBanner() {
   const setSearch = (e) => {
     setSearchQ(e.target.value);
   };
-  const [SearchParams, setSearchParams] = useState("");
-
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     searchParams.set("q", searchQ);
@@ -86,8 +84,10 @@ export function HomeBanner() {
     <>
       <div>
         <div
-          className="bg-cover bg-center -z-50 top-10 left-0 sm:left-10 md:left-16 ml-0 sm:ml-2 fixed inset-0 h-96  w-screen banner-bg"
-          style={{ backgroundImage: `url("/images/searchb1.jpg")` }}
+          className="bg-cover bg-center -z-50 top-10 left-0 sm:left-10 md:left-16 ml-0 sm:ml-2 fixed  h-96 overflow-hidden  w-screen banner-bg"
+          style={{
+            backgroundImage: `url("/images/searchb1.jpg")`,
+          }}
         >
           <div className="absolute top-0 left-0 h-full w-full bg-primary  bg-opacity-50"></div>
         </div>
@@ -105,21 +105,22 @@ export function HomeBanner() {
                 options={enumCategoriesOptions}
                 placeholder="Categories"
                 onChange={handleSelectChange}
-                className="z-100 mr-3"
+                className="z-100 sm:mr-3 mr-1"
               />
-              <span className="items-center">
+              <div className="items-center flex">
                 <input
                   onChange={setSearch}
-                  className="p-3  banner-search border rounded rounded-r-none border-gray-300"
+                  className="p-3 banner-search border rounded rounded-r-none border-gray-300"
                   type="text"
                   value={searchQ}
                   title="text"
                   placeholder="Search book here"
                 />
-                <button className="p-3  btn-primary text-white rounded-r-md">
-                  Search
+                <button className="p-3 flex  btn-primary text-white rounded-r-md">
+                  <FaSearch className="text-2xl" />
+                  <div className="hidden sm:flex">Search</div>
                 </button>
-              </span>
+              </div>
             </form>
           </div>
           <SearchRecommenderTag />
@@ -132,7 +133,7 @@ export function HomeBanner() {
 function SearchRecommenderTag() {
   const recommended = [`top new book`, "chemistry", "poetry", "handout"];
   return (
-    <div className="flex gap-3">
+    <div className="flex flex-wrap gap-2">
       {recommended.map((s, index) => (
         <div key={index}>
           <span className="border  bg-gray-50 bg-opacity-30 hover:bg-opacity-40 pl-3 pr-3 items-center rounded-full flex cursor-pointer">

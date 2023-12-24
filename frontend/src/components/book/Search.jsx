@@ -34,9 +34,12 @@ export function Search() {
 
   const isList = useSelector((state) => state.store.isList);
   return (
-    <div className="pl-3 pr-3">
+    <div>
       <HomeBanner />
-      <div style={{ minHeight: "50vh" }} className="bg-white w-full">
+      <div
+        style={{ minHeight: "50vh" }}
+        className="pl-3 pr-3 bg-white w-screen"
+      >
         <Filter_View />
         {isList ? <BookList books={books} /> : <BookGrid books={books} />}
       </div>
@@ -69,9 +72,6 @@ export function Filter_View() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(isList);
-  }, [isList]);
 
   return (
     <div

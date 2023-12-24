@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { BookCategory, FeaturedBooks } from "../components/book/bookCategory";
-import { NavBarLanding } from "../components/common/navBar";
 import { HomeBanner } from "../components/user/user-home";
 import UserNav from "../components/user/userNav";
 import Footer from "../components/common/footer";
@@ -14,7 +13,7 @@ export function LandingPage({ SetLogin }) {
         <HomeBanner />
       </div>
 
-      <div className="items-center gap-20 flex flex-col flex-grow p-0  bg-white overflow-hidden ">
+      <div className="items-center w-full gap-20 flex flex-col flex-grow p-0  bg-white overflow-hidden ">
         <BookCategory />
         <LandingBanner1 />
         <FeaturedBooks />
