@@ -3,6 +3,8 @@ import axios from "axios";
 import { apiurl } from "../../assets/constData";
 import { BookList } from "./BookList";
 import { LoadingCardList } from "../../shared/LoadingCard";
+import GetBooks from "./getBooks";
+import { BookGrid } from "./BookGrid";
 
 export function BookCategory() {
   const [activeButton, setActiveButton] = useState("Most Popular");
@@ -122,6 +124,30 @@ function BookCategoryDisplay({ books, loading }) {
           ...more
         </span>
       </div>
+    </div>
+  );
+}
+
+export function FeaturedBooks() {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get(`${apiurl}/books/get`)
+      .then((res) => {
+        setBooks(res.data.data.Books);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+  return (
+    <div className="m-3">
+      <h1 className="text-3xl mb-3">Featured Books</h1>
+      <BookGrid books={books.slice(0, 8)} />
     </div>
   );
 }
