@@ -184,18 +184,18 @@ export function RightSideContent({ close }) {
             close();
           }}
         >
-          <FaUserGear className="icon" /> Account detail
+          <FaUserGear className="text-xl mr-3" /> Account detail
         </li>
         <li>
-          <GoStarFill className="icon" />
+          <GoStarFill className="text-xl mr-3" />
           Favorites
         </li>
         <li>
-          <SiBookstack className="icon" />
+          <SiBookstack className="text-xl mr-3" />
           My Contributions
         </li>
         <li>
-          <FcDownload className="icon" />
+          <FcDownload className="text-xl mr-3" />
           Downloads
         </li>
         <li onClick={openModal}>Logout</li>
@@ -218,7 +218,7 @@ export function UserSideBar({ setLogin }) {
   };
 
   return (
-    <div className="left-user-side-bar mt-14 text-center z-20">
+    <div className="left-user-side-bar mt-14 text-center z-0">
       <ul className="flex flex-col">
         <li
           className={`side-bar-item ${
