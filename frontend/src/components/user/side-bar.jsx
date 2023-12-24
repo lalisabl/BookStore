@@ -169,7 +169,9 @@ export function RightSideContent({ close }) {
   const handleLogoutConfirmed = async () => {
     try {
       await axios.get(`${apiurl}/users/logout`, { withCredentials: true });
+      setModalIsOpen(false);
       navigate("/");
+      window.location.reload();
     } catch (error) {
       console.error("Logout failed", error);
     }
