@@ -16,7 +16,8 @@ import "../../assets/style/userHome.css";
 import axios from "axios";
 import { apiurl } from "../../assets/constData";
 import { useSelector } from "react-redux";
-
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 export function AccountSideBar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -145,7 +146,7 @@ export function ProfileHeader({ close, userInfo }) {
             close();
           }}
           className="mr-2 rounded-full p-0 h-20 w-auto"
-          src="/images/placeholder.jpg"
+          src={`http://localhost:5000/images/users/${userInfo.profile.picture}`}
         />
         <div>
           <h4>Hi,{userInfo.profile?.fullName}</h4>
@@ -293,10 +294,6 @@ const SidebarComp = ({ children, HandleClick }) => {
     </div>
   );
 };
-
-import Modal from "react-modal";
-Modal.setAppElement("#root");
-
 const Popup = ({ message, onConfirm, modalIsOpen, closeModal }) => {
   return (
     <Modal
