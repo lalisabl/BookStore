@@ -114,8 +114,7 @@ export default function BookDetail() {
                       <img
                         src={
                           "http://localhost:5000/images/users/" +
-                          book?.user.profile?.picture +
-                          ".png"
+                          book?.user.profile?.picture
                         }
                         className="w-10 h-10 border mr-1 rounded-full"
                       />
