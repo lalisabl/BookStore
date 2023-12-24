@@ -174,21 +174,24 @@ export function RightSideContent({ close }) {
             close();
           }}
         >
-          <FaUserGear className="icon" /> Account detail
+          <FaUserGear className="text-xl mr-3" /> Account detail
         </li>
         <li>
-          <GoStarFill className="icon" />
+          <GoStarFill className="text-xl mr-3" />
           Favorites
         </li>
         <li>
-          <SiBookstack className="icon" />
+          <SiBookstack className="text-xl mr-3" />
           My Contributions
         </li>
         <li>
-          <FcDownload className="icon" />
+          <FcDownload className="text-xl mr-3" />
           Downloads
         </li>
-        <li onClick={() => setShowPopup(true)}>Logout</li>
+        <li onClick={() => setShowPopup(true)}>
+          <MdLogout className="text-xl mr-3" />
+          Logout
+        </li>
       </ul>
       {showPopup && (
         <GenericModal isOpen={showPopup} onClose={() => setShowPopup(false)}>
