@@ -35,6 +35,7 @@ export function Login({ HandleRegister, success }) {
       dispatch(setLoginStatus(true));
       success();
       navigate("/");
+      window.location.reload();
       console.log("Login successful", response.data);
     } catch (error) {
       dispatch(setLoginStatus(false));
