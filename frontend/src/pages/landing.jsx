@@ -2,7 +2,7 @@ import { BookCategory } from "../components/book/bookCategory";
 import { NavBarLanding } from "../components/common/navBar";
 import { HomeBanner } from "../components/user/user-home";
 import UserNav from "../components/user/userNav";
-
+import Footer from "../components/common/footer";
 export function LandingPage({ SetLogin }) {
   return (
     <>
@@ -15,6 +15,7 @@ export function LandingPage({ SetLogin }) {
         <ServiceBanner />
         <BookCategory />
       </div>
+      <Footer />
     </>
   );
 }
