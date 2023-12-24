@@ -1,6 +1,6 @@
-import { TfiEmail } from "react-icons/tfi";
+import { BiLogoGmail } from "react-icons/bi";
 import { BiLogoTelegram } from "react-icons/bi";
-import { BiLogoFacebookCircle } from "react-icons/bi";
+import { BiLogoFacebook } from "react-icons/bi";
 
 const Footer = () => {
   return (
@@ -55,15 +55,15 @@ const Footer = () => {
         </div>
         <div className="flex flex-col pl-8">
           <h4 className="mb-4">STAY CONNECTED</h4>
-          <ul className="flex gap-4 text-lg">
-            <li>
-              <TfiEmail />
+          <ul className="flex gap-4 text-l text-black">
+            <li className="bg-slate-200 overflow-hidden rounded-full p-4 transition duration-300 ease-in-out hover:bg-gray-900 hover:text-slate-200">
+              <BiLogoGmail />
             </li>
-            <li>
+            <li className="bg-slate-200 overflow-hidden rounded-full p-4 transition duration-300 ease-in-out hover:bg-gray-900 hover:text-slate-200">
               <BiLogoTelegram />
             </li>
-            <li>
-              <BiLogoFacebookCircle />
+            <li className="bg-slate-200 overflow-hidden rounded-full p-4 transition duration-300 ease-in-out hover:bg-gray-900 hover:text-slate-200">
+              <BiLogoFacebook />
             </li>
           </ul>
         </div>
