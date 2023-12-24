@@ -29,8 +29,8 @@ function Pages() {
           withCredentials: true,
         });
         setLoading(true);
-        setLogin(true);
-        dispatch(setLoginStatus(true));
+        // setLogin(true);
+        // dispatch(setLoginStatus(true));
         dispatch(setUserInfo(res.data.data.user));
       } catch (error) {
         setLoading(true);
