@@ -113,8 +113,7 @@ export const Books = ({ book, isGrid }) => {
             <img
               src={
                 "http://localhost:5000/images/users/" +
-                book.user.profile.picture +
-                ".png"
+                book.user.profile.picture 
               }
               alt={book.user.username}
               className="w-8 rounded-full border mr-1"
