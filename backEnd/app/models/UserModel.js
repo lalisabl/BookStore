@@ -69,7 +69,7 @@ const userSchema = new Schema({
     },
     picture: {
       type: String,
-      default: "profile_picture_url",
+      default: "profile_picture_url.png",
     },
     bio: {
       type: String,
