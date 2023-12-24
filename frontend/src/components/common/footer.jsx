@@ -1,7 +1,8 @@
+import { useState } from "react";
+
 import { BiLogoGmail } from "react-icons/bi";
 import { BiLogoTelegram } from "react-icons/bi";
 import { BiLogoFacebook } from "react-icons/bi";
-
 const Footer = () => {
   return (
     <div className=" bg-gray-800 text-white py-4 lg:py-8 lg:px-24">

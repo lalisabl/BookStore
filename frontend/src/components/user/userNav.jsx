@@ -3,7 +3,7 @@ import { PiGlobe } from "react-icons/pi";
 import { RightSideBar } from "./side-bar";
 import { FaHome } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DropdownButton from "../../shared/dropdown";
 import Select from "react-select";
 import { BiSearch } from "react-icons/bi";
@@ -13,7 +13,6 @@ import { Login, Register } from "./login-registration";
 
 export default function UserNav() {
   const isLogin = useSelector((state) => state.store.isLogin);
-  
 
   const [language, setLanguage] = useState("en");
   const isScrolled = useSelector((state) => state.store.isScrolled);
@@ -23,7 +22,6 @@ export default function UserNav() {
   const handleChangeLanguage = (newLanguage) => {
     setLanguage(newLanguage);
   };
-
   const [isRightSideBarVisible, setRightSideBarVisibility] = useState(false);
 
   const handleClick = () => {
