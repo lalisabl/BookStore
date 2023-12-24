@@ -1,7 +1,7 @@
 import { GoStarFill } from "react-icons/go";
 import { PiGlobe } from "react-icons/pi";
-import { RightSideBar } from "./side-bar";
-import { FaHome } from "react-icons/fa";
+import { ProfileHeader, RightSideBar } from "./side-bar";
+import { FaBars, FaHome } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DropdownButton from "../../shared/dropdown";
@@ -10,10 +10,11 @@ import { BiSearch } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import GenericModal from "../../shared/GenericModal";
 import { Login, Register } from "./login-registration";
+import { AnimatePresence, motion } from "framer-motion";
+import { MdClose } from "react-icons/md";
 
 export default function UserNav() {
   const isLogin = useSelector((state) => state.store.isLogin);
-  
 
   const [language, setLanguage] = useState("en");
   const isScrolled = useSelector((state) => state.store.isScrolled);
@@ -25,7 +26,6 @@ export default function UserNav() {
   };
 
   const [isRightSideBarVisible, setRightSideBarVisibility] = useState(false);
-
   const handleClick = () => {
     setRightSideBarVisibility(true);
   };
@@ -62,52 +62,74 @@ export default function UserNav() {
       setShowLoginPopup(true);
     }
   };
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [toggleBar, setToggleBar] = useState(false);
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 640);
+  };
+  useEffect(() => {
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <div>
       <div>
-        <div className="nav account-nav fixed top-0 left-0 w-full h-0 flex border-b">
+        <div className="nav w-screen right-0 account-nav fixed top-0 sm:pr-8 sm:pl-8  h-0 flex border-b">
           <div className="nav-right flex items-center gap-0">
             <img
               className="logo w-16"
               src="/images/pre-logo.png"
               alt="logoPhoto"
             />
-            <DropdownButton buttonTitle={"Books"} dropDownContent={dropdown} />
+            <div className="hidden sm:block">
+              <DropdownButton
+                buttonTitle={"Books"}
+                dropDownContent={dropdown}
+              />
+            </div>
           </div>
 
           {isScrolled && <SearchInp />}
 
-          <div className="nav-left flex items-center">
-            <div
-              className=" flex items-center cursor-pointer"
-              onClick={() => navigate("/ ")}
-            >
-              <FaHome className="icon text-lg" />
-              Home
-            </div>
-
-            {isLogin && (
+          <div className="flex gap-3 items-center">
+            <div className="gap-3 hidden sm:flex">
               <div
-                onClick={() => navigate("/My-favorites")}
-                className="favorites flex items-center cursor-pointer"
+                className=" flex items-center cursor-pointer"
+                onClick={() => navigate("/ ")}
               >
-                <GoStarFill className="mr-1" />
-                Fav
+                <FaHome className="icon text-lg" />
+                Home
               </div>
-            )}
-
-            <div className="langueges flex items-center">
-              <PiGlobe className="mr-1" />
-              <select
-                value={language}
-                onChange={(e) => handleChangeLanguage(e.target.value)}
-                className="border-none focus:outline-none"
-              >
-                <option value="en">en</option>
-                <option value="es">oro</option>
-                <option value="fr">amh</option>
-              </select>
+              {isLogin && (
+                <div
+                  onClick={() => navigate("/My-favorites")}
+                  className="favorites flex items-center cursor-pointer"
+                >
+                  <GoStarFill className="mr-1" />
+                  Fav
+                </div>
+              )}
+              <div className="langueges flex items-center">
+                <PiGlobe className="mr-1" />
+                <select
+                  value={language}
+                  onChange={(e) => handleChangeLanguage(e.target.value)}
+                  className="border-none focus:outline-none"
+                >
+                  <option value="en">en</option>
+                  <option value="es">oro</option>
+                  <option value="fr">amh</option>
+                </select>
+              </div>
             </div>
+
             {isLogin ? (
               <div>
                 <img
@@ -118,20 +140,39 @@ export default function UserNav() {
                 />
               </div>
             ) : (
-              <div>
-                <button
-                  onClick={() => handleSignInClick(true)}
-                  className="m-1 btn-primary rounded-lg p-1"
-                >
-                  Login
-                </button>
-                <button
-                  onClick={() => handleSignUpClick(true)}
-                  className="m-1 btn-primary-white rounded-lg p-1"
-                >
-                  Sign Up
-                </button>
+              !isScrolled && (
+                <div>
+                  <button
+                    onClick={() => handleSignInClick(true)}
+                    className="m-1 btn-primary rounded-lg p-1"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={() => handleSignUpClick(true)}
+                    className="m-1 btn-primary-white rounded-lg p-1"
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              )
+            )}
+
+            {isMobile && !isLogin && (
+              <div
+                onClick={() => setToggleBar(true)}
+                className="cursor-pointer text-2xl  hover:text-primary"
+              >
+                <FaBars />
               </div>
+            )}
+
+            {toggleBar && (
+              <MobileNavBar
+                dropdown={dropdown}
+                show={toggleBar}
+                closeBar={() => setToggleBar(false)}
+              />
             )}
 
             {isRightSideBarVisible && isLogin && (
@@ -198,7 +239,7 @@ function SearchInp() {
   };
 
   const handleSelectChange = (selectedOption) => {
-    console.log("Selected option:", selectedOption);
+    // console.log("Selected option:", selectedOption);
   };
 
   const options = [
@@ -227,12 +268,12 @@ function SearchInp() {
             options={options}
             placeholder="Categories"
             onChange={handleSelectChange}
-            className="z-100 mr-3"
+            className="z-100 sm:mr-3"
           />
           <div className="items-center  flex">
             <input
               onChange={setSearch}
-              className="p-1.5 w-64 border rounded rounded-r-none border-gray-300"
+              className="p-1.5 w-28 sm:w-64 border rounded rounded-r-none border-gray-300"
               type="text"
               value={searchQ}
               title="text"
@@ -245,5 +286,79 @@ function SearchInp() {
         </form>
       </div>
     </div>
+  );
+}
+
+function MobileNavBar({ show, closeBar, dropdown }) {
+  const navigate = useNavigate();
+  const isLogin = useSelector((state) => state.store.isLogin);
+  const [language, setLanguage] = useState("en");
+  const [isShow, setShow] = useState(show);
+  return (
+    <>
+      <AnimatePresence>
+        {isShow && (
+          <div
+            className="modal"
+            onClick={() => {
+              setShow(false);
+              setTimeout(closeBar, 1000);
+            }}
+          >
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              onClick={(e) => e.stopPropagation()}
+              className="gap-3 fixed w-64 h-full bg-primary_bg right-0 top-2 p-3 flex flex-col"
+            >
+              <div
+                onClick={() => {
+                  setShow(false);
+                  setTimeout(closeBar, 1000);
+                }}
+              >
+                <MdClose className="text-right" />
+              </div>
+
+              <div
+                className=" flex items-center cursor-pointer"
+                onClick={() => navigate("/ ")}
+              >
+                <FaHome className="icon text-lg" />
+                Home
+              </div>
+
+              <DropdownButton
+                buttonTitle={"Books"}
+                dropDownContent={dropdown}
+              />
+              {isLogin && (
+                <div
+                  onClick={() => navigate("/My-favorites")}
+                  className="favorites flex items-center cursor-pointer"
+                >
+                  <GoStarFill className="mr-1" />
+                  Fav
+                </div>
+              )}
+              <div className="langueges flex items-center">
+                <PiGlobe className="mr-1" />
+                <select
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                  className="border-none focus:outline-none"
+                >
+                  <option value="en">en</option>
+                  <option value="es">oro</option>
+                  <option value="fr">amh</option>
+                </select>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

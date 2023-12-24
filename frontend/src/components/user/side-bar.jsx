@@ -134,12 +134,13 @@ export function ProfileHeader({ close }) {
   const navigate = useNavigate();
   return (
     <>
-      <div className="profile-header">
+      <div className="flex items-center h-20">
         <img
           onClick={() => {
             navigate("/account/profile");
             close();
           }}
+          className="mr-2 rounded-full p-0 h-20 w-auto"
           src="/images/placeholder.jpg"
         />
         <div>

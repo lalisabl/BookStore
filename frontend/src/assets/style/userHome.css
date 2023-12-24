@@ -212,4 +212,8 @@
   .side-bar-item:hover::before {
     transform: scaleX(1);
   }
+  .banner-search{
+    width: auto;
+    width: 40vw;
+  }
 }
