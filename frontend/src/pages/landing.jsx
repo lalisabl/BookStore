@@ -3,9 +3,9 @@ import { BookCategory } from "../components/book/bookCategory";
 import { NavBarLanding } from "../components/common/navBar";
 import { HomeBanner } from "../components/user/user-home";
 import UserNav from "../components/user/userNav";
-import GenericModal from "../shared/GenericModal";
+import Footer from "../components/common/footer";
 import { Login, Register } from "../components/user/login-registration";
-
+import GenericModal from "../shared/GenericModal";
 export function LandingPage({ SetLogin }) {
   return (
     <>
@@ -18,6 +18,7 @@ export function LandingPage({ SetLogin }) {
         <BookCategory />
         <LandingBanner1 />
       </div>
+      <Footer />
     </>
   );
 }
