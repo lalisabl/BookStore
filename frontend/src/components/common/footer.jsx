@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { BiLogoGmail } from "react-icons/bi";
 import { BiLogoTelegram } from "react-icons/bi";
 import { BiLogoFacebook } from "react-icons/bi";
