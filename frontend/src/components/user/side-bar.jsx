@@ -15,6 +15,7 @@ import { TiDocumentAdd } from "react-icons/ti";
 import "../../assets/style/userHome.css";
 import axios from "axios";
 import { apiurl } from "../../assets/constData";
+import { useSelector } from "react-redux";
 
 export function AccountSideBar() {
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ export function AccountSideBar() {
 }
 
 export function RightSideBar({ closeBar, show }) {
+  const userInfo = useSelector((state) => state.store.userInfo);
   const [isShow, setShow] = useState(show);
   return (
     <>
@@ -111,6 +113,7 @@ export function RightSideBar({ closeBar, show }) {
                 <MdClose className="icon-exit" />
               </span>
               <ProfileHeader
+                userInfo={userInfo}
                 close={() => {
                   setShow(false);
                   setTimeout(closeBar, 1000);
@@ -130,8 +133,9 @@ export function RightSideBar({ closeBar, show }) {
   );
 }
 
-export function ProfileHeader({ close }) {
+export function ProfileHeader({ close, userInfo }) {
   const navigate = useNavigate();
+
   return (
     <>
       <div className="flex items-center h-20">
@@ -144,8 +148,8 @@ export function ProfileHeader({ close }) {
           src="/images/placeholder.jpg"
         />
         <div>
-          <div>Hi, John Doe</div>
-          <div className="text-muted">johnDoe123</div>
+          <h4>Hi,{userInfo.profile?.fullName}</h4>
+          <p className="text-muted">{userInfo.username}</p>
         </div>
       </div>
     </>
@@ -154,8 +158,14 @@ export function ProfileHeader({ close }) {
 
 export function RightSideContent({ close }) {
   const navigate = useNavigate();
-  const [showPopup, setShowPopup] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
 
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
   const handleLogoutConfirmed = async () => {
     try {
       await axios.get(`${apiurl}/users/logout`, { withCredentials: true });
@@ -188,17 +198,14 @@ export function RightSideContent({ close }) {
           <FcDownload className="icon" />
           Downloads
         </li>
-        <li onClick={() => setShowPopup(true)}>Logout</li>
+        <li onClick={openModal}>Logout</li>
       </ul>
-      {showPopup && (
-        <GenericModal isOpen={showPopup} onClose={() => setShowPopup(false)}>
-          <Popup
-            message="Are you sure you want to log out?"
-            onConfirm={handleLogoutConfirmed}
-            onCancel={() => setShowPopup(false)}
-          />
-        </GenericModal>
-      )}
+      <Popup
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        message="Are you sure you want to log out?"
+        onConfirm={handleLogoutConfirmed}
+      />
     </>
   );
 }
@@ -284,12 +291,46 @@ const SidebarComp = ({ children, HandleClick }) => {
     </div>
   );
 };
-const Popup = ({ message, onConfirm, onCancel }) => {
+
+import Modal from "react-modal";
+Modal.setAppElement("#root");
+
+const Popup = ({ message, onConfirm, modalIsOpen, closeModal }) => {
   return (
-    <div className="popup">
-      <p>{message}</p>
-      <button onClick={onConfirm}>Yes</button>
-      <button onClick={onCancel}>No</button>
-    </div>
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      contentLabel="logout confirmation"
+      style={{
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          zIndex: 1000,
+        },
+        content: {
+          width: "25%",
+          height: "30%",
+          margin: "auto",
+          background: "#fff",
+          borderRadius: "8px",
+          outline: "none",
+        },
+      }}
+    >
+      <div className="py-6 text-center">
+        <p className="mb-6">{message}</p>
+        <button
+          onClick={onConfirm}
+          className="p-2 mr-4 hover:bg-gray-300 hover:rounded"
+        >
+          Yes
+        </button>
+        <button
+          onClick={closeModal}
+          className="p-2 hover:bg-gray-300 hover:rounded"
+        >
+          No
+        </button>
+      </div>
+    </Modal>
   );
 };
