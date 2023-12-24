@@ -64,7 +64,7 @@ export default function UserNav() {
 
   const [isMobile, setIsMobile] = useState(false);
   const [toggleBar, setToggleBar] = useState(false);
-
+  const user = useSelector((state) => state.store.userInfo);
   const handleResize = () => {
     setIsMobile(window.innerWidth < 640);
   };
@@ -133,7 +133,7 @@ export default function UserNav() {
               <div>
                 <img
                   onClick={handleClick}
-                  src="/images/male.png"
+                  src={`http://localhost:5000/images/users/${user.profile.picture}`}
                   className="w-10 cursor-pointer h-10 rounded-full overflow-hidden hover:border"
                   alt="userPhoto"
                 />
