@@ -19,8 +19,8 @@ function BookNavItem({ text }) {
     "Book contributor": <FaUser />,
   };
   return (
-    <div className="p-1 mb-3 rounded flex items-center cursor-pointer text-gray-900 hover:text-black ">
-      {icons[text]} {text}
+    <div className="p-1 mb-3  rounded flex items-center cursor-pointer text-gray-900 hover:text-black ">
+      {icons[text]} <div className="hidden sm:flex">{text}</div>
     </div>
   );
 }
@@ -34,7 +34,7 @@ function BookNav() {
   ];
 
   return (
-    <div className="fixed top-12 -right-3 p-4 shadow  text-left">
+    <div className="fixed flex sm:flex-col top-12 -right-3 p-1 pr-4 pb-0 mt-1 sm:p-4 shadow bg-primary_bg text-left">
       {navItems.map((text, index) => (
         <BookNavItem key={index} text={text} />
       ))}
@@ -77,9 +77,9 @@ export default function BookDetail() {
         <>
           {book && (
             <>
-              <div className="flex flex-wrap m-auto md:w-4/6 shadow sm:w-full     bg-white rounded-md overflow-hidden  px-2">
+              <div className="flex flex-wrap m-auto md:w-4/6 shadow w-full  bg-white rounded-md overflow-hidden  px-2">
                 <div className="flex mb-4">
-                  <span>
+                  <div>
                     <img
                       src={
                         fileType(book?.filename) === "pdf"
@@ -91,7 +91,7 @@ export default function BookDetail() {
                       }
                       className="bg-gray-100 w-24 mr-2"
                     />
-                  </span>
+                  </div>
                 </div>
 
                 <div className="text-left">
@@ -128,8 +128,8 @@ export default function BookDetail() {
                     </div>
                   </div>
                 </div>
-                <div className=" ml-24 mb-4 flex gap-3 items-end justify-right text-right">
-                  <button className="m-1 flex items-center bg-gray-200 border rounded-lg p-1 hover:bg-gray-300">
+                <div className="sm:ml-24 mb-4 flex z-0  sm:gap-3 items-end">
+                  <button className="m-1 flex items-center  bg-gray-200 border rounded-lg p-1 hover:bg-gray-300">
                     <BiDownload className="text-xl" />
                     <span>Download</span>
                   </button>
