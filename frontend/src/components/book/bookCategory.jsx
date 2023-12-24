@@ -72,7 +72,7 @@ export function BookCategory() {
 function BookCategoryDisplay({ books, loading }) {
   return (
     <div className="top-category">
-      <div className="category-item">
+      <div className="category-item text-right">
         <h1 className="text-2xl mb-3">Fiction</h1>
         {loading ? (
           <div className="grid grid-cols-1 m-auto">
@@ -86,11 +86,11 @@ function BookCategoryDisplay({ books, loading }) {
           </>
         )}
 
-        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">
+        <div className="inline-block p-1 pr-4 pl-4 mt-4 rounded-full cursor-pointer btn-transparent">
           ...more
-        </span>
+        </div>
       </div>
-      <div className="category-item">
+      <div className="category-item text-right">
         <h1 className=" text-2xl mb-3">Novels</h1>
         {loading ? (
           <div className="grid grid-cols-1 m-auto">
@@ -103,11 +103,11 @@ function BookCategoryDisplay({ books, loading }) {
             <BookList books={books.slice(0, 3)} />
           </>
         )}
-        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">
+        <div className="inline-block  p-1 pr-4 pl-4 mt-4 rounded-full cursor-pointer btn-transparent">
           ...more
-        </span>
+        </div>
       </div>
-      <div className="category-item">
+      <div className="category-item text-right">
         <h1 className=" text-2xl mb-3">Academic</h1>
         {loading ? (
           <div className="grid grid-cols-1 m-auto">
@@ -120,9 +120,9 @@ function BookCategoryDisplay({ books, loading }) {
             <BookList books={books.slice(0, 3)} />
           </>
         )}
-        <span className=" rounded-lg text- p-1 cursor-pointer btn-transparent btn">
+        <div className="inline-block p-1 pr-4 pl-4 mt-4 rounded-full cursor-pointer btn-transparent">
           ...more
-        </span>
+        </div>
       </div>
     </div>
   );
