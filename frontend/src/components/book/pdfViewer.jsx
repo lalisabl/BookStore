@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { apiurl } from "../../assets/constData";
-
 export default function PDFViewer() {
   const { id } = useParams();
   const [fileUrl, setFileUrl] = useState(null);
@@ -28,7 +27,6 @@ export default function PDFViewer() {
   const toolbarPluginInstance = toolbarPlugin();
   const fullScreenPluginInstance = fullScreenPlugin();
   const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
-  // const fileUrl = `http://localhost:5000/file-1703320013937.pdf`;
   const transformToolbarSlot = (slot) => ({
     ...slot,
     Download: () => <></>,
