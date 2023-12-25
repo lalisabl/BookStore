@@ -12,6 +12,7 @@ import GenericModal from "../../shared/GenericModal";
 import { Login, Register } from "./login-registration";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
+import { host } from "../../assets/constData";
 
 export default function UserNav() {
   const isLogin = useSelector((state) => state.store.isLogin);
@@ -133,7 +134,7 @@ export default function UserNav() {
               <div>
                 <img
                   onClick={handleClick}
-                  src={`http://localhost:5000/images/users/${user.profile.picture}`}
+                  src={`${host}/images/users/${user.profile.picture}`}
                   className="w-10 cursor-pointer h-10 rounded-full overflow-hidden hover:border"
                   alt="userPhoto"
                 />
