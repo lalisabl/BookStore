@@ -10,6 +10,8 @@ import axios from "axios";
 import { formatViews } from "./BookList";
 import { LoadingCardVert } from "../../shared/LoadingCard";
 import { MdRateReview } from "react-icons/md";
+import Follow from "../common/follow";
+import { useSelector } from "react-redux";
 
 function BookNavItem({ text }) {
   const icons = {
@@ -47,6 +49,7 @@ export default function BookDetail() {
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(true);
   const [book, setBook] = useState();
+  const userInfo = useSelector((state) => state.store.userInfo);
 
   useEffect(() => {
     axios
@@ -120,9 +123,7 @@ export default function BookDetail() {
                       />
                       <div className="flex flex-col">
                         {book?.user.username}
-                        <button className=" text-sm  rounded-lg p-0 btn-primary text-white">
-                          Follow
-                        </button>
+                        <Follow userInfo={userInfo} book={book} />
                       </div>
                     </div>
                   </div>

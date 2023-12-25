@@ -6,44 +6,9 @@ import { apiurl, host } from "../assets/constData";
 import axios from "axios";
 import { formatViews } from "../components/book/BookList";
 import { useSelector } from "react-redux";
+import Follow from "../components/common/follow";
 export const Books = ({ book, isGrid }) => {
-  const [isFollow, setIsFollow] = useState(false);
-  const [loading, setLoading] = useState(true);
   const userInfo = useSelector((state) => state.store.userInfo);
-  useEffect(() => {
-    if (userInfo && userInfo.following) {
-      setIsFollow(
-        userInfo.following.some((item) => item._id === book.user._id)
-      );
-      setLoading(false);
-    } else {
-      setIsFollow(false);
-      setLoading(false);
-    }
-  }, [userInfo, book.user._id]);
-  const handleFollow = async (isFollow, uploaderId) => {
-    if (!isFollow) {
-      try {
-        await axios.post(`${apiurl}/users/follow/${uploaderId}`, null, {
-          withCredentials: true,
-        });
-        setIsFollow(true);
-      } catch (err) {
-        setIsFollow(false);
-        console.error("Error following user:", err);
-      }
-    } else {
-      try {
-        await axios.post(`${apiurl}/users/unfollow/${uploaderId}`, null, {
-          withCredentials: true,
-        });
-        setIsFollow(false);
-      } catch (err) {
-        setIsFollow(true);
-        console.error("Error following user:", err);
-      }
-    }
-  };
 
   const navigate = useNavigate();
   function fileType(filename) {
@@ -112,8 +77,8 @@ export const Books = ({ book, isGrid }) => {
           >
             <img
               src={
-                `${host}/images/users/` +
-                book.user.profile.picture 
+                "http://localhost:5000/images/users/" +
+                book.user.profile.picture
               }
               alt={book.user.username}
               className="w-8 rounded-full border mr-1"
@@ -122,19 +87,7 @@ export const Books = ({ book, isGrid }) => {
               <span className="font-semibold text-gray-500">
                 {book.user.username}
               </span>
-
-              {loading ? (
-                <span>...</span>
-              ) : (
-                <button
-                  className={`btn-primary rounded-md ml-1 ${
-                    !isFollow ? "follow" : "unfollow"
-                  }`}
-                  onClick={() => handleFollow(isFollow, book.user._id)}
-                >
-                  {!isFollow ? <p>Follow </p> : <p>unFollow </p>}
-                </button>
-              )}
+              <Follow userInfo={userInfo} book={book} />
             </div>
           </div>
         </div>
