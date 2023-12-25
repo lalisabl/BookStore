@@ -9,7 +9,10 @@ const ProfileDetail = () => {
   const [user, setUser] = useState([]);
   const [showFullNamePopup, setShowFullNamePopup] = useState(false);
   const [showPasswordPopup, setShowPasswordPopup] = useState(false);
+  const [showUsernamePopup, setShowUsernamePopup] = useState(false);
   const [fullName, setFullName] = useState("");
+  const [newUsername, setNewUsername] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -68,6 +71,11 @@ const ProfileDetail = () => {
       });
     console.log("Saving Password:", newPassword);
   };
+  const handleUsernameSubmit = () => {
+    // Add logic here to handle the submission of the new username
+    console.log("New username submitted:", newUsername);
+    setModalIsOpen(false);
+  };
   return (
     <div>
       <div
@@ -95,11 +103,13 @@ const ProfileDetail = () => {
               <div className=" username flex items-center justify-between">
                 <h4 className=" text-lg font-bold">User name</h4>
                 <p className="text-gray-600">{user.username}</p>
-                <span className="center"></span>
+                <button onClick={() => setModalIsOpen(true)} className="btn">
+                  Edit
+                </button>{" "}
               </div>
               <div className=" password flex items-center justify-between">
+                <h4 className=" text-lg font-bold">Password</h4>
                 <p>********</p>
-                <div></div>
                 <button onClick={handleEditPassword} className="btn">
                   Edit
                 </button>
@@ -113,6 +123,32 @@ const ProfileDetail = () => {
           </div>
         )}
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Profile Photo Upload Modal"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 1000,
+          },
+          content: {
+            width: "50%",
+            height: "50%",
+            margin: "auto",
+            background: "#fff",
+            borderRadius: "8px",
+            outline: "none",
+          },
+        }}
+      >
+        <UsernameChangePopup
+          newUsername={newUsername}
+          setNewUsername={setNewUsername}
+          onSave={handleUsernameSubmit}
+          closeModal={() => setModalIsOpen}
+        />
+      </Modal>
       {showFullNamePopup && (
         <GenericModal
           isOpen={showFullNamePopup}
@@ -328,7 +364,6 @@ function ProfilePhotoUploader({ user }) {
           </p>
         </div>
       </div>
-
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -375,7 +410,42 @@ function ProfilePhotoUploader({ user }) {
   );
 }
 
-// Example usage in a parent component:
-// <ProfilePhotoUploader onUpload={(file) => console.log('File uploaded:', file)} />
+const UsernameChangePopup = ({
+  newUsername,
+  setNewUsername,
+  closeModal,
+  onSave,
+}) => {
+  return (
+    <div className="p-4 bg-white rounded-md shadow-md relative">
+      <span
+        className="close cursor-pointer text-2xl absolute right-0 top-0"
+        onClick={closeModal}
+      >
+        &times;
+      </span>
+      <h2 className="text-2xl font-bold mb-4">Change Username</h2>
+      <label
+        htmlFor="newUsername"
+        className="block text-sm font-medium text-gray-700"
+      >
+        New Username:
+      </label>
+      <input
+        type="text"
+        id="newUsername"
+        value={newUsername}
+        onChange={(e) => setNewUsername(e.target.value)}
+        className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500 text-center"
+      />
+      <button
+        onClick={onSave}
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+      >
+        Save
+      </button>
+    </div>
+  );
+};
 
 export default ProfileDetail;

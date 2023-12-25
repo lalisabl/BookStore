@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
 import { apiurl } from "../../assets/constData";
 import axios from "axios";
-const Follow = ({ userInfo, book }) => {
+const Follow = ({ userInfo, userId }) => {
   const [isFollow, setIsFollow] = useState(false);
   const [loading, setLoading] = useState(true);
+  const currentUserId = userInfo._id;
   useEffect(() => {
     if (userInfo && userInfo.following) {
-      setIsFollow(
-        userInfo.following.some((item) => item._id === book.user._id)
-      );
+      setIsFollow(userInfo.following.some((item) => item._id === userId));
       setLoading(false);
     } else {
       setIsFollow(false);
       setLoading(false);
     }
-  }, [userInfo, book.user._id]);
+  }, [userInfo, userId]);
   const handleFollow = async (isFollow, uploaderId) => {
     if (!isFollow) {
       try {
@@ -47,9 +46,10 @@ const Follow = ({ userInfo, book }) => {
           className={`btn-primary rounded-md ml-1 ${
             !isFollow ? "follow" : "unfollow"
           }`}
-          onClick={() => handleFollow(isFollow, book.user._id)}
+          onClick={() => handleFollow(isFollow, userId)}
         >
-          {!isFollow ? <p>Follow </p> : <p>unFollow </p>}
+          {currentUserId !== userId &&
+            (isFollow ? <p>Unfollow</p> : <p>Follow</p>)}
         </button>
       )}
     </>
