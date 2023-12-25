@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
-import { apiurl } from "../assets/constData";
+import { apiurl, host } from "../assets/constData";
 import axios from "axios";
 import { formatViews } from "../components/book/BookList";
 import { useSelector } from "react-redux";
@@ -112,7 +112,7 @@ export const Books = ({ book, isGrid }) => {
           >
             <img
               src={
-                "http://localhost:5000/images/users/" +
+                `${host}/images/users/` +
                 book.user.profile.picture 
               }
               alt={book.user.username}

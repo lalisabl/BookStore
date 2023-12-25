@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { apiurl } from "../../assets/constData";
+import { apiurl, host } from "../../assets/constData";
 import { IoPencil } from "react-icons/io5";
 import { MdOutlineClear } from "react-icons/md";
 import GenericModal from "../../shared/GenericModal";
@@ -304,7 +304,7 @@ function ProfilePhotoUploader({ user }) {
           style={{ bottom: "-50%" }}
         >
           <img
-            src={`http://localhost:5000/images/users/${user.profile.picture}`}
+            src={`${host}/images/users/${user.profile.picture}`}
             alt="user-image"
             className="rounded-full w-16 h-16 object-cover"
           />

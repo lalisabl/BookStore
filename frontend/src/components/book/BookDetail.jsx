@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { BiDownload, BiInfoCircle, BiStar } from "react-icons/bi";
 import { GoDiscussionDuplicate } from "react-icons/go";
-import { apiurl } from "../../assets/constData";
+import { apiurl, host } from "../../assets/constData";
 import { FaReadme, FaUser } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Rating from "react-rating";
@@ -113,7 +113,7 @@ export default function BookDetail() {
                     <div className="flex items-center">
                       <img
                         src={
-                          "http://localhost:5000/images/users/" +
+                          `${host}/images/users/` +
                           book?.user.profile?.picture
                         }
                         className="w-10 h-10 border mr-1 rounded-full"
@@ -248,7 +248,7 @@ const ReviewRateDisplay = ({ reviews }) => {
             <div className="flex items-center mb-2 border-b">
               <img
                 src={
-                  "http://localhost:5000/images/users/" +
+                  `${host}/images/users/` +
                   review.user_id.profile.picture
                 }
                 className="w-7 h-7 border  cursor-pointer mr-1 rounded-full"
