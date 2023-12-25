@@ -4,14 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#646cff', // Replace with your desired primary color code
-        primaryBackground: '#ffcc00', // Replace with your desired primary background color code
-      },
+        primary: "#646cff",
+        secondary: "#e74c3c",
+     },
       backgroundColor: {
-        primary_bg: '#f3f3f3', // Repeat the primary background color code here
+        primary_bg: "#f3f3f3", // Repeat the primary background color code here
       },
     },
-
   },
   plugins: [],
 };

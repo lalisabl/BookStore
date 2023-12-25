@@ -5,6 +5,7 @@ import { BookList } from "./BookList";
 import { LoadingCardList } from "../../shared/LoadingCard";
 import GetBooks from "./getBooks";
 import { BookGrid } from "./BookGrid";
+import { useNavigate } from "react-router-dom";
 
 export function BookCategory() {
   const [activeButton, setActiveButton] = useState("Most Popular");
@@ -13,18 +14,25 @@ export function BookCategory() {
     setActiveButton(buttonName);
   };
   const [books, setBooks] = useState([]);
+  const [Fictions, setFictions] = useState([]);
+  const [Academic, setAcademic] = useState([]);
+  const [NonFiction, setNonFiction] = useState([]);
   useEffect(() => {
-    axios
-      .get(`${apiurl}/books/get`)
-      .then((res) => {
-        setBooks(res.data.data.Books);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
+    try {
+      axios.get(`${apiurl}/books/get?category=Fiction`).then((res) => {
+        setFictions(res.data.data.Books);
       });
+      axios.get(`${apiurl}/books/get?category=Non-Fiction`).then((res) => {
+        setNonFiction(res.data.data.Books);
+      });
+      axios.get(`${apiurl}/books/get?category=Education`).then((res) => {
+        setAcademic(res.data.data.Books);
+      });
+    } catch (e) {
+      console.log();
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   return (
@@ -64,12 +72,18 @@ export function BookCategory() {
           New Books
         </div>
       </div>
-      <BookCategoryDisplay books={books} loading={loading} />
+      <BookCategoryDisplay
+        loading={loading}
+        Academic={Academic}
+        Fictions={Fictions}
+        NonFiction={NonFiction}
+      />
     </div>
   );
 }
 
-function BookCategoryDisplay({ books, loading }) {
+function BookCategoryDisplay({ Academic, Fictions, NonFiction, loading }) {
+  const navigate = useNavigate();
   return (
     <div className="top-category">
       <div className="category-item text-right">
@@ -82,16 +96,21 @@ function BookCategoryDisplay({ books, loading }) {
           </div>
         ) : (
           <>
-            <BookList books={books.slice(0, 3)} />
+            <BookList books={Fictions?.slice(0, 3)} />
           </>
         )}
 
-        <div className="inline-block p-1 pr-4 pl-4 mt-4 rounded-full cursor-pointer btn-transparent">
+        <div
+          onClick={() => {
+            navigate("/search?category=Fiction");
+          }}
+          className="inline-block p-1 pr-4 pl-4 mt-4 rounded-full cursor-pointer btn-transparent"
+        >
           ...more
         </div>
       </div>
       <div className="category-item text-right">
-        <h1 className=" text-2xl mb-3">Novels</h1>
+        <h1 className=" text-2xl mb-3">Others</h1>
         {loading ? (
           <div className="grid grid-cols-1 m-auto">
             <LoadingCardList />
@@ -100,10 +119,15 @@ function BookCategoryDisplay({ books, loading }) {
           </div>
         ) : (
           <>
-            <BookList books={books.slice(0, 3)} />
+            <BookList books={NonFiction?.slice(0, 3)} />
           </>
         )}
-        <div className="inline-block  p-1 pr-4 pl-4 mt-4 rounded-full cursor-pointer btn-transparent">
+        <div
+          onClick={() => {
+            navigate("/search?category=Graphic Novels/Comics");
+          }}
+          className="inline-block  p-1 pr-4 pl-4 mt-4 rounded-full cursor-pointer btn-transparent"
+        >
           ...more
         </div>
       </div>
@@ -117,10 +141,15 @@ function BookCategoryDisplay({ books, loading }) {
           </div>
         ) : (
           <>
-            <BookList books={books.slice(0, 3)} />
+            <BookList books={Academic?.slice(0, 3)} />
           </>
         )}
-        <div className="inline-block p-1 pr-4 pl-4 mt-4 rounded-full cursor-pointer btn-transparent">
+        <div
+          onClick={() => {
+            navigate("/search?category=Education");
+          }}
+          className="inline-block p-1 pr-4 pl-4 mt-4 rounded-full cursor-pointer btn-transparent"
+        >
           ...more
         </div>
       </div>

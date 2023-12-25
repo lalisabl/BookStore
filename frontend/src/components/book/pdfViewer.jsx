@@ -16,7 +16,6 @@ export default function PDFViewer() {
     axios
       .get(`${apiurl}/books/getLocation/${id}`)
       .then((res) => {
-        // console.log(res.data.fileLocation);
         setFileUrl(res.data.fileLocation);
       })
       .catch((err) => {});
@@ -42,7 +41,7 @@ export default function PDFViewer() {
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
           <div
             style={{ height: "83vh", zIndex: "-1", maxWidth: "100%" }}
-            className=" overflow-y-scroll overflow-x-hidden"
+            className=" overflow-y-scroll  overflow-x-hidden"
           >
             <div className="absolute top-0 left-96  z-40  bg-primary_bg p-1.5">
               <Toolbar>{renderDefaultToolbar(transformToolbarSlot)}</Toolbar>
