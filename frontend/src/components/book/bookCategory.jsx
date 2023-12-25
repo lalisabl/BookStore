@@ -13,7 +13,6 @@ export function BookCategory() {
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
   };
-  const [books, setBooks] = useState([]);
   const [Fictions, setFictions] = useState([]);
   const [Academic, setAcademic] = useState([]);
   const [NonFiction, setNonFiction] = useState([]);
@@ -25,13 +24,16 @@ export function BookCategory() {
       axios.get(`${apiurl}/books/get?category=Non-Fiction`).then((res) => {
         setNonFiction(res.data.data.Books);
       });
-      axios.get(`${apiurl}/books/get?category=Education`).then((res) => {
-        setAcademic(res.data.data.Books);
-      });
+      axios
+        .get(`${apiurl}/books/get?category=Education`)
+        .then((res) => {
+          setAcademic(res.data.data.Books);
+        })
+        .then((a) => {
+          setLoading(false);
+        });
     } catch (e) {
       console.log();
-    } finally {
-      setLoading(false);
     }
   }, []);
 
