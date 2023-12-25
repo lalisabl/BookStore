@@ -18,6 +18,8 @@ import BookDetail from "./components/book/BookDetail";
 import { useDispatch } from "react-redux";
 import { setLoginStatus, setUserInfo } from "./redux/actions";
 import PDFViewer from "./components/book/pdfViewer";
+import DefaultPage from "./pages/defaultPg";
+import ComingSoon from "./shared/ComingSoon";
 function Pages() {
   const dispatch = useDispatch();
   const [login, setLogin] = useState(false);
@@ -78,11 +80,11 @@ function Pages() {
                 />
                 <Route
                   path="/My-books"
-                  element={<UserPage path={<BookForm />} />}
+                  element={<UserPage path={<ComingSoon />} />}
                 />
                 <Route
                   path="/My-favorites"
-                  element={<UserPage path={<BookForm />} />}
+                  element={<UserPage path={<ComingSoon />} />}
                 />
                 <Route
                   path="/books/:id"
@@ -101,9 +103,15 @@ function Pages() {
             ) : (
               <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
             )}
-            <Route path="/books/:id" element={<BookDetail />} />
-            <Route path="/books/:id/read" element={<PDFViewer />} />
-            <Route path="search/" element={<Search />} />
+            <Route
+              path="/books/:id"
+              element={<DefaultPage page={<BookDetail />} />}
+            />
+            <Route path="search/" element={<DefaultPage page={<Search />} />} />
+            <Route
+              path="/books/:id/read"
+              element={<DefaultPage page={<PDFViewer />} />}
+            />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
