@@ -12,3 +12,4 @@ export default function DefaultPage({ page }) {
     </div>
   );
 }
+ 

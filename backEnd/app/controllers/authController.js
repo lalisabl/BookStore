@@ -1,6 +1,9 @@
+const process = require("../../Config/config");
+
 const User = require("../models/UserModel");
 const jwt = require("jsonwebtoken");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 const passport = require("passport");
