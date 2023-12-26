@@ -1,18 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { apiurl, host } from "../../assets/constData";
-import { IoPencil } from "react-icons/io5";
-import { MdOutlineClear } from "react-icons/md";
 import GenericModal from "../../shared/GenericModal";
 import { BiHide } from "react-icons/bi";
 const ProfileDetail = () => {
   const [user, setUser] = useState([]);
-  const [showFullNamePopup, setShowFullNamePopup] = useState(false);
   const [showPasswordPopup, setShowPasswordPopup] = useState(false);
-  const [showUsernamePopup, setShowUsernamePopup] = useState(false);
   const [fullName, setFullName] = useState("");
   const [newUsername, setNewUsername] = useState("");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [userNameModalIsOpen, setUserNameModalIsOpen] = useState(false);
+  const [fullNameModalIsOpen, setFullNameModalIsOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -45,7 +42,7 @@ const ProfileDetail = () => {
       .patch(apiUrl, { fullName }, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        setModalIsOpen(false);
+        setFullNameModalIsOpen(false);
       })
       .catch((error) => {
         console.error("Error updating Full Name:", error.response.data);
@@ -71,7 +68,7 @@ const ProfileDetail = () => {
   const handleUsernameSubmit = () => {
     // Add logic here to handle the submission of the new username
     console.log("New username submitted:", newUsername);
-    setModalIsOpen(false);
+    setUserNameModalIsOpen(false);
   };
   return (
     <div>
@@ -93,14 +90,20 @@ const ProfileDetail = () => {
                 ) : (
                   <p className="text-gray-600">{user.profile.fullName}</p>
                 )}
-                <button onClick={() => setModalIsOpen(true)} className="btn">
+                <button
+                  onClick={() => setFullNameModalIsOpen(true)}
+                  className="btn"
+                >
                   Edit
                 </button>
               </div>
               <div className=" username flex items-center justify-between">
                 <h4 className=" text-lg font-bold">User name</h4>
                 <p className="text-gray-600">{user.username}</p>
-                <button onClick={() => setModalIsOpen(true)} className="btn">
+                <button
+                  onClick={() => setUserNameModalIsOpen(true)}
+                  className="btn"
+                >
                   Edit
                 </button>{" "}
               </div>
@@ -121,17 +124,18 @@ const ProfileDetail = () => {
         )}
       </div>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
+        isOpen={userNameModalIsOpen}
+        onRequestClose={() => setUserNameModalIsOpen(false)}
         contentLabel="userName change Modal"
         style={{
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
             zIndex: 1000,
           },
           content: {
+            height: "min-content",
             width: "50%",
-            height: "50%",
+            maxheight: "50%",
             margin: "auto",
             background: "#fff",
             borderRadius: "8px",
@@ -143,21 +147,22 @@ const ProfileDetail = () => {
           newUsername={newUsername}
           setNewUsername={setNewUsername}
           onSave={handleUsernameSubmit}
-          closeModal={() => setModalIsOpen(false)}
+          closeModal={() => setUserNameModalIsOpen(false)}
         />
       </Modal>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
+        isOpen={fullNameModalIsOpen}
+        onRequestClose={() => setFullNameModalIsOpen(false)}
         contentLabel="userName change Modal"
         style={{
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
             zIndex: 1000,
           },
           content: {
+            height: "min-content",
             width: "50%",
-            height: "50%",
+            maxHeight: "50%",
             margin: "auto",
             background: "#fff",
             borderRadius: "8px",
@@ -169,9 +174,10 @@ const ProfileDetail = () => {
           fullName={fullName}
           setFullName={setFullName}
           onSave={handleProfileChange}
-          closeModal={() => setModalIsOpen(false)}
+          closeModal={() => setFullNameModalIsOpen(false)}
         />
       </Modal>
+
       {showPasswordPopup && (
         <GenericModal
           isOpen={showPasswordPopup}
@@ -206,22 +212,32 @@ const FullNameUpdate = ({ fullName, setFullName, onSave, closeModal }) => {
     }
   };
   return (
-    <div className="popup fname">
+    <div className="p-4 bg-white rounded-md shadow-md relative">
       <span
         className="close cursor-pointer text-2xl absolute right-0 top-0"
         onClick={closeModal}
       >
         &times;
       </span>
-      <h3>Profile Full Name</h3>
+      <h2 className="text-sm sm:text-xl font-bold mb-4">Change FullName</h2>
+      <label
+        htmlFor="newUsername"
+        className="block text-sm font-medium text-gray-700"
+      >
+        New FullName:
+      </label>
       <input
         type="text"
         value={fullName}
         onChange={(e) => setFullName(e.target.value)}
         placeholder="your full name"
+        className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
       />
       {error && <p className="error-message">{error}</p>}
-      <button className="btn btn-inactive" onClick={handleSave}>
+      <button
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+        onClick={onSave}
+      >
         Save
       </button>
     </div>
@@ -255,46 +271,53 @@ const PasswordUpdate = ({
     }
   };
   return (
-    <div className="popup pswd">
-      <h3>Change Password</h3>
-      <div className="input-content">
+    <div className=" flex flex-col gap-4 relative p-8">
+      <h2 className="text-sm sm:text-xl font-bold text-center mb-4">
+        Change Password
+      </h2>
+      <div className="relative">
         <label>
-          Current Password
-          <br />
+          Current Password:
           <input
             type="password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
+            className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
           />
-          <BiHide className="eye-icons" />
+          <BiHide className="absolute right-4 bottom-2" />
         </label>
       </div>
-      <div className="input-content">
+
+      <div className="relative">
         <label>
-          New Password
-          <br />
+          New Password:
           <input
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
+            className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
           />
-          <BiHide className="eye-icons" />
+          <BiHide className="absolute right-4 bottom-2" />
         </label>
       </div>
-      <div className="input-content">
+
+      <div className="relative">
         <label>
-          Confirm New Password
-          <br />
+          Confirm New Password:
           <input
             type="password"
             value={confirmNewPassword}
             onChange={(e) => setConfirmNewPassword(e.target.value)}
+            className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
           />
-          <BiHide className="eye-icons" />
+          <BiHide className="absolute right-4 bottom-2" />
         </label>
       </div>
       {error && <p className="error-message">{error}</p>}
-      <button className="btn btn-inactive" onClick={handleSave}>
+      <button
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+        onClick={handleSave}
+      >
         Save
       </button>
     </div>
@@ -441,7 +464,7 @@ const UsernameChangePopup = ({
       >
         &times;
       </span>
-      <h2 className="text-2xl font-bold mb-4">Change Username</h2>
+      <h2 className=" text-sm sm:text-xl font-bold mb-4">Change Username</h2>
       <label
         htmlFor="newUsername"
         className="block text-sm font-medium text-gray-700"
