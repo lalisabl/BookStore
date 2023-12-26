@@ -296,29 +296,9 @@ const SidebarComp = ({ children, HandleClick }) => {
 };
 const Popup = ({ message, onConfirm, modalIsOpen, closeModal }) => {
   return (
-    <Modal
-      isOpen={modalIsOpen}
-      onRequestClose={closeModal}
-      contentLabel="logout confirmation"
-      style={{
-        overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          zIndex: 1000,
-        },
-        content: {
-          width: "min-content",
-          height: "min-content",
-          minHeight: "50%",
-          minWidth: "30%",
-          margin: "auto",
-          background: "#fff",
-          borderRadius: "8px",
-          outline: "none",
-        },
-      }}
-    >
+    <GenericModal isOpen={modalIsOpen} onClose={closeModal}>
       <div className="py-6 text-center">
-        <p className="mb-6">{message}</p>
+        <p className="my-6">{message}</p>
         <button
           onClick={onConfirm}
           className="p-2 mr-4 hover:bg-gray-300 hover:rounded"
@@ -332,6 +312,6 @@ const Popup = ({ message, onConfirm, modalIsOpen, closeModal }) => {
           No
         </button>
       </div>
-    </Modal>
+    </GenericModal>
   );
 };

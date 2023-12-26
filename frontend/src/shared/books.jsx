@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
+import { BsBookmarkHeartFill } from "react-icons/bs";
 import { apiurl, host } from "../assets/constData";
 import axios from "axios";
 import { formatViews } from "../components/book/BookList";
@@ -9,7 +10,8 @@ import { useSelector } from "react-redux";
 import Follow from "../components/common/follow";
 export const Books = ({ book, isGrid }) => {
   const userInfo = useSelector((state) => state.store.userInfo);
-
+  const [savedBook, setSavedBook] = useState("");
+  const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
   function fileType(filename) {
     filename;
@@ -19,15 +21,45 @@ export const Books = ({ book, isGrid }) => {
     }
   }
 
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation();
+    axios
+      .patch(
+        `${apiurl}/users/updateMe`,
+        { savedBook },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(response.data);
+        setSavedBook("");
+      })
+      .catch((error) => {
+        console.error("Error updating Full Name:", error.response.data);
+        setSavedBook("");
+      });
+  };
+
   return (
     <div
       onClick={() => {
         navigate("/books/" + book._id);
       }}
       key={book._id}
-      className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md"
+      className={`bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md relative`}
+      onMouseEnter={() => {
+        setIsFavorite(true);
+        setSavedBook(book._id);
+      }}
+      onMouseLeave={() => {
+        setIsFavorite(false);
+        setSavedBook("");
+      }}
     >
-      <div className={`${!isGrid ? "flex w-full" : ""}`}>
+      <div
+        className={`${!isGrid ? "flex w-full" : ""} ${
+          isFavorite ? "opacity-30" : ""
+        } `}
+      >
         <img
           src={
             fileType(book.filename) === "pdf"
@@ -42,7 +74,6 @@ export const Books = ({ book, isGrid }) => {
             !isGrid ? "w-24  h-auto object-contai" : ""
           } bg-gray-100`}
         />
-
         <div
           className={`${
             !isGrid ? "p-3 flex flex-col justify-between" : ""
@@ -92,6 +123,14 @@ export const Books = ({ book, isGrid }) => {
           </div>
         </div>
       </div>
+      {isFavorite && (
+        <button
+          onClick={handleFavoriteClick}
+          className="absolute top-2 right-2 text-4xl text-red-500"
+        >
+          <BsBookmarkHeartFill />
+        </button>
+      )}
     </div>
   );
 };
