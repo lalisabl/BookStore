@@ -13,6 +13,7 @@ import { Login, Register } from "./login-registration";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
 import { host } from "../../assets/constData";
+import BackBTN from "../../shared/backbtn";
 
 export default function UserNav() {
   const isLogin = useSelector((state) => state.store.isLogin);
@@ -78,13 +79,16 @@ export default function UserNav() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const back = useSelector((state) => state.store.backBtn);
+
   return (
     <div>
       <div>
         <div className="nav w-screen right-0 account-nav fixed top-0 sm:pr-8 sm:pl-8  h-0 flex border-b">
-          <div className="nav-right flex items-center gap-0">
+          <div className="nav-right flex items-center  gap-0">
+            {isMobile && back ? <BackBTN /> : ""}
             <img
-              className="logo w-16"
+              className={`logo w-16 ${back && isMobile ? "hidden" : "flex"}`}
               src="/images/pre-logo.png"
               alt="logoPhoto"
             />
@@ -322,6 +326,13 @@ function MobileNavBar({ show, closeBar, dropdown }) {
                 <MdClose className="text-right" />
               </div>
 
+              <div>
+                <img
+                  className="w-16 hidden sm:flex"
+                  src="/images/pre-logo.png"
+                  alt="logoPhoto"
+                />
+              </div>
               <div
                 className=" flex items-center cursor-pointer"
                 onClick={() => navigate("/ ")}
