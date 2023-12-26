@@ -12,7 +12,11 @@ const ProfileDetail = () => {
   const [showUsernamePopup, setShowUsernamePopup] = useState(false);
   const [fullName, setFullName] = useState("");
   const [newUsername, setNewUsername] = useState("");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [userNameModalIsOpen, setUserNameModalIsOpen] = useState(false);
+  const [fullNameModalIsOpen, setFullNameModalIsOpen] = useState(false);
+  const [passwordModalIsOpen, setPasswordModalIsOpen] = useState(false);
+  const [profileModalIsOpen, setProfileModalIsOpen] = useState(false);
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -45,7 +49,7 @@ const ProfileDetail = () => {
       .patch(apiUrl, { fullName }, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        setModalIsOpen(false);
+        setProfileModalIsOpen(false);
       })
       .catch((error) => {
         console.error("Error updating Full Name:", error.response.data);
@@ -71,7 +75,7 @@ const ProfileDetail = () => {
   const handleUsernameSubmit = () => {
     // Add logic here to handle the submission of the new username
     console.log("New username submitted:", newUsername);
-    setModalIsOpen(false);
+    setUserNameModalIsOpen(false);
   };
   return (
     <div>
@@ -93,14 +97,20 @@ const ProfileDetail = () => {
                 ) : (
                   <p className="text-gray-600">{user.profile.fullName}</p>
                 )}
-                <button onClick={() => setModalIsOpen(true)} className="btn">
+                <button
+                  onClick={() => setFullNameModalIsOpen(true)}
+                  className="btn"
+                >
                   Edit
                 </button>
               </div>
               <div className=" username flex items-center justify-between">
                 <h4 className=" text-lg font-bold">User name</h4>
                 <p className="text-gray-600">{user.username}</p>
-                <button onClick={() => setModalIsOpen(true)} className="btn">
+                <button
+                  onClick={() => setUserNameModalIsOpen(true)}
+                  className="btn"
+                >
                   Edit
                 </button>{" "}
               </div>
@@ -121,8 +131,8 @@ const ProfileDetail = () => {
         )}
       </div>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
+        isOpen={userNameModalIsOpen}
+        onRequestClose={() => setUserNameModalIsOpen(false)}
         contentLabel="userName change Modal"
         style={{
           overlay: {
@@ -143,12 +153,12 @@ const ProfileDetail = () => {
           newUsername={newUsername}
           setNewUsername={setNewUsername}
           onSave={handleUsernameSubmit}
-          closeModal={() => setModalIsOpen(false)}
+          closeModal={() => setUserNameModalIsOpen(false)}
         />
       </Modal>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
+        isOpen={fullNameModalIsOpen}
+        onRequestClose={() => setFullNameModalIsOpen(false)}
         contentLabel="userName change Modal"
         style={{
           overlay: {
@@ -169,7 +179,7 @@ const ProfileDetail = () => {
           fullName={fullName}
           setFullName={setFullName}
           onSave={handleProfileChange}
-          closeModal={() => setModalIsOpen(false)}
+          closeModal={() => setFullNameModalIsOpen(false)}
         />
       </Modal>
       {showPasswordPopup && (
