@@ -116,14 +116,13 @@ export default function BookDetail() {
                     <div className="flex items-center">
                       <img
                         src={
-                          `${host}/images/users/` +
-                          book?.user.profile?.picture
+                          `${host}/images/users/` + book?.user.profile?.picture
                         }
                         className="w-10 h-10 border mr-1 rounded-full"
                       />
                       <div className="flex flex-col">
                         {book?.user.username}
-                        <Follow userInfo={userInfo} book={book} />
+                        <Follow userInfo={userInfo} userId={book.user._id} />
                       </div>
                     </div>
                   </div>
@@ -248,10 +247,7 @@ const ReviewRateDisplay = ({ reviews }) => {
           <div key={review.id} className="mb-4 text-gray-700">
             <div className="flex items-center mb-2 border-b">
               <img
-                src={
-                  `${host}/images/users/` +
-                  review.user_id.profile.picture
-                }
+                src={`${host}/images/users/` + review.user_id.profile.picture}
                 className="w-7 h-7 border  cursor-pointer mr-1 rounded-full"
               />
               <span className="text-xs cursor-pointer font-semibold ">

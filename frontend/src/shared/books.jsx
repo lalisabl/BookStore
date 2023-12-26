@@ -87,7 +87,7 @@ export const Books = ({ book, isGrid }) => {
               <span className="font-semibold text-gray-500">
                 {book.user.username}
               </span>
-              <Follow userInfo={userInfo} book={book} />
+              <Follow userInfo={userInfo} userId={book.user._id} />
             </div>
           </div>
         </div>

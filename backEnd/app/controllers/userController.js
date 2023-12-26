@@ -139,43 +139,56 @@ const followUnfollowUser = async (req, res, action) => {
     const followerUser = await User.findById(followerId);
 
     if (followedUser && followerUser) {
-      const numFollowers = followedUser.followers.length;
-      const numFollowing = followerUser.following.length;
+      if (followerId !== userId) {
+        const numFollowers = followedUser.followers.length;
+        const numFollowing = followerUser.following.length;
 
-      const updateFollowedUser =
-        action === "follow"
-          ? {
-              $addToSet: { followers: followerId },
-              $set: { numFollowers: numFollowers + 1 },
-            }
-          : {
-              $pull: { followers: followerId },
-              $set: { numFollowers: numFollowers - 1 },
-            };
+        const updateFollowedUser =
+          action === "follow"
+            ? {
+                $addToSet: { followers: followerId },
+                $set: { numFollowers: numFollowers + 1 },
+              }
+            : {
+                $pull: { followers: followerId },
+                $set: { numFollowers: numFollowers - 1 },
+              };
 
-      const updateFollowerUser =
-        action === "follow"
-          ? {
-              $addToSet: { following: userId },
-              $set: { numFollowing: numFollowing + 1 },
-            }
-          : {
-              $pull: { following: userId },
-              $set: { numFollowing: numFollowing - 1 },
-            };
+        const updateFollowerUser =
+          action === "follow"
+            ? {
+                $addToSet: { following: userId },
+                $set: { numFollowing: numFollowing + 1 },
+              }
+            : {
+                $pull: { following: userId },
+                $set: { numFollowing: numFollowing - 1 },
+              };
 
-      await User.findByIdAndUpdate(userId, updateFollowedUser, { new: true });
-      await User.findByIdAndUpdate(followerId, updateFollowerUser, {
-        new: true,
-      });
-
-      const successMessage =
-        action === "follow"
-          ? "User followed successfully."
-          : "User unfollowed successfully.";
-      res.status(200).json({ success: true, message: successMessage });
+        await User.findByIdAndUpdate(userId, updateFollowedUser, { new: true });
+        await User.findByIdAndUpdate(followerId, updateFollowerUser, {
+          new: true,
+        });
+        const successMessage =
+          action === "follow"
+            ? "User followed successfully."
+            : "User unfollowed successfully.";
+        res.status(200).json({ success: true, message: successMessage });
+      } else {
+        res
+          .status(400)
+          .json({
+            success: false,
+            error: "Sorry,you couldn't follow yourself",
+          });
+      }
     } else {
-      res.status(404).json({ success: false, error: "No user with this id" });
+      res
+        .status(404)
+        .json({
+          success: false,
+          error: "Sorry,we couldn't find any user associated with this ID",
+        });
     }
   } catch (error) {
     console.error(
