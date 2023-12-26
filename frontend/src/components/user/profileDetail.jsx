@@ -18,9 +18,6 @@ const ProfileDetail = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [loading, setLoading] = useState(true);
   let apiUrl;
-  const handleEditFullName = () => {
-    setShowFullNamePopup(true);
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,7 +45,7 @@ const ProfileDetail = () => {
       .patch(apiUrl, { fullName }, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        setShowFullNamePopup(false);
+        setModalIsOpen(false);
       })
       .catch((error) => {
         console.error("Error updating Full Name:", error.response.data);
@@ -96,7 +93,7 @@ const ProfileDetail = () => {
                 ) : (
                   <p className="text-gray-600">{user.profile.fullName}</p>
                 )}
-                <button onClick={handleEditFullName} className="btn">
+                <button onClick={() => setModalIsOpen(true)} className="btn">
                   Edit
                 </button>
               </div>
@@ -126,7 +123,7 @@ const ProfileDetail = () => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        contentLabel="Profile Photo Upload Modal"
+        contentLabel="userName change Modal"
         style={{
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -146,21 +143,35 @@ const ProfileDetail = () => {
           newUsername={newUsername}
           setNewUsername={setNewUsername}
           onSave={handleUsernameSubmit}
-          closeModal={() => setModalIsOpen}
+          closeModal={() => setModalIsOpen(false)}
         />
       </Modal>
-      {showFullNamePopup && (
-        <GenericModal
-          isOpen={showFullNamePopup}
-          onClose={() => setShowFullNamePopup(false)}
-        >
-          <FullNameUpdate
-            fullName={fullName}
-            setFullName={setFullName}
-            onSave={handleProfileChange}
-          />
-        </GenericModal>
-      )}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="userName change Modal"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 1000,
+          },
+          content: {
+            width: "50%",
+            height: "50%",
+            margin: "auto",
+            background: "#fff",
+            borderRadius: "8px",
+            outline: "none",
+          },
+        }}
+      >
+        <FullNameUpdate
+          fullName={fullName}
+          setFullName={setFullName}
+          onSave={handleProfileChange}
+          closeModal={() => setModalIsOpen(false)}
+        />
+      </Modal>
       {showPasswordPopup && (
         <GenericModal
           isOpen={showPasswordPopup}
@@ -182,7 +193,7 @@ const ProfileDetail = () => {
     </div>
   );
 };
-const FullNameUpdate = ({ fullName, setFullName, onSave }) => {
+const FullNameUpdate = ({ fullName, setFullName, onSave, closeModal }) => {
   const [error, setError] = useState(null);
   const handleSave = () => {
     if (!fullName.trim()) {
@@ -196,6 +207,12 @@ const FullNameUpdate = ({ fullName, setFullName, onSave }) => {
   };
   return (
     <div className="popup fname">
+      <span
+        className="close cursor-pointer text-2xl absolute right-0 top-0"
+        onClick={closeModal}
+      >
+        &times;
+      </span>
       <h3>Profile Full Name</h3>
       <input
         type="text"
