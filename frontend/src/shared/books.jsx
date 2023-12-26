@@ -10,8 +10,9 @@ import { useSelector } from "react-redux";
 import Follow from "../components/common/follow";
 export const Books = ({ book, isGrid }) => {
   const userInfo = useSelector((state) => state.store.userInfo);
-  const [savedBook, setSavedBook] = useState("");
+  const [favorites, setFavorites] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
+  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   function fileType(filename) {
     filename;
@@ -23,19 +24,27 @@ export const Books = ({ book, isGrid }) => {
 
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
+
     axios
       .patch(
         `${apiurl}/users/updateMe`,
-        { savedBook },
+        { favorites },
         { withCredentials: true }
       )
       .then((response) => {
-        console.log(response.data);
-        setSavedBook("");
+        const updatedUserProfile = response.data.data.updatedUser.profile;
+        console.log(updatedUserProfile);
+        setIsFavorite(true);
+        setMessage("Book added to favorites!");
+
+        // Hide the message after a certain amount of time
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000); // Adjust the time as needed (e.g., 3000 milliseconds = 3 seconds)
       })
       .catch((error) => {
-        console.error("Error updating Full Name:", error.response.data);
-        setSavedBook("");
+        console.error("Error updating favorites:", error.response.data);
+        setFavorites("");
       });
   };
 
@@ -48,11 +57,11 @@ export const Books = ({ book, isGrid }) => {
       className={`bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md relative`}
       onMouseEnter={() => {
         setIsFavorite(true);
-        setSavedBook(book._id);
+        setFavorites(book._id);
       }}
       onMouseLeave={() => {
         setIsFavorite(false);
-        setSavedBook("");
+        setFavorites("");
       }}
     >
       <div
@@ -130,6 +139,11 @@ export const Books = ({ book, isGrid }) => {
         >
           <BsBookmarkHeartFill />
         </button>
+      )}
+      {message && (
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border rounded shadow-md">
+          {message}
+        </div>
       )}
     </div>
   );
