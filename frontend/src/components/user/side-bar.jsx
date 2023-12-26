@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import classNames from "classnames";
 import { FaHome, FaUser } from "react-icons/fa";
 import { FcDownload, FcReading } from "react-icons/fc";
 import { SiBookstack } from "react-icons/si";
@@ -306,8 +307,10 @@ const Popup = ({ message, onConfirm, modalIsOpen, closeModal }) => {
           zIndex: 1000,
         },
         content: {
-          width: "25%",
-          height: "30%",
+          width: "min-content",
+          height: "min-content",
+          minHeight: "50%",
+          minWidth: "30%",
           margin: "auto",
           background: "#fff",
           borderRadius: "8px",
