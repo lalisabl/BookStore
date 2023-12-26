@@ -3,6 +3,7 @@ const initialState = {
   isList: false,
   isLogin: false,
   userInfo: {},
+  backBtn: false,
 };
 
 const Reducer = (state = initialState, action) => {
@@ -26,6 +27,11 @@ const Reducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.payload,
+      };
+    case "SET_BACK_BTN":
+      return {
+        ...state,
+        backBtn: action.payload,
       };
     default:
       return state;
