@@ -47,6 +47,7 @@ body {
   background-color: var(--bg-light-white);
 }
 
+
 a {
   color: var(--color-white);
   transition: var(--transition);
