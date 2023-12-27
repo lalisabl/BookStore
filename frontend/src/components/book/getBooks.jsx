@@ -31,12 +31,15 @@ export default function GetBooks() {
             <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full">
               <LoadingCardList />
               <LoadingCardList />
-              <LoadingCardList /> <LoadingCardList />
-              <LoadingCardList />
-              <LoadingCardList /> <LoadingCardList />
               <LoadingCardList />
               <LoadingCardList />
-              <LoadingCardList /> <LoadingCardList />
+              <LoadingCardList />
+              <LoadingCardList />
+              <LoadingCardList />
+              <LoadingCardList />
+              <LoadingCardList />
+              <LoadingCardList />
+              <LoadingCardList />
               <LoadingCardList />
               <LoadingCardList />
               <LoadingCardList />

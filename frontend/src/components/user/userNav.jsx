@@ -87,11 +87,13 @@ export default function UserNav() {
         <div className="nav w-screen right-0 account-nav fixed top-0 sm:pr-8 sm:pl-8  h-0 flex border-b">
           <div className="nav-right flex items-center  gap-0">
             {isMobile && back ? <BackBTN /> : ""}
-            <img
-              className={`logo w-16 ${back && isMobile ? "hidden" : "flex"}`}
-              src="/images/pre-logo.png"
-              alt="logoPhoto"
-            />
+            <div>
+              <img
+                className={`h-12 ${back && isMobile ? "hidden" : "flex"}`}
+                src="/images/hayuu_book_store_logo_edited-removebg-preview.png"
+                alt="logoPhoto"
+              />
+            </div>
             <div className="hidden sm:block">
               <DropdownButton
                 buttonTitle={"Books"}
