@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BsFillGrid1X2Fill } from "react-icons/bs";
 import { setListView } from "../../redux/actions";
 import { BookGrid } from "./BookGrid";
+import { LoadingCardList, LoadingCardVert } from "../../shared/LoadingCard";
 
 export function Search() {
   const location = useLocation();
@@ -17,6 +18,7 @@ export function Search() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
   const [books, setBooks] = useState([]);
   useEffect(() => {
     setLoading(true);
@@ -28,7 +30,7 @@ export function Search() {
       })
       .catch((error) => {
         setLoading(false);
-        setError(true);
+        setError(error.message);
       });
   }, [newURL]);
 
@@ -41,7 +43,48 @@ export function Search() {
         className="pl-3 pr-3 bg-white w-screen"
       >
         <Filter_View />
-        {isList ? <BookList books={books} /> : <BookGrid books={books} />}
+        {loading ? (
+          <>
+            {isList ? (
+              <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full">
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+                <LoadingCardList />
+              </div>
+            ) : (
+              <div className="gap-3 grid sm:grid-cols-3 lg:grid-cols-8  md:grid-cols-5 grid-cols-2">
+                <LoadingCardVert />
+                <LoadingCardVert />
+                <LoadingCardVert /> <LoadingCardVert />
+                <LoadingCardVert /> <LoadingCardVert />
+                <LoadingCardVert /> <LoadingCardVert />
+                <LoadingCardVert /> <LoadingCardVert />
+                <LoadingCardVert />
+                <LoadingCardVert />
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {isList ? <BookList books={books} /> : <BookGrid books={books} />}
+          </>
+        )}
+        {error && (
+          <div className="m-2 p-4 bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -71,7 +114,6 @@ export function Filter_View() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
 
   return (
     <div
