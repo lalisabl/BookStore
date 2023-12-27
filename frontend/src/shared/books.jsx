@@ -44,13 +44,10 @@ export const Books = ({ book, isGrid }) => {
       .post(`${apiurl}/favorites/${bookId}`, null, { withCredentials: true })
       .then((response) => {
         const updatedUserProfile = response.data.data;
-        setHover(true);
         setMessage("Book added to favorites!");
-
-        // Hide the message after a certain amount of time
         setTimeout(() => {
           setMessage(null);
-        }, 3000); // Adjust the time as needed (e.g., 3000 milliseconds = 3 seconds)
+        }, 3000);
       })
       .catch((error) => {
         console.error("Error updating favorites:", error.response.data);
