@@ -35,7 +35,14 @@ exports.addToFavorites = async (req, res, next) => {
 
 exports.getFavorites = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id).populate("profile.favorites");
+    const user = await User.findById(req.user.id).populate({
+      path: "profile.favorites",
+      populate: {
+        path: "user",
+        select:
+          "email created_at username profile.picture profile.bio  fullName",
+      },
+    });
     res.status(200).json({ status: "success", data: user.profile.favorites });
   } catch (error) {
     next(error);
