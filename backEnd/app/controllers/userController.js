@@ -68,11 +68,11 @@ exports.getOneUser = catchAsync(async (req, res, next) => {
   let query = User.findById(req.params.userId)
     .populate({
       path: "followers",
-      select: "username fullName profile.picture",
+      select: "username fullName profile.picture profile.favorites",
     })
     .populate({
       path: "following",
-      select: "username fullName profile.picture",
+      select: "username fullName profile.picture,profile.favorites",
     })
     .exec();
   const user = await query;

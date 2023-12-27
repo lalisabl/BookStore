@@ -9,7 +9,6 @@ const Favorites = () => {
   useEffect(() => {
     axios(`${apiurl}/favorites/`, { withCredentials: true })
       .then((response) => {
-        console.log(response.data.data);
         setBooks(response.data.data);
       })
       .catch((err) => {
