@@ -54,7 +54,7 @@ function LandingBanner1() {
         <div className="absolute top-0 bottom-0 inset-0 bg-primary opacity-40"></div>
         <div className="flex flex-col gap-2  w-full h-full  relative">
           <div className="ml-4 lg:ml-24 text-gray-100 text-4xl sm:text-7xl font-semibold ">
-            Dive into a World of Stories at Tome Readers!
+            Dive into a World of Stories at HayuBk!
           </div>
 
           <div className="flex m-auto gap-10 flex-wrap sm:flex-nowrap justify-around w-5/6">

@@ -4,7 +4,7 @@
 }
 
 .nav {
-  height: 3rem;
+  height: 3.5rem;
   background: var(--bg-light-white);
   position: fixed;
   top: 0;
@@ -13,8 +13,8 @@
   transition: var(--transition);
 }
 
-.logo {
-  width: 4rem;
+.nav .logo {
+  max-height: 10%;
   overflow: hidden;
 }
 .account-nav,

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export function BookCategory() {
   const [activeButton, setActiveButton] = useState("Most Popular");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
   };
@@ -17,24 +18,25 @@ export function BookCategory() {
   const [Academic, setAcademic] = useState([]);
   const [NonFiction, setNonFiction] = useState([]);
   useEffect(() => {
-    try {
-      axios.get(`${apiurl}/books/get?category=Fiction`).then((res) => {
-        setFictions(res.data.data.Books);
+    axios.get(`${apiurl}/books/get?category=Fiction`).then((res) => {
+      setFictions(res.data.data.Books);
+    });
+    axios.get(`${apiurl}/books/get?category=Non-Fiction`).then((res) => {
+      setNonFiction(res.data.data.Books);
+    });
+    axios
+      .get(`${apiurl}/books/get?category=Education`)
+      .then((res) => {
+        setAcademic(res.data.data.Books);
+      })
+      .then((a) => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err.message);
+        setError(err.message);
       });
-      axios.get(`${apiurl}/books/get?category=Non-Fiction`).then((res) => {
-        setNonFiction(res.data.data.Books);
-      });
-      axios
-        .get(`${apiurl}/books/get?category=Education`)
-        .then((res) => {
-          setAcademic(res.data.data.Books);
-        })
-        .then((a) => {
-          setLoading(false);
-        });
-    } catch (e) {
-      console.log();
-    }
   }, []);
 
   return (
@@ -76,6 +78,7 @@ export function BookCategory() {
       </div>
       <BookCategoryDisplay
         loading={loading}
+        error={error}
         Academic={Academic}
         Fictions={Fictions}
         NonFiction={NonFiction}
@@ -84,12 +87,19 @@ export function BookCategory() {
   );
 }
 
-function BookCategoryDisplay({ Academic, Fictions, NonFiction, loading }) {
+function BookCategoryDisplay({
+  error,
+  Academic,
+  Fictions,
+  NonFiction,
+  loading,
+}) {
   const navigate = useNavigate();
   return (
     <div className="top-category">
       <div className="category-item text-right">
         <h1 className="text-2xl mb-3">Fiction</h1>
+
         {loading ? (
           <div className="grid grid-cols-1 m-auto">
             <LoadingCardList />
@@ -100,6 +110,11 @@ function BookCategoryDisplay({ Academic, Fictions, NonFiction, loading }) {
           <>
             <BookList books={Fictions?.slice(0, 3)} />
           </>
+        )}
+        {error && (
+          <div className="m-2 p-4 bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
+            {error}
+          </div>
         )}
 
         <div
@@ -124,6 +139,11 @@ function BookCategoryDisplay({ Academic, Fictions, NonFiction, loading }) {
             <BookList books={NonFiction?.slice(0, 3)} />
           </>
         )}
+        {error && (
+          <div className="m-2 p-4 bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
+            {error}
+          </div>
+        )}
         <div
           onClick={() => {
             navigate("/search?category=Graphic Novels/Comics");
@@ -146,6 +166,11 @@ function BookCategoryDisplay({ Academic, Fictions, NonFiction, loading }) {
             <BookList books={Academic?.slice(0, 3)} />
           </>
         )}
+        {error && (
+          <div className="m-2 p-4 bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
+            {error}
+          </div>
+        )}
         <div
           onClick={() => {
             navigate("/search?category=Education");
@@ -162,6 +187,7 @@ function BookCategoryDisplay({ Academic, Fictions, NonFiction, loading }) {
 export function FeaturedBooks() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   useEffect(() => {
     axios
       .get(`${apiurl}/books/get`)
@@ -170,6 +196,7 @@ export function FeaturedBooks() {
       })
       .catch((err) => {
         console.log(err);
+        setError(err.message);
       })
       .finally(() => {
         setLoading(false);
@@ -179,6 +206,11 @@ export function FeaturedBooks() {
     <div className="m-3">
       <h1 className="text-3xl mb-3">Featured Books</h1>
       <BookGrid books={books.slice(0, 8)} />
+      {error && (
+        <div className="m-2 p-4 bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
+          {error}
+        </div>
+      )}
     </div>
   );
 }
