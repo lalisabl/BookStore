@@ -10,22 +10,17 @@ import { useSelector } from "react-redux";
 import Follow from "../components/common/follow";
 export const Books = ({ book, isGrid }) => {
   const userInfo = useSelector((state) => state.store.userInfo);
-  const [bookId, setBookId] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if (userInfo && userInfo.profile.favorites) {
-      setIsFavorite(
-        userInfo.profile.favorites.some((item) => {
-          item === book._id;
-        })
-      );
+    if (userInfo && userInfo?.profile?.favorites) {
+      setIsFavorite(userInfo.profile.favorites.includes(book._id));
       setLoading(false);
     } else {
       setIsFavorite(false);
-      setLoading(true);
+      setLoading(false);
     }
   }, [userInfo, book._id]);
 
@@ -37,13 +32,11 @@ export const Books = ({ book, isGrid }) => {
     }
   }
 
-  const handleFavoriteClick = (e, bookid) => {
+  const handleFavoriteClick = async (e, bookid) => {
     e.stopPropagation();
-    setBookId(bookid);
-    axios
-      .post(`${apiurl}/favorites/${bookId}`, null, { withCredentials: true })
+    await axios
+      .post(`${apiurl}/favorites/${bookid}`, null, { withCredentials: true })
       .then((response) => {
-        const updatedUserProfile = response.data.data;
         setMessage("Book added to favorites!");
         setTimeout(() => {
           setMessage(null);
@@ -51,7 +44,6 @@ export const Books = ({ book, isGrid }) => {
       })
       .catch((error) => {
         console.error("Error updating favorites:", error.response.data);
-        setBookId("");
       });
   };
 
@@ -67,12 +59,14 @@ export const Books = ({ book, isGrid }) => {
         <span>...</span>
       ) : (
         <button
-          onClick={() => handleFavoriteClick(book._id)}
-          className={`absolute top-2 right-2 text-x ${
-            isFavorite ? "text-red-500" : "text-blue-500"
-          }`}
+          onClick={(e) => handleFavoriteClick(e, book._id)}
+          className={`absolute top-0 right-0 text-xl }`}
         >
-          <BsBookmarkHeartFill />
+          {isFavorite ? (
+            <BsBookmarkHeartFill className="text-red-500" />
+          ) : (
+            <BsBookmarkHeartFill className="text-blue-500" />
+          )}
         </button>
       )}
 

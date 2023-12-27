@@ -12,20 +12,19 @@ exports.addToFavorites = async (req, res, next) => {
     ).populate("profile.favorites");
 
     // Create a notification for the user who uploaded the book
-    const book = await Book.findById(req.params.bookId);
-    console.log(book.title);
-    if (book && book.user) {
-      const notification = await Notification.create({
-        message: `${req.user.username} added your book to favorites.`,
-        relatedBook: req.params.bookId,
-        sender: req.user.id,
-      });
-      await User.findByIdAndUpdate(
-        book.user,
-        { $addToSet: { "profile.notifications": notification._id } },
-        { new: true }
-      );
-    }
+    // const book = await Book.findById(req.params.bookId);
+    // if (book && book.user) {
+    //   const notification = await Notification.create({
+    //     message: `${req.user.username} added your book to favorites.`,
+    //     relatedBook: req.params.bookId,
+    //     sender: req.user.id,
+    //   });
+    //   await User.findByIdAndUpdate(
+    //     book.user,
+    //     { $addToSet: { "profile.notifications": notification._id } },
+    //     { new: true }
+    //   );
+    // }
 
     res.status(201).json({ status: "success", data: user.profile.favorites });
   } catch (error) {
