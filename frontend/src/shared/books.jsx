@@ -34,17 +34,31 @@ export const Books = ({ book, isGrid }) => {
 
   const handleFavoriteClick = async (e, bookid) => {
     e.stopPropagation();
-    await axios
-      .post(`${apiurl}/favorites/${bookid}`, null, { withCredentials: true })
-      .then((response) => {
-        setMessage("Book added to favorites!");
-        setTimeout(() => {
-          setMessage(null);
-        }, 3000);
-      })
-      .catch((error) => {
-        console.error("Error updating favorites:", error.response.data);
-      });
+    if (!isFavorite) {
+      await axios
+        .post(`${apiurl}/favorites/${bookid}`, null, { withCredentials: true })
+        .then((response) => {
+          setMessage("Book added to favorites!");
+          setTimeout(() => {
+            setMessage(null);
+          }, 3000);
+        })
+        .catch((error) => {
+          console.error("Error updating favorites:", error.response.data);
+        });
+    } else {
+      await axios
+        .delete(`${apiurl}/favorites/${bookid}`, { withCredentials: true })
+        .then((response) => {
+          setMessage("Book removed from favorites!");
+          setTimeout(() => {
+            setMessage(null);
+          }, 3000);
+        })
+        .catch((error) => {
+          console.error("Error updating favorites:", error.response.data);
+        });
+    }
   };
 
   return (
