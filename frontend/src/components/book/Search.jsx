@@ -119,7 +119,7 @@ export function Filter_View() {
     <div
       ref={buttonRef}
       className={`pl-2 pr-2 flex items-center mb-3  rounded-md bg-gray-100 border ${
-        isScrolled ? "fixed top-12 shadow-none border-b" : ""
+        isScrolled ? "fixed z-10 top-12 shadow-none border-b" : ""
       }`}
     >
       <div
