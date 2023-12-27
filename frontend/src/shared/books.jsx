@@ -38,7 +38,9 @@ export const Books = ({ book, isGrid }) => {
       await axios
         .post(`${apiurl}/favorites/${bookid}`, null, { withCredentials: true })
         .then((response) => {
-          setMessage("Book added to favorites!");
+          setIsFavorite(true);
+          setMessage("added");
+
           setTimeout(() => {
             setMessage(null);
           }, 3000);
@@ -50,7 +52,8 @@ export const Books = ({ book, isGrid }) => {
       await axios
         .delete(`${apiurl}/favorites/${bookid}`, { withCredentials: true })
         .then((response) => {
-          setMessage("Book removed from favorites!");
+          setIsFavorite(false);
+          setMessage("removed");
           setTimeout(() => {
             setMessage(null);
           }, 3000);
@@ -149,7 +152,11 @@ export const Books = ({ book, isGrid }) => {
         </div>
       </div>
       {message && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border rounded shadow-md">
+        <div
+          className={`absolute top-0 left-1/2 transform -translate-x-1/2 bg-white border rounded shadow-md ${
+            message === "removed" ? "text-red-500" : "text-black"
+          }`}
+        >
           {message}
         </div>
       )}
