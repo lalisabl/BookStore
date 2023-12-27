@@ -10,10 +10,12 @@ import { useSelector } from "react-redux";
 import Follow from "../components/common/follow";
 export const Books = ({ book, isGrid }) => {
   const userInfo = useSelector((state) => state.store.userInfo);
-  const [favorites, setFavorites] = useState("");
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [bookId, setBookId] = useState("");
+  const [isHover, setHover] = useState(false);
+  const [isFavorite, setFavorite] = useState(false);
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
+
   function fileType(filename) {
     filename;
     if (filename && typeof filename === "string") {
@@ -26,15 +28,10 @@ export const Books = ({ book, isGrid }) => {
     e.stopPropagation();
 
     axios
-      .patch(
-        `${apiurl}/users/updateMe`,
-        { favorites },
-        { withCredentials: true }
-      )
+      .post(`${apiurl}/favorites/${bookId}`, null, { withCredentials: true })
       .then((response) => {
-        const updatedUserProfile = response.data.data.updatedUser.profile;
-        console.log(updatedUserProfile);
-        setIsFavorite(true);
+        const updatedUserProfile = response.data.data;
+        setHover(true);
         setMessage("Book added to favorites!");
 
         // Hide the message after a certain amount of time
@@ -44,7 +41,7 @@ export const Books = ({ book, isGrid }) => {
       })
       .catch((error) => {
         console.error("Error updating favorites:", error.response.data);
-        setFavorites("");
+        setBookId("");
       });
   };
 
@@ -56,17 +53,17 @@ export const Books = ({ book, isGrid }) => {
       key={book._id}
       className={`bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md relative`}
       onMouseEnter={() => {
-        setIsFavorite(true);
-        setFavorites(book._id);
+        setHover(true);
+        setBookId(book._id);
       }}
       onMouseLeave={() => {
-        setIsFavorite(false);
-        setFavorites("");
+        setHover(false);
+        setBookId("");
       }}
     >
       <div
         className={`${!isGrid ? "flex w-full" : ""} ${
-          isFavorite ? "opacity-30" : ""
+          isHover ? "opacity-30" : ""
         } `}
       >
         <img
@@ -132,7 +129,7 @@ export const Books = ({ book, isGrid }) => {
           </div>
         </div>
       </div>
-      {isFavorite && (
+      {isHover && (
         <button
           onClick={handleFavoriteClick}
           className="absolute top-2 right-2 text-4xl text-red-500"

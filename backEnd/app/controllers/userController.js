@@ -33,16 +33,12 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
 // update user profile
 exports.updateMe = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  const { fullName, username, bio, notifications, favorites, reading_history } =
-    req.body;
+  const { fullName, username, bio, notifications, reading_history } = req.body;
   let picture;
   if (req.file) picture = req.file.filename;
   if (fullName) user.profile.fullName = fullName;
   if (username) user.username = username;
   if (bio) user.profile.bio = bio;
-  if (favorites) {
-    user.profile.favorites.addToSet(favorites);
-  }
   if (notifications) user.profile.notifications = notifications;
   if (reading_history) user.profile.reading_history = reading_history;
   if (picture) user.profile.picture = picture;
