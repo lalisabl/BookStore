@@ -33,14 +33,12 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
 // update user profile
 exports.updateMe = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  const { fullName, username, bio, notifications, favorites, reading_history } =
-    req.body;
+  const { fullName, username, bio, notifications, reading_history } = req.body;
   let picture;
   if (req.file) picture = req.file.filename;
   if (fullName) user.profile.fullName = fullName;
   if (username) user.username = username;
   if (bio) user.profile.bio = bio;
-  if (favorites) user.profile.favorites = favorites;
   if (notifications) user.profile.notifications = notifications;
   if (reading_history) user.profile.reading_history = reading_history;
   if (picture) user.profile.picture = picture;
@@ -175,20 +173,16 @@ const followUnfollowUser = async (req, res, action) => {
             : "User unfollowed successfully.";
         res.status(200).json({ success: true, message: successMessage });
       } else {
-        res
-          .status(400)
-          .json({
-            success: false,
-            error: "Sorry,you couldn't follow yourself",
-          });
+        res.status(400).json({
+          success: false,
+          error: "Sorry,you couldn't follow yourself",
+        });
       }
     } else {
-      res
-        .status(404)
-        .json({
-          success: false,
-          error: "Sorry,we couldn't find any user associated with this ID",
-        });
+      res.status(404).json({
+        success: false,
+        error: "Sorry,we couldn't find any user associated with this ID",
+      });
     }
   } catch (error) {
     console.error(

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
+import { BsBookmarkHeartFill } from "react-icons/bs";
 import { apiurl, host } from "../assets/constData";
 import axios from "axios";
 import { formatViews } from "../components/book/BookList";
@@ -9,8 +10,12 @@ import { useSelector } from "react-redux";
 import Follow from "../components/common/follow";
 export const Books = ({ book, isGrid }) => {
   const userInfo = useSelector((state) => state.store.userInfo);
-
+  const [bookId, setBookId] = useState("");
+  const [isHover, setHover] = useState(false);
+  const [isFavorite, setFavorite] = useState(false);
+  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
+
   function fileType(filename) {
     filename;
     if (filename && typeof filename === "string") {
@@ -19,15 +24,48 @@ export const Books = ({ book, isGrid }) => {
     }
   }
 
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation();
+
+    axios
+      .post(`${apiurl}/favorites/${bookId}`, null, { withCredentials: true })
+      .then((response) => {
+        const updatedUserProfile = response.data.data;
+        setHover(true);
+        setMessage("Book added to favorites!");
+
+        // Hide the message after a certain amount of time
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000); // Adjust the time as needed (e.g., 3000 milliseconds = 3 seconds)
+      })
+      .catch((error) => {
+        console.error("Error updating favorites:", error.response.data);
+        setBookId("");
+      });
+  };
+
   return (
     <div
       onClick={() => {
         navigate("/books/" + book._id);
       }}
       key={book._id}
-      className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md"
+      className={`bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md relative`}
+      onMouseEnter={() => {
+        setHover(true);
+        setBookId(book._id);
+      }}
+      onMouseLeave={() => {
+        setHover(false);
+        setBookId("");
+      }}
     >
-      <div className={`${!isGrid ? "flex w-full" : ""}`}>
+      <div
+        className={`${!isGrid ? "flex w-full" : ""} ${
+          isHover ? "opacity-30" : ""
+        } `}
+      >
         <img
           src={
             fileType(book.filename) === "pdf"
@@ -42,7 +80,6 @@ export const Books = ({ book, isGrid }) => {
             !isGrid ? "w-24  h-auto object-contai" : ""
           } bg-gray-100`}
         />
-
         <div
           className={`${
             !isGrid ? "p-3 flex flex-col justify-between" : ""
@@ -92,6 +129,19 @@ export const Books = ({ book, isGrid }) => {
           </div>
         </div>
       </div>
+      {isHover && (
+        <button
+          onClick={handleFavoriteClick}
+          className="absolute top-2 right-2 text-4xl text-red-500"
+        >
+          <BsBookmarkHeartFill />
+        </button>
+      )}
+      {message && (
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border rounded shadow-md">
+          {message}
+        </div>
+      )}
     </div>
   );
 };

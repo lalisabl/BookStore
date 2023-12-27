@@ -20,6 +20,7 @@ import { setLoginStatus, setUserInfo } from "./redux/actions";
 import PDFViewer from "./components/book/pdfViewer";
 import DefaultPage from "./pages/defaultPg";
 import ComingSoon from "./shared/ComingSoon";
+import Favorites from "./components/user/favorites";
 function Pages() {
   const dispatch = useDispatch();
   const [login, setLogin] = useState(false);
@@ -84,7 +85,7 @@ function Pages() {
                 />
                 <Route
                   path="/My-favorites"
-                  element={<UserPage path={<ComingSoon />} />}
+                  element={<UserPage path={<Favorites />} />}
                 />
                 <Route
                   path="/books/:id"

@@ -3,6 +3,7 @@ import axios from "axios";
 import { apiurl, host } from "../../assets/constData";
 import GenericModal from "../../shared/GenericModal";
 import { BiHide } from "react-icons/bi";
+import Modal from "react-modal";
 const ProfileDetail = () => {
   const [user, setUser] = useState([]);
   const [showPasswordPopup, setShowPasswordPopup] = useState(false);
@@ -123,60 +124,33 @@ const ProfileDetail = () => {
           </div>
         )}
       </div>
-      <Modal
-        isOpen={userNameModalIsOpen}
-        onRequestClose={() => setUserNameModalIsOpen(false)}
-        contentLabel="userName change Modal"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
-            zIndex: 1000,
-          },
-          content: {
-            height: "min-content",
-            width: "50%",
-            maxheight: "50%",
-            margin: "auto",
-            background: "#fff",
-            borderRadius: "8px",
-            outline: "none",
-          },
-        }}
-      >
-        <UsernameChangePopup
-          newUsername={newUsername}
-          setNewUsername={setNewUsername}
-          onSave={handleUsernameSubmit}
-          closeModal={() => setUserNameModalIsOpen(false)}
-        />
-      </Modal>
-      <Modal
-        isOpen={fullNameModalIsOpen}
-        onRequestClose={() => setFullNameModalIsOpen(false)}
-        contentLabel="userName change Modal"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
-            zIndex: 1000,
-          },
-          content: {
-            height: "min-content",
-            width: "50%",
-            maxHeight: "50%",
-            margin: "auto",
-            background: "#fff",
-            borderRadius: "8px",
-            outline: "none",
-          },
-        }}
-      >
-        <FullNameUpdate
-          fullName={fullName}
-          setFullName={setFullName}
-          onSave={handleProfileChange}
-          closeModal={() => setFullNameModalIsOpen(false)}
-        />
-      </Modal>
+      {userNameModalIsOpen && (
+        <GenericModal
+          isOpen={userNameModalIsOpen}
+          onClose={() => setUserNameModalIsOpen(false)}
+        >
+          <UsernameChangePopup
+            newUsername={newUsername}
+            setNewUsername={setNewUsername}
+            onSave={handleUsernameSubmit}
+            closeModal={() => setUserNameModalIsOpen(false)}
+          />
+        </GenericModal>
+      )}
+
+      {fullNameModalIsOpen && (
+        <GenericModal
+          isOpen={fullNameModalIsOpen}
+          onClose={() => setFullNameModalIsOpen(false)}
+        >
+          <FullNameUpdate
+            fullName={fullName}
+            setFullName={setFullName}
+            onSave={handleProfileChange}
+            closeModal={() => setFullNameModalIsOpen(false)}
+          />
+        </GenericModal>
+      )}
 
       {showPasswordPopup && (
         <GenericModal
@@ -213,12 +187,6 @@ const FullNameUpdate = ({ fullName, setFullName, onSave, closeModal }) => {
   };
   return (
     <div className="p-4 bg-white rounded-md shadow-md relative">
-      <span
-        className="close cursor-pointer text-2xl absolute right-0 top-0"
-        onClick={closeModal}
-      >
-        &times;
-      </span>
       <h2 className="text-sm sm:text-xl font-bold mb-4">Change FullName</h2>
       <label
         htmlFor="newUsername"
@@ -324,8 +292,6 @@ const PasswordUpdate = ({
   );
 };
 
-import Modal from "react-modal";
-
 // Set the root element for the modal
 Modal.setAppElement("#root");
 function ProfilePhotoUploader({ user }) {
@@ -404,48 +370,35 @@ function ProfilePhotoUploader({ user }) {
           </p>
         </div>
       </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Profile Photo Upload Modal"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 1000,
-          },
-          content: {
-            width: "50%",
-            margin: "auto",
-            background: "#fff",
-            borderRadius: "8px",
-            outline: "none",
-          },
-        }}
-      >
-        <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-bold mb-4">Upload Profile Photo</h2>
-          <input
-            type="file"
-            onChange={handleFileChange}
-            className="mb-4 py-10 px-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-        </div>
-        <div className="flex gap-4">
-          <button
-            onClick={handlePictureChange}
-            className="bg-blue-500 text-white py-2 px-4 rounded-md mr-2 hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
-          >
-            Upload
-          </button>
+      <GenericModal isOpen={modalIsOpen} onClose={closeModal}>
+        <div className="p-4">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-lg sm:text-2xl font-bold mb-4 text-center">
+              Upload Profile Photo
+            </h2>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className="mb-2 p-5 sm:mb-4 sm:p-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+          </div>
+          <div className="flex sm:gap-4 justify-center">
+            <button
+              onClick={handlePictureChange}
+              className="bg-blue-500 text-white m-4 px-4 py-2 rounded-md mr-2 hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
+            >
+              Upload
+            </button>
 
-          <button
-            onClick={closeModal}
-            className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:border-gray-500"
-          >
-            Close
-          </button>
+            <button
+              onClick={closeModal}
+              className="bg-gray-300 text-gray-700 m-4 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:border-gray-500"
+            >
+              Close
+            </button>
+          </div>
         </div>
-      </Modal>
+      </GenericModal>
     </div>
   );
 }
@@ -458,12 +411,6 @@ const UsernameChangePopup = ({
 }) => {
   return (
     <div className="p-4 bg-white rounded-md shadow-md relative">
-      <span
-        className="close cursor-pointer text-2xl absolute right-0 top-0"
-        onClick={closeModal}
-      >
-        &times;
-      </span>
       <h2 className=" text-sm sm:text-xl font-bold mb-4">Change Username</h2>
       <label
         htmlFor="newUsername"
