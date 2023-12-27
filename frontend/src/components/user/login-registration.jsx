@@ -19,31 +19,28 @@ export function Login({ HandleRegister, success }) {
   const [identifier, setIdentifier] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
   const [password, setPassword] = useState("");
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
+    axios
+      .post(
         `${apiurl}/users/login`,
         {
           [identifier.includes("@") ? "email" : "username"]: identifier,
           password,
         },
         { withCredentials: true }
-      );
-      // SetLogin(true);
-      dispatch(setLoginStatus(true));
-      success();
-      navigate("/");
-      window.location.reload();
-      console.log("Login successful", response.data);
-    } catch (error) {
-      dispatch(setLoginStatus(false));
-      console.error(
-        "Login failed",
-        error.response ? error.response.data : error.message
-      );
-    }
+      )
+      .then((res) => {
+        dispatch(setLoginStatus(true));
+        success();
+        window.location.reload();
+      })
+      .catch((err) => {
+        setError("try again wrong password or email");
+        dispatch(setLoginStatus(false));
+      });
   };
 
   const handleWithGoogle = async () => {
@@ -72,6 +69,7 @@ export function Login({ HandleRegister, success }) {
         <div className="form-container"></div>
         <div className="form-content">
           <h3>Welcome to Gr8Books</h3>
+
           <form onSubmit={handleLoginSubmit}>
             <div className="with-google">
               <button
@@ -110,7 +108,13 @@ export function Login({ HandleRegister, success }) {
                 </div>
               </div>
             </div>
+
             <div>
+              {error && (
+                <div className="p-1 pr-14 pl-14 w-max m-auto bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
+                  {error}
+                </div>
+              )}
               <button className="btn btn-primary" type="submit">
                 Login
               </button>

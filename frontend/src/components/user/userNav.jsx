@@ -12,7 +12,7 @@ import GenericModal from "../../shared/GenericModal";
 import { Login, Register } from "./login-registration";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
-import { host } from "../../assets/constData";
+import { enumCategoriesOptions, host } from "../../assets/constData";
 import BackBTN from "../../shared/backbtn";
 
 export default function UserNav() {
@@ -87,9 +87,11 @@ export default function UserNav() {
         <div className="nav w-screen right-0 account-nav fixed top-0 sm:pr-8 sm:pl-8  h-0 flex border-b">
           <div className="nav-right flex items-center  gap-0">
             {isMobile && back ? <BackBTN /> : ""}
-            <div>
+            <div onClick={() => navigate("/")}>
               <img
-                className={`h-12 ${back && isMobile ? "hidden" : "flex"}`}
+                className={`h-12 cursor-pointer ${
+                  back && isMobile ? "hidden" : "flex"
+                }`}
                 src="/images/hayuu_book_store_logo_edited-removebg-preview.png"
                 alt="logoPhoto"
               />
@@ -240,21 +242,17 @@ function SearchInp() {
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     searchParams.set("q", searchQ);
-    const updatedSearchParams = searchParams.toString();
-    navigate("/search?" + updatedSearchParams);
+    // Add category parameter if it exists
+    if (searchParams.has("category")) {
+      navigate(`/search?${searchParams.toString()}`);
+    } else {
+      navigate("/search?q=" + searchQ);
+    }
   };
 
   const handleSelectChange = (selectedOption) => {
-    // console.log("Selected option:", selectedOption);
+    searchParams.set("category", selectedOption.value);
   };
-
-  const options = [
-    { value: "1", label: "Option 1" },
-    { value: "2", label: "Option 2" },
-    { value: "1", label: "Option 1" },
-    { value: "2", label: "Option 2" },
-  ];
-
   const customStyles = {
     control: (provided) => ({
       ...provided,
@@ -271,10 +269,10 @@ function SearchInp() {
         >
           <Select
             styles={customStyles}
-            options={options}
+            options={enumCategoriesOptions}
             placeholder="Categories"
             onChange={handleSelectChange}
-            className="z-100 sm:mr-3"
+            className="z-100 sm:mr-3 mr-1"
           />
           <div className="items-center  flex">
             <input
