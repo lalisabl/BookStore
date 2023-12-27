@@ -38,7 +38,10 @@ export function Login({ HandleRegister, success }) {
         window.location.reload();
       })
       .catch((err) => {
-        setError("try again wrong password or email");
+        if (err.response.status === 401) {
+          console.log(err.response);
+          setError(err.response.data.message);
+        }
         dispatch(setLoginStatus(false));
       });
   };
@@ -52,7 +55,7 @@ export function Login({ HandleRegister, success }) {
     }
   };
   return (
-    <div className="registration-container login">
+    <div className="registration-container mobile-login">
       <div className="welcome-banner">
         <FontAwesomeIcon icon={faRocket} className="icon" />
         <h3>Welcome </h3>
@@ -108,13 +111,12 @@ export function Login({ HandleRegister, success }) {
                 </div>
               </div>
             </div>
-
+            {error && (
+              <div className="p-1 pr-14 pl-14 w-max m-auto bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
+                {error}
+              </div>
+            )}
             <div>
-              {error && (
-                <div className="p-1 pr-14 pl-14 w-max m-auto bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
-                  {error}
-                </div>
-              )}
               <button className="btn btn-primary" type="submit">
                 Login
               </button>

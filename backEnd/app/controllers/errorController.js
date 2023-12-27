@@ -1,4 +1,6 @@
 const AppError = require("../../utils/catchAsync");
+const process = require("../../Config/config");
+
 let message = null;
 const handleJWTError = () => {
   return new AppError("Invalid token.Please log in again!", 401);
