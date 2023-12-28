@@ -16,7 +16,7 @@ import Loading from "./Loading";
  * YOU CAN USE ModalTry component to try it
  */
 
-const GenericModal = ({ isOpen, onClose, children }) => {
+const GenericModal = ({ customStyles, isOpen, onClose, children }) => {
   const [isVisible, setIsVisible] = useState(false);
   const handleModalClick = (e) => {
     e.stopPropagation();
@@ -26,7 +26,11 @@ const GenericModal = ({ isOpen, onClose, children }) => {
   }, [isOpen]);
   return (
     isOpen && (
-      <div className="modal" onClick={onClose}>
+      <div
+        style={{ justifyContent: customStyles }}
+        className="modal"
+        onClick={onClose}
+      >
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: isVisible ? 1 : 0.5, opacity: isVisible ? 1 : 0 }}

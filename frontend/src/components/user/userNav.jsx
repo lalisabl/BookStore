@@ -195,6 +195,7 @@ export default function UserNav() {
             {showLoginPopup && (
               <>
                 <GenericModal
+                  customStyles="left"
                   isOpen={showLoginPopup}
                   onClose={() => setShowLoginPopup(false)}
                 >
@@ -210,6 +211,7 @@ export default function UserNav() {
             {showRegisterPopup && (
               <>
                 <GenericModal
+                  customStyles="left"
                   isOpen={showRegisterPopup}
                   onClose={() => setShowRegisterPopup(false)}
                 >
