@@ -3,6 +3,7 @@ import { UserSideBar } from "../components/user/side-bar";
 import BackBTN from "../shared/backbtn";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import Footer from "../components/common/footer";
 
 export function UserPage({ SetLogin, path }) {
   const back = useSelector((state) => state.store.backBtn);
@@ -29,6 +30,7 @@ export function UserPage({ SetLogin, path }) {
         </div>
         {path}
       </div>
+      {/* <Footer /> */}
     </div>
   );
 }
