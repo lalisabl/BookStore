@@ -55,11 +55,11 @@ export function Login({ HandleRegister, success }) {
     }
   };
   return (
-    <div className="registration-container mobile-login">
+    <div className="registration-container  register">
       <div className="welcome-banner">
         <FontAwesomeIcon icon={faRocket} className="icon" />
         <h3>Welcome </h3>
-        <p>start reading, reader is leader this tooks you 3-5 sec atmost</p>
+        <p>start reading, reader is leader this takes you 3-5 sec atmost</p>
         <button
           className="btn btn-primary-white"
           type="button"
@@ -71,7 +71,7 @@ export function Login({ HandleRegister, success }) {
       <div className=" form-bg">
         <div className="form-container"></div>
         <div className="form-content">
-          <h3>Welcome to Gr8Books</h3>
+          <h3>Welcome to HayuBk</h3>
 
           <form onSubmit={handleLoginSubmit}>
             <div className="with-google">
@@ -194,7 +194,7 @@ export function Register({ HandleLogin, success }) {
       <div className="welcome-banner">
         <FontAwesomeIcon icon={faRocket} className="icon" />
         <h3>Welcome </h3>
-        <p>start reading, reader is leader this tooks you 3-5 sec atmost</p>
+        <p>start reading, reader is leader this takes you 3-5 sec at most</p>
         <button
           className="btn btn-primary-white"
           type="button"
@@ -203,10 +203,13 @@ export function Register({ HandleLogin, success }) {
           Login
         </button>
       </div>
+
       <div className="form-bg">
-        <div className="form-container"></div>
+        <div className="form-container">
+
+        </div>
         <div className="form-content">
-          <h3>Welcome to Gr8Books</h3>
+          <h3>Welcome to HayuBk</h3>
           <form onSubmit={handleSubmit}>
             <div className="with-google">
               <button

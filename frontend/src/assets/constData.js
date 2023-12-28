@@ -1,6 +1,9 @@
 export const apiurl = "http://localhost:5000/api/v1";
 export const host = "http://localhost:5000";
 
+
+// export const apiurl = "https://hayubkserver.5gada.com/api/v1";
+// export const host = "https://hayubkserver.5gada.com";
 export const enumCategories = [
   "Fiction",
   "Non-Fiction",

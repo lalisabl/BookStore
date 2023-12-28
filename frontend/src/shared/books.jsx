@@ -136,7 +136,7 @@ export const Books = ({ book, isGrid }) => {
           >
             <img
               src={
-                "http://localhost:5000/images/users/" +
+                `${host}/images/users/` +
                 book.user.profile.picture
               }
               alt={book.user.username}
