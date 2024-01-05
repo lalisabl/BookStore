@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setBackBtn } from "../redux/actions";
-import { useLocation } from "react-router-dom";
 
 export default function BackBTN() {
   const [isMobile, setIsMobile] = useState(false);
