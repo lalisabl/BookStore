@@ -1,15 +1,18 @@
 import { BiLogoGmail } from "react-icons/bi";
 import { BiLogoTelegram } from "react-icons/bi";
 import { BiLogoFacebook } from "react-icons/bi";
+import { useNavigate, Link } from "react-router-dom";
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <div className=" bg-gray-800 text-white py-4 lg:py-8 lg:px-24">
       <div className="container mx-auto grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:place-items-start">
         <div className="flex flex-col w-60 ">
           <h4 className=" mb-4">BOOKSTORE</h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quos
-            recusandae amet corporis qui.
+            Engage in lively literary discussions in our vibrant forum,
+            connecting with fellow book enthusiasts and expanding your reading
+            horizons.
           </p>
         </div>
         <div className="flex flex-col leading-7 font-serif font-normal lg:border-l lg:border-slate-600 lg:pl-8">
@@ -36,14 +39,17 @@ const Footer = () => {
           <h4 className="mb-4">OUR COMPANY</h4>
           <ul className="flex flex-col">
             <li>
-              <a href="#" className="hover:underline">
+              <Link
+                to="/aboutUs"
+                className="hover:underline hover:cursor-pointer"
+              >
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <Link to="/search?" className="hover:underline">
                 Books
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="hover:underline">
