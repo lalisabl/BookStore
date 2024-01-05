@@ -57,7 +57,7 @@ function LandingBanner1() {
             Dive into a World of Stories at HayuBk!
           </div>
 
-          <div className="flex m-auto gap-10 flex-wrap sm:flex-nowrap justify-around w-5/6">
+          <div className="flex m-auto gap-10  flex-wrap md:flex-nowrap justify-around w-5/6 mb-6">
             <div className="bg-gray-500 w-full  p-10 rounded-lg bg-opacity-40  flex-n text-lg  text-white hover:bg-opacity-70">
               <div>Join today for free</div>
               <button
@@ -83,6 +83,7 @@ function LandingBanner1() {
               </button>
             </div>
           </div>
+
         </div>
       </div>
       {showLoginPopup && (
