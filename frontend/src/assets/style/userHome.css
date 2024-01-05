@@ -115,6 +115,7 @@
   min-width: 70px;
   color: #1a1a1a;
   position: fixed;
+  z-index: 4;
   left: 0;
   height: 100vh;
 }
@@ -184,6 +185,9 @@
   .left-user-side-bar {
     min-width: 50px;
     width: max-content;
+  }
+  .right-sideBar{
+    width: 300px;
   }
 }
 

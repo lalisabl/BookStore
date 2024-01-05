@@ -36,7 +36,7 @@ export default function BackBTN() {
         <button
           className={`${
             !isMobile ? "fixed" : ""
-          }  z-30 border rounded-md pl-1 ml-3 bg-gray-100 pr-1  flex items-center`}
+          }  z-1-m border rounded-md pl-1 ml-3 bg-gray-100 pr-1  flex items-center`}
           onClick={handleGoBack}
         >
           <FaArrowLeft className="text-xl" />

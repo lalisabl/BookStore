@@ -271,15 +271,17 @@ function SearchInp() {
           <div className="items-center  flex">
             <input
               onChange={setSearch}
-              className="p-1.5 w-28 sm:w-64 border rounded rounded-r-none border-gray-300"
+              className="p-1.5 w-32 sm:w-64 border rounded rounded-r-none border-gray-300"
               type="text"
               value={searchQ}
               title="text"
               placeholder="Search book here"
             />
+
             <button className="btn-primary p-1.5 text-white rounded-r-md">
               <BiSearch className=" text-2xl" />
             </button>
+            
           </div>
         </form>
       </div>
