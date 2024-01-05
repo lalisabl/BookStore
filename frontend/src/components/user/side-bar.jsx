@@ -92,7 +92,7 @@ export function RightSideBar({ closeBar, show }) {
       <AnimatePresence>
         {isShow && (
           <div
-            className="modal z-50"
+            className="modal"
             onClick={() => {
               setShow(false);
               setTimeout(closeBar, 1000);
