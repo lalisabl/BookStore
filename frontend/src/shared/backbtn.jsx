@@ -34,7 +34,7 @@ export default function BackBTN() {
       {back && (
         <button
           className={`${
-            !isMobile ? "fixed" : ""
+            !isMobile ? "fixed" : " mr-0 "
           }  z-1-m border rounded-md pl-1 ml-3 bg-gray-100 pr-1  flex items-center`}
           onClick={handleGoBack}
         >
