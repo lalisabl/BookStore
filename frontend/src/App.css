@@ -136,6 +136,22 @@ body {
   width: 100%;
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
+.pdf-reader {
+  position: relative;
+  height: 90vh;
+  width: 90vw;
+  margin: auto;
+}
+.toolbar {
+  top: 1%;
+  left: 27%;
+  z-index: 12;
+  width: 50vw;
+  overflow: hidden;
+  margin: auto;
+  position: fixed;
+}
+
 @media screen and (min-width: 640) {
   .landing-pg .banner-bg {
     margin-left: 0;
@@ -145,9 +161,13 @@ body {
     width: 100%;
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
+ 
 }
 @media screen and (max-width: 768px) {
   .mobile-hidden {
     display: none;
+  }
+  .toolbar{
+    left: 20%;
   }
 }

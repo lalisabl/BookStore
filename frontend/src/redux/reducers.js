@@ -39,6 +39,7 @@ const Reducer = (state = initialState, action) => {
         ...state,
         isMobile: action.payload,
       };
+
     default:
       return state;
   }

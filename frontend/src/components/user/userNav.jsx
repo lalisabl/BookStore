@@ -76,6 +76,7 @@ export default function UserNav() {
         <div className="nav w-screen right-0 account-nav fixed top-0 sm:pr-8 sm:pl-8  h-0 flex border-b">
           <div className="flex items-center  sm:gap-14">
             {isMobile && back ? <BackBTN /> : ""}
+            
             <div onClick={() => navigate("/")}>
               <img
                 className={`h-12 cursor-pointer ${

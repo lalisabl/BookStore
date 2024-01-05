@@ -40,7 +40,7 @@ export function Search() {
       <HomeBanner />
       <div
         style={{ minHeight: "50vh" }}
-        className="pl-3 pr-3 bg-white w-screen"
+        className="pl-3 pr-3 pb-14 bg-white w-screen"
       >
         <Filter_View />
         {loading ? (

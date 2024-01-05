@@ -13,6 +13,7 @@ const Account = ({ path }) => {
         <UserNav />
         <AccountSideBar />
         <div>{path}</div>
+        
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const GenericModal = ({ customStyles, isOpen, onClose, children }) => {
     isOpen && (
       <div
         style={{ justifyContent: customStyles }}
-        className="modal"
+        className="modal "
         onClick={onClose}
       >
         <motion.div
