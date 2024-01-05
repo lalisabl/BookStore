@@ -190,7 +190,8 @@
 @media screen and (max-width: 640px) {
   .left-user-side-bar {
     width: 100vw;
-    height: max-content;
+    z-index: 4;
+    height: max-content; 
     bottom: 0;
   }
   .left-user-side-bar ul {

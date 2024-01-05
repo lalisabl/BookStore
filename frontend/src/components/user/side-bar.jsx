@@ -18,6 +18,7 @@ import { apiurl, host } from "../../assets/constData";
 import { useSelector } from "react-redux";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
+
 export function AccountSideBar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -91,7 +92,7 @@ export function RightSideBar({ closeBar, show }) {
       <AnimatePresence>
         {isShow && (
           <div
-            className="modal"
+            className="modal z-50"
             onClick={() => {
               setShow(false);
               setTimeout(closeBar, 1000);
@@ -103,7 +104,7 @@ export function RightSideBar({ closeBar, show }) {
               exit={{ x: "100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               onClick={(e) => e.stopPropagation()}
-              className={`right-sideBar`}
+              className={`right-sideBar `}
             >
               <span
                 onClick={() => {
@@ -213,7 +214,7 @@ export function RightSideContent({ close }) {
   );
 }
 
-export function UserSideBar({ setLogin }) {
+export function UserSideBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const isActive = (path) => {
@@ -221,7 +222,7 @@ export function UserSideBar({ setLogin }) {
   };
 
   return (
-    <div className="left-user-side-bar mt-14 text-center z-0">
+    <div className="left-user-side-bar mt-14 text-center z-10">
       <ul className="flex flex-col">
         <li
           className={`side-bar-item ${
