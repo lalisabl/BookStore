@@ -21,6 +21,7 @@ import PDFViewer from "./components/book/pdfViewer";
 import DefaultPage from "./pages/defaultPg";
 import ComingSoon from "./shared/ComingSoon";
 import Favorites from "./components/user/favorites";
+import AboutUs from "./pages/about";
 function Pages() {
   const dispatch = useDispatch();
   const [login, setLogin] = useState(false);
@@ -105,6 +106,10 @@ function Pages() {
               <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
             )}
             <Route
+              path="/aboutUs"
+              element={<DefaultPage page={<AboutUs />} />}
+            />
+            <Route
               path="/books/:id"
               element={<DefaultPage page={<BookDetail />} />}
             />
@@ -122,9 +127,7 @@ function Pages() {
 }
 
 function App() {
- 
-  
- //set is mobile
+  //set is mobile
   const dispatch = useDispatch();
   const handleResize = () => {
     dispatch(setSetIsMobile(window.innerWidth < 640));
@@ -136,8 +139,6 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-
 
   return (
     <div className="overflow-x-hidden overflow-y-scroll">

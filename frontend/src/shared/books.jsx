@@ -70,6 +70,7 @@ export const Books = ({ book, isGrid }) => {
         navigate("/books/" + book._id);
       }}
       key={book._id}
+      id="books"
       className={`bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md relative`}
     >
       {loading ? (
@@ -135,10 +136,7 @@ export const Books = ({ book, isGrid }) => {
             }`}
           >
             <img
-              src={
-                `${host}/images/users/` +
-                book.user.profile.picture
-              }
+              src={`${host}/images/users/` + book.user.profile.picture}
               alt={book.user.username}
               className="w-8 rounded-full border mr-1"
             />
