@@ -20,3 +20,8 @@ export const setBackBtn = (backBtn) => ({
   type: "SET_BACK_BTN",
   payload: backBtn,
 });
+
+export const setSetIsMobile = (isMobile) => ({
+  type: "SET_MOBILE_VIEW",
+  payload: isMobile,
+});

@@ -4,6 +4,7 @@ const initialState = {
   isLogin: false,
   userInfo: {},
   backBtn: false,
+  isMobile: false,
 };
 
 const Reducer = (state = initialState, action) => {
@@ -32,6 +33,11 @@ const Reducer = (state = initialState, action) => {
       return {
         ...state,
         backBtn: action.payload,
+      };
+    case "SET_MOBILE_VIEW":
+      return {
+        ...state,
+        isMobile: action.payload,
       };
     default:
       return state;

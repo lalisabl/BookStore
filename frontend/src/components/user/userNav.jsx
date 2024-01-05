@@ -274,7 +274,7 @@ function SearchInp() {
             options={enumCategoriesOptions}
             placeholder="Categories"
             onChange={handleSelectChange}
-            className="z-100 sm:mr-3 mr-1"
+            className="z-100 sm:mr-3  mr-1"
           />
           <div className="items-center  flex">
             <input
