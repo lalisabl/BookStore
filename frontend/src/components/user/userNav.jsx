@@ -64,21 +64,10 @@ export default function UserNav() {
     }
   };
 
-  const [isMobile, setIsMobile] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
   const [toggleBar, setToggleBar] = useState(false);
   const user = useSelector((state) => state.store.userInfo);
-  const handleResize = () => {
-    setIsMobile(window.innerWidth < 640);
-  };
-  useEffect(() => {
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const isMobile = useSelector((state) => state.store.isMobile);
   const back = useSelector((state) => state.store.backBtn);
 
   return (
@@ -240,7 +229,7 @@ function SearchInp() {
   const setSearch = (e) => {
     setSearchQ(e.target.value);
   };
-
+  const isMobile = useSelector((state) => state.store.isMobile);
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     searchParams.set("q", searchQ);
@@ -269,13 +258,16 @@ function SearchInp() {
           onSubmit={handleSearchSubmit}
           className="flex  relative items-center"
         >
-          <Select
-            styles={customStyles}
-            options={enumCategoriesOptions}
-            placeholder="Categories"
-            onChange={handleSelectChange}
-            className="z-100 sm:mr-3  mr-1"
-          />
+          {!isMobile && (
+            <Select
+              styles={customStyles}
+              options={enumCategoriesOptions}
+              placeholder="Categories"
+              onChange={handleSelectChange}
+              className="z-100 sm:mr-3  mr-1"
+            />
+          )}
+
           <div className="items-center  flex">
             <input
               onChange={setSearch}

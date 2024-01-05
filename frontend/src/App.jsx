@@ -16,7 +16,7 @@ import { apiurl } from "./assets/constData";
 import { NotFound } from "./pages/NotFoundPage";
 import BookDetail from "./components/book/BookDetail";
 import { useDispatch } from "react-redux";
-import { setLoginStatus, setUserInfo } from "./redux/actions";
+import { setLoginStatus, setSetIsMobile, setUserInfo } from "./redux/actions";
 import PDFViewer from "./components/book/pdfViewer";
 import DefaultPage from "./pages/defaultPg";
 import ComingSoon from "./shared/ComingSoon";
@@ -122,6 +122,23 @@ function Pages() {
 }
 
 function App() {
+ 
+  
+ //set is mobile
+  const dispatch = useDispatch();
+  const handleResize = () => {
+    dispatch(setSetIsMobile(window.innerWidth < 640));
+  };
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+
+
   return (
     <div className="overflow-x-hidden overflow-y-scroll">
       <Pages />
