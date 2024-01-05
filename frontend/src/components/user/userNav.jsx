@@ -74,7 +74,7 @@ export default function UserNav() {
     <div>
       <div>
         <div className="nav w-screen right-0 account-nav fixed top-0 sm:pr-8 sm:pl-8  h-0 flex border-b">
-          <div className="nav-right flex items-center  gap-0">
+          <div className="flex items-center  sm:gap-14">
             {isMobile && back ? <BackBTN /> : ""}
             <div onClick={() => navigate("/")}>
               <img
@@ -268,7 +268,7 @@ function SearchInp() {
             />
           )}
 
-          <div className="items-center  flex">
+          <div className="items-center m-auto  flex">
             <input
               onChange={setSearch}
               className="p-1.5 w-32 sm:w-64 border rounded rounded-r-none border-gray-300"
