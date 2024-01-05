@@ -14,7 +14,7 @@ def extract_thumbnail_from_first_page(pdf_path, output_folder):
     image_path = f"{output_folder}/thumbnail_page_1.png"
     pix.save(image_path, "png")
 
-    # Close the PDF document
+    # Close the PDF document 
     pdf_document.close()
 
 # Example usage
