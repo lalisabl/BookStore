@@ -37,8 +37,5 @@
   transform: rotate(180deg);
 }
 @media screen and (max-width: 780px) {
-  .mobile-login{
-    position: fixed;
-    bottom: 0;
-  }
+ 
 }

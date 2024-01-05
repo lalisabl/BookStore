@@ -36,7 +36,7 @@ const GenericModal = ({ customStyles, isOpen, onClose, children }) => {
           animate={{ scale: isVisible ? 1 : 0.5, opacity: isVisible ? 1 : 0 }}
           exit={{ scale: 0.5, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="modal-content w-4/5 sm:w-auto"
+          className="modal-content"
           onClick={handleModalClick}
         >
           <span className="modal-close" onClick={onClose}>

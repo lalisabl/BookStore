@@ -5,6 +5,7 @@ import UserNav from "../components/user/userNav";
 import Footer from "../components/common/footer";
 import { Login, Register } from "../components/user/login-registration";
 import GenericModal from "../shared/GenericModal";
+import { useSelector } from "react-redux";
 export function LandingPage({ SetLogin }) {
   return (
     <>
@@ -43,6 +44,8 @@ function LandingBanner1() {
       setShowLoginPopup(true);
     }
   };
+
+  const isMobile = useSelector((state) => state.store.isMobile);
   return (
     <>
       <div
@@ -83,12 +86,12 @@ function LandingBanner1() {
               </button>
             </div>
           </div>
-
         </div>
       </div>
       {showLoginPopup && (
         <>
           <GenericModal
+            customStyles={!isMobile ? "" : "left"}
             isOpen={showLoginPopup}
             onClose={() => setShowLoginPopup(false)}
           >
@@ -104,6 +107,7 @@ function LandingBanner1() {
       {showRegisterPopup && (
         <>
           <GenericModal
+            customStyles={!isMobile ? "" : "left"}
             isOpen={showRegisterPopup}
             onClose={() => setShowRegisterPopup(false)}
           >
