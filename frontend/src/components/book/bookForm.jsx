@@ -10,6 +10,7 @@ import { faUpload, faFile } from "@fortawesome/free-solid-svg-icons";
 import { GenericLittleLoadingModal } from "../../shared/GenericModal";
 import CreatableSelect from "react-select/creatable";
 import { KeyboardEventHandler } from "react";
+import { useNavigate } from "react-router-dom";
 
 const allowedDocumentExtensions = [
   "pdf",
@@ -84,7 +85,7 @@ const BookForm = () => {
     //   }
     // }
   };
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -126,7 +127,8 @@ const BookForm = () => {
       >
         {!loading && !error && msg !== "" ? (
           <div className="text-green-600 bg-green-100 p-3 rounded-md mb-4">
-            {msg} You will be redirected to the home page in 2 seconds.
+            {msg} You will be redirected to the home page in 2 seconds.{" "}
+            {setTimeout(() => navigate("/"), 3000)}
           </div>
         ) : !loading && error ? (
           <div className="text-red-600 bg-red-100 p-3 rounded-md mb-4">
