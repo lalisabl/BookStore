@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { apiurl } from "../../assets/constData";
 import axios from "axios";
 import LoginRegisterPopUp from "../loginFormHandle";
+import { useSelector } from "react-redux";
 const Follow = ({ userInfo, userId }) => {
+  const isLogin = useSelector((state) => state.store.isLogin);
   const [isFollow, setIsFollow] = useState(false);
   const [loading, setLoading] = useState(true);
   const currentUserId = userInfo._id;
@@ -40,7 +42,9 @@ const Follow = ({ userInfo, userId }) => {
   };
   return (
     <>
-      {loading ? (
+      {isLogin ? (
+        <LoginRegisterPopUp />
+      ) : loading ? (
         <span>...</span>
       ) : (
         <button
