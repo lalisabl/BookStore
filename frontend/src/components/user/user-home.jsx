@@ -50,7 +50,6 @@ export function HomeBanner() {
     searchParams.set("category", selectedOption.value);
   };
 
-
   const customStyles = {
     control: (provided) => ({
       ...provided,
@@ -65,6 +64,9 @@ export function HomeBanner() {
     const scrolled = window.scrollY > 100;
     dispatch(setScrollState(scrolled));
   };
+  useEffect(() => {
+    console.log(searchQ);
+  }, [searchQ]);
 
   useEffect(() => {
     dispatch(setScrollState(false));
@@ -118,20 +120,23 @@ export function HomeBanner() {
               </div>
             </form>
           </div>
-          <SearchRecommenderTag />
+          <SearchRecommenderTag setSearch={setSearchQ} />
         </div>
       </div>
     </>
   );
 }
 
-function SearchRecommenderTag() {
+function SearchRecommenderTag({ setSearch }) {
   const recommended = [`top new book`, "chemistry", "poetry", "handout"];
   return (
     <div className="flex flex-wrap gap-2">
       {recommended.map((s, index) => (
         <div key={index}>
-          <span className="border  bg-gray-50 bg-opacity-30 hover:bg-opacity-40 pl-3 pr-3 items-center rounded-full flex cursor-pointer">
+          <span
+            onClick={() => setSearch(s)}
+            className="border  bg-gray-50 bg-opacity-30 hover:bg-opacity-40 pl-3 pr-3 items-center rounded-full flex cursor-pointer"
+          >
             <FaSearch className="mr-2" /> {s}
           </span>
         </div>
