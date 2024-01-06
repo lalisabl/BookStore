@@ -15,7 +15,6 @@ export const Books = ({ book, isGrid }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    console.log(book.thumbnail);
     if (userInfo && userInfo?.profile?.favorites) {
       setIsFavorite(userInfo.profile.favorites.includes(book._id));
       setLoading(false);

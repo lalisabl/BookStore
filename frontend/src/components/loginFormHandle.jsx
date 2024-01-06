@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import GenericModal from "../shared/GenericModal";
 import { Login } from "./user/login-registration";
-const LoginRegisterPopUp = () => {
-  const [showLoginPopup, setShowLoginPopup] = useState(true);
+const LoginRegisterPopUp = ({ asklogin }) => {
+  const [showLoginPopup, setShowLoginPopup] = useState(asklogin);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
   const isMobile = useSelector((state) => state.store.isMobile);
   const handleSignInClick = (param) => {
