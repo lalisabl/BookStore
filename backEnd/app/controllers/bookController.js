@@ -2,6 +2,7 @@ const Book = require("../models/bookModel");
 const Notification = require("../models/notificationModel");
 const User = require("../models/UserModel");
 const multer = require("multer");
+const { fromPath } = require("pdf2pic");
 const sharp = require("sharp");
 const path = require("path");
 const catchAsync = require("../../utils/catchAsync");
@@ -19,6 +20,31 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
+const thumbnail = async (pdfFilePath, outputFolderPath) => {
+  const options = {
+    density: 100,
+    saveFilename: "thumbnail_page_1",
+    savePath: outputFolderPath,
+    format: "png",
+    width: 100, // Specify the width of the thumbnail in pixels
+    height: 100, // Specify the height of the thumbnail in pixels
+  };
+
+  const convert = fromPath(pdfFilePath, options);
+  const pageToConvertAsImage = 1;
+
+  try {
+    const result = await convert(pageToConvertAsImage, {
+      responseType: "image",
+    });
+    console.log("Thumbnail extraction successful:", result[0]);
+    return result[0];
+  } catch (error) {
+    console.error("Error extracting thumbnail:", error);
+    return null;
+  }
+};
 
 exports.postBook = catchAsync(async (req, res, next) => {
   upload.single("file")(req, res, async function (err) {
@@ -51,12 +77,17 @@ exports.postBook = catchAsync(async (req, res, next) => {
     const filename = req.file.filename;
     if (!allowedDocumentExtensions.includes(fileExtension)) {
       const filePath = `uploads/${filename}`;
+
       await fs.unlink(filePath);
       return next(new AppError("Unsupported file type", 400));
     }
 
     try {
-      await Book.create({ title, user, filename, category });
+      const thumbnailPath = await thumbnail(
+        `uploads/${filename}`,
+        "thumbnails"
+      );
+      await Book.create({ title, user, filename, category, thumbnailPath });
       res.status(201).json({ message: "Book uploaded successfully" });
     } catch (err) {
       const filePath = `uploads/${filename}`;
@@ -316,7 +347,6 @@ exports.setRate_review = catchAsync(async (req, res, next) => {
     .status(200)
     .json({ message: "Rating and review set successfully." });
 });
-
 // Endpoint to handle download requests
 exports.shareBook = catchAsync(async (req, res, next) => {
   const { bookId } = req.params;
