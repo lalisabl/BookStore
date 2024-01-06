@@ -15,6 +15,7 @@ export const Books = ({ book, isGrid }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    console.log(book.thumbnail);
     if (userInfo && userInfo?.profile?.favorites) {
       setIsFavorite(userInfo.profile.favorites.includes(book._id));
       setLoading(false);
@@ -91,12 +92,14 @@ export const Books = ({ book, isGrid }) => {
       <div className={`${!isGrid ? "flex w-full" : ""}`}>
         <img
           src={
-            fileType(book.filename) === "pdf"
-              ? "images/pdf.png"
-              : fileType(book.filename) === "doc" ||
-                  fileType(book.filename) === "docx"
-                ? "images/word.png"
-                : "images/default.png"
+            !book.thumbnail
+              ? fileType(book.filename) === "pdf"
+                ? "images/pdf.png"
+                : fileType(book.filename) === "doc" ||
+                    fileType(book.filename) === "docx"
+                  ? "images/word.png"
+                  : "images/default.png"
+              : `${host}/thumbnails/${book.thumbnail}`
           }
           alt={book.title}
           className={`${

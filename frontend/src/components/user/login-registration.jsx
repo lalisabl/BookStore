@@ -21,6 +21,7 @@ export function Login({ HandleRegister, success }) {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [password, setPassword] = useState("");
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     axios
@@ -205,9 +206,7 @@ export function Register({ HandleLogin, success }) {
       </div>
 
       <div className="form-bg">
-        <div className="form-container">
-
-        </div>
+        <div className="form-container"></div>
         <div className="form-content">
           <h3>Welcome to HayuBk</h3>
           <form onSubmit={handleSubmit}>

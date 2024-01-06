@@ -21,14 +21,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const thumbnail = async (pdfFilePath, outputFolderPath) => {
+const Thumbnail = async (pdfFilePath, outputFolderPath) => {
   const options = {
     density: 100,
     saveFilename: "thumbnail_page_1",
     savePath: outputFolderPath,
     format: "png",
-    width: 100, // Specify the width of the thumbnail in pixels
-    height: 100, // Specify the height of the thumbnail in pixels
+    width: 100,
+    height: 100,
   };
 
   const convert = fromPath(pdfFilePath, options);
@@ -83,11 +83,8 @@ exports.postBook = catchAsync(async (req, res, next) => {
     }
 
     try {
-      const thumbnailPath = await thumbnail(
-        `uploads/${filename}`,
-        "thumbnails"
-      );
-      await Book.create({ title, user, filename, category, thumbnailPath });
+      const thumbnail = await Thumbnail(`uploads/${filename}`, "./thumbnails");
+      await Book.create({ title, user, filename, category, thumbnail });
       res.status(201).json({ message: "Book uploaded successfully" });
     } catch (err) {
       const filePath = `uploads/${filename}`;
@@ -300,7 +297,7 @@ exports.getEachBook = catchAsync(async (req, res, next) => {
   if (book && book.reviews) {
     book.reviews.sort((a, b) => b.timestamp - a.timestamp);
   }
-  
+
   res.status(200).json({
     status: "success",
     data: {
