@@ -57,33 +57,33 @@ const BookForm = () => {
       ...formData,
       [e.target.name]: file,
     });
-    // if (file) {
-    //   const fileExtension = file.name.split(".").pop().toLowerCase();
+    if (file) {
+      const fileExtension = file.name.split(".").pop().toLowerCase();
 
-    //   // Check if the file extension is in the allowed document extensions
-    //   if (allowedDocumentExtensions.includes(fileExtension)) {
-    //     setFormData({
-    //       ...formData,
-    //       [e.target.name]: file,
-    //     });
-    //   } else {
-    //     setError(true);
-    //     setMsg(`unsupported file type \n only the following allowed   "pdf",
-    //     "doc",
-    //     "docx",
-    //     "txt",
-    //     "xls",
-    //     "rtf",
-    //     "odt",
-    //     "csv",
-    //     "ods",
-    //     "xlsx",
-    //     "ppt",
-    //     "pptx",
-    //   `);
-    //     console.log("Unsupported file type");
-    //   }
-    // }
+      // Check if the file extension is in the allowed document extensions
+      if (allowedDocumentExtensions.includes(fileExtension)) {
+        setFormData({
+          ...formData,
+          [e.target.name]: file,
+        });
+      } else {
+        setError(true);
+        setMsg(`unsupported file type \n only the following allowed   "pdf",
+        "doc",
+        "docx",
+        "txt",
+        "xls",
+        "rtf",
+        "odt",
+        "csv",
+        "ods",
+        "xlsx",
+        "ppt",
+        "pptx",
+      `);
+        console.log("Unsupported file type");
+      }
+    }
   };
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
