@@ -10,9 +10,6 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { apiurl } from "../../assets/constData";
 
-
-
-
 export default function PDFViewer() {
   const { id } = useParams();
   const [fileUrl, setFileUrl] = useState(null);
@@ -44,6 +41,10 @@ export default function PDFViewer() {
 
   const handleMouseEnter = () => {
     setIsMouseInside(true);
+
+    setTimeout(() => {
+      setIsMouseInside();
+    }, 5000);
   };
 
   const handleMouseLeave = () => {
@@ -59,8 +60,10 @@ export default function PDFViewer() {
             className="overflow-y-scroll pdf-reader overflow-x-hidden"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseEnter}
           >
-            {(isMouseInside || pdfContainerRef.current?.contains(document.activeElement)) && (
+            {(isMouseInside ||
+              pdfContainerRef.current?.contains(document.activeElement)) && (
               <div className="toolbar bg-primary_bg p-1.5">
                 <Toolbar>{renderDefaultToolbar(transformToolbarSlot)}</Toolbar>
               </div>
@@ -82,5 +85,3 @@ export default function PDFViewer() {
     </>
   );
 }
-
-

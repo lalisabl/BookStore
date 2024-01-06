@@ -7,8 +7,7 @@ export default function DefaultPage({ page }) {
   return (
     <div>
       <UserNav />
-      <BackBTN />
-      <div className="mt-14  landing-pg">{page}</div>
+      <div className="mt-16  landing-pg">{page}</div>
       <Footer />
     </div>
   );

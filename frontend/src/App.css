@@ -138,16 +138,16 @@ body {
 }
 .pdf-reader {
   position: relative;
-  height: 90vh;
+  height: 95vh;
+  border: 1px solid rgba(170, 170, 170, 0.226);
   width: 90vw;
   margin: auto;
 }
 .toolbar {
-  top: 1%;
-  left: 27%;
+  top: 10%;
+  left: 25%;
   z-index: 12;
   width: 50vw;
-  overflow: hidden;
   margin: auto;
   position: fixed;
 }
@@ -168,6 +168,8 @@ body {
     display: none;
   }
   .toolbar{
-    left: 20%;
+    top: 8%;
+    left: 18%;
+    width: auto;
   }
 }
