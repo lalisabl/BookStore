@@ -27,7 +27,7 @@ function BookNavItem({ text, username }) {
     "Book info": "",
     "Discussion Forum": () => navigate("./forums"),
     "Reviews and rates": () => navigate("#give_rate"),
-    "Book contributor": () => navigate(`/${username}`),
+    "Book contributor": () => navigate(`/user/${username}`),
   };
   return (
     <div
@@ -81,6 +81,19 @@ export default function BookDetail() {
       return fileExtension;
     }
   }
+
+  const [fileUrl, setFileUrl] = useState();
+
+  useEffect(() => {
+    if (book && book.downloadable) {
+      axios
+        .get(`${apiurl}/books/download/${id}`)
+        .then((res) => {
+          setFileUrl(res.data.url);
+        })
+        .catch((err) => {});
+    }
+  }, [book, id]);
   const navigate = useNavigate();
   return (
     <div className="pb-3 mt-10">
@@ -140,10 +153,16 @@ export default function BookDetail() {
                   </div>
                 </div>
                 <div className="sm:ml-24 mb-4 flex z-0  sm:gap-3 items-end">
-                  <button className="m-1 flex items-center  bg-gray-200 border rounded-lg p-1 hover:bg-gray-300">
+                  <a
+                    rel="noreferrer"
+                    href={`http://localhost:5000/file-1702504475442.pdf`}
+                    download={"true"}
+                    className="m-1 flex items-center  bg-gray-200 border rounded-lg p-1 hover:bg-gray-300"
+                  >
                     <BiDownload className="text-xl" />
+
                     <span>Download</span>
-                  </button>
+                  </a>
                   <button
                     onClick={() => navigate("./read")}
                     className="m-1 flex items-center bg-gray-200 border rounded-lg p-1 hover:bg-gray-300"

@@ -107,7 +107,7 @@ function Pages() {
               <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
             )}
             <Route
-              path="/:username"
+              path="/user/:username"
               element={<DefaultPage page={<UserProfile />} />}
             />
             <Route

@@ -52,6 +52,7 @@ const bookSchema = new Schema({
       timestamp: { type: Date, default: Date.now },
     },
   ],
+  tags: [String],
   downloads: { type: Number, default: 0 },
   shares: { type: Number, default: 0 },
   reports: [

@@ -52,7 +52,7 @@ exports.postBook = catchAsync(async (req, res, next) => {
       return next(new AppError("File upload failed", 500));
     }
     const user = req.user.id;
-    const { title, category } = req.body;
+    const { title, category, tags } = req.body;
     if (!req.file) {
       return next(new AppError("bad request: no file selected", 404));
     }

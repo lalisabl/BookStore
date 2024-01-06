@@ -34,17 +34,22 @@ export default function UserNav() {
 
   const dropdown = [
     {
-      title: "dashboard",
-      link: "/dashboard",
-    },
-    {
-      title: "other but",
-      link: "/b",
-    },
-    {
       title: "My favorites",
       link: "/My-favorites",
     },
+    {
+      title: "Academic",
+      link: "/search?category=Education",
+    },
+    {
+      title: "History",
+      link: "/search?category=History",
+    },
+    {
+      title: "Religion/Spirituality",
+      link: "/search?category=Religion%2FSpirituality",
+    },
+    
   ];
   const handleSignInClick = (param) => {
     if (param) {
