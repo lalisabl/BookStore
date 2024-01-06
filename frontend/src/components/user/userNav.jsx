@@ -14,10 +14,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
 import { enumCategoriesOptions, host } from "../../assets/constData";
 import BackBTN from "../../shared/backbtn";
+import LoginRegisterPopUp from "../loginFormHandle";
 
 export default function UserNav() {
   const isLogin = useSelector((state) => state.store.isLogin);
-
   const [language, setLanguage] = useState("en");
   const isScrolled = useSelector((state) => state.store.isScrolled);
 
@@ -49,25 +49,10 @@ export default function UserNav() {
       title: "Religion/Spirituality",
       link: "/search?category=Religion%2FSpirituality",
     },
-    
   ];
-  const handleSignInClick = (param) => {
-    if (param) {
-      setShowLoginPopup(true);
-    } else {
-      setShowLoginPopup(false);
-      setShowRegisterPopup(true);
-    }
-  };
+  const handleSignInClick = (param) => {};
 
-  const handleSignUpClick = (param) => {
-    if (param) {
-      setShowRegisterPopup(true);
-    } else {
-      setShowRegisterPopup(false);
-      setShowLoginPopup(true);
-    }
-  };
+  const handleSignUpClick = (param) => {};
   // const [isMobile, setIsMobile] = useState(false);
   const [toggleBar, setToggleBar] = useState(false);
   const user = useSelector((state) => state.store.userInfo);
@@ -145,13 +130,17 @@ export default function UserNav() {
               !isScrolled && (
                 <div>
                   <button
-                    onClick={() => handleSignInClick(true)}
+                    onClick={() => {
+                      setShowLoginPopup(true);
+                    }}
                     className="m-1 btn-primary rounded-lg p-1"
                   >
                     Login
                   </button>
                   <button
-                    onClick={() => handleSignUpClick(true)}
+                    onClick={() => {
+                      setShowRegisterPopup(true);
+                    }}
                     className="m-1 btn-primary-white rounded-lg p-1"
                   >
                     Sign Up
@@ -187,6 +176,18 @@ export default function UserNav() {
             )}
 
             {showLoginPopup && (
+              <LoginRegisterPopUp
+                asklogin={() => setShowLoginPopup(false)}
+                login={true}
+              />
+            )}
+            {showRegisterPopup && (
+              <LoginRegisterPopUp
+                asklogin={() => setShowRegisterPopup(false)}
+                login={false}
+              />
+            )}
+            {/* {showLoginPopup && (
               <>
                 <GenericModal
                   customStyles={!isMobile ? "" : "left"}
@@ -218,7 +219,7 @@ export default function UserNav() {
                   />
                 </GenericModal>
               </>
-            )}
+            )} */}
           </div>
         </div>
       </div>

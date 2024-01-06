@@ -42,10 +42,6 @@ const Follow = ({ userInfo, userId }) => {
       }
     }
   };
-
-  useEffect(() => {
-    console.log(askLogin);
-  }, [askLogin]);
   return (
     <>
       {loading ? (
@@ -64,7 +60,9 @@ const Follow = ({ userInfo, userId }) => {
         </button>
       )}
 
-      {askLogin && <LoginRegisterPopUp asklogin={() => setAskLogin(false)} />}
+      {askLogin && (
+        <LoginRegisterPopUp asklogin={() => setAskLogin(false)} login={true} />
+      )}
     </>
   );
 };
