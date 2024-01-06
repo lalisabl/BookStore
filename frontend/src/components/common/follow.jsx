@@ -51,15 +51,16 @@ const Follow = ({ userInfo, userId }) => {
           className={`btn-primary rounded-md ml-1 ${
             !isFollow ? "follow" : "unfollow"
           }`}
-          onClick={() =>
-            isLogin ? () => HandleFollow(isFollow, userId) : setAskLogin(true)
-          }
+          onClick={() => {
+            isLogin ? HandleFollow(isFollow, userId) : setAskLogin(true);
+            console.log("After setAskLogin(true):", askLogin);
+          }}
         >
           {currentUserId !== userId &&
             (isFollow ? <p>Unfollow</p> : <p>Follow</p>)}
         </button>
       )}
-      {askLogin && <LoginRegisterPopUp asklogin={true} />}
+      {askLogin && <LoginRegisterPopUp setAskLogin={() => setAskLogin(true)} />}
     </>
   );
 };
