@@ -64,7 +64,6 @@ export const Books = ({ book, isGrid }) => {
         });
     }
   };
-
   return (
     <div
       onClick={() => {

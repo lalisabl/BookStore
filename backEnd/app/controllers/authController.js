@@ -26,9 +26,7 @@ const createSendToken = (user, statusCode, res) => {
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
   res.cookie("jwt", token, cookieOptions);
-  // Remove password from output
   user.password = undefined;
-
   res.status(statusCode).json({
     status: "success",
     token,
@@ -44,7 +42,6 @@ const generateUniqueUsername = async (email) => {
   let isUsernameTaken = true;
   while (isUsernameTaken) {
     const randomNumber = Math.floor(1000 + Math.random() * 9000);
-    // Combine the base username and random number
     username = `${baseUsername}${randomNumber}`;
     const existingUser = await User.findOne({ username });
     isUsernameTaken = !!existingUser;

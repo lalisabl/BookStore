@@ -131,6 +131,7 @@ export function Login({ HandleRegister, success }) {
 
 export function Register({ HandleLogin, success }) {
   const dispatch = useDispatch();
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -138,7 +139,6 @@ export function Register({ HandleLogin, success }) {
   });
   const [emailAvailability, setEmailAvailability] = useState(null);
   const [focusedInput, setFocusedInput] = useState(null);
-  // const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -167,15 +167,29 @@ export function Register({ HandleLogin, success }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (formData.password.length < 8) {
+        setError("Password must be at least 8 characters long.");
+        setTimeout(() => {
+          setError("");
+        }, 2000);
+        return;
+      }
+      if (!emailAvailability) {
+        setFocusedInput("email");
+        setError("");
+      }
       if (emailAvailability) {
-        const response = await axios.post(`${apiurl}/users/register`, formData);
+        const response = await axios.post(
+          `${apiurl}/users/register`,
+          formData,
+          { withCredentials: true }
+        );
         dispatch(setLoginStatus(true));
         success();
+        setError("");
         console.log("Registration successful:", response.data);
-      } else {
-        setFocusedInput("email");
+        window.location.reload();
       }
-      // Add any additional logic for successful registration (e.g., redirect)
     } catch (error) {
       console.error("Registration failed:", error.response.data);
       dispatch(setLoginStatus(false));
@@ -231,7 +245,7 @@ export function Register({ HandleLogin, success }) {
                 onFocus={() => handleInputFocus("email")}
                 placeholder="Email *"
                 required
-                onInput={handleChange} // Triggered as the user types
+                onInput={handleChange}
               />
               {emailAvailability !== null &&
                 formData.email !== "" &&
@@ -254,6 +268,11 @@ export function Register({ HandleLogin, success }) {
               />
             </div>
             <div>
+              {error ? (
+                <p className=" text-sm text-center text-red-500">{error}</p>
+              ) : (
+                ""
+              )}
               <button className="btn btn-primary" type="submit">
                 Register
               </button>
