@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   apiurl,
@@ -33,9 +33,22 @@ const BookForm = () => {
   const [formData, setFormData] = useState({
     title: "",
     category: "",
+    tags: [],
     file: null,
-    downloadable: "no",
+    downloadable: true,
   });
+
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    console.log("tags from up", tags);
+  }, [tags]);
+  const handleTagCreation = (newTags) => {
+    setTags(newTags);
+    setFormData({
+      ...formData,
+      tags: newTags,
+    });
+  };
 
   const handleChangeCategory = (selectedOption) => {
     const categoryValue = selectedOption ? selectedOption.value : ""; // Use an empty string if no category selected
@@ -88,33 +101,34 @@ const BookForm = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(formData);
     const formDataToSend = new FormData();
     formDataToSend.append("title", formData.title);
     formDataToSend.append("category", formData.category);
     formDataToSend.append("downloadable", formData.downloadable);
     formDataToSend.append("file", formData.file);
+    formDataToSend.append("tag", formData.tags);
 
-    setLoading(true);
-    try {
-      const response = await axios.post(
-        `${apiurl}/books/upload`,
-        formDataToSend,
-        { withCredentials: true }
-      );
-      setLoading(false);
-      setError(false);
-      setMsg(response.data.message);
-    } catch (error) {
-      setLoading(false);
-      setError(true);
-      if (error.response.status === 401) {
-        setMsg("unAuthorized");
-      }
-      console.log(error.response.data.message);
-      setMsg(error.response.data.message);
-      console.error("Error:", error);
-    }
+    // setLoading(true);
+    // try {
+    //   const response = await axios.post(
+    //     `${apiurl}/books/upload`,
+    //     formDataToSend,
+    //     { withCredentials: true }
+    //   );
+    //   setLoading(false);
+    //   setError(false);
+    //   setMsg(response.data.message);
+    // } catch (error) {
+    //   setLoading(false);
+    //   setError(true);
+    //   if (error.response.status === 401) {
+    //     setMsg("unAuthorized");
+    //   }
+    //   console.log(error.response.data.message);
+    //   setMsg(error.response.data.message);
+    //   console.error("Error:", error);
+    // }
   };
 
   return (
@@ -171,8 +185,8 @@ const BookForm = () => {
               <input
                 type="radio"
                 name="downloadable"
-                value="yes"
-                checked={formData.downloadable === "yes"}
+                value={true}
+                checked={formData.downloadable === true}
                 onChange={handleChange}
                 className="mr-1"
               />
@@ -182,8 +196,8 @@ const BookForm = () => {
               <input
                 type="radio"
                 name="downloadable"
-                value="no"
-                checked={formData.downloadable === "no"}
+                value={false}
+                checked={formData.downloadable === false}
                 onChange={handleChange}
                 className="mr-1"
               />
@@ -193,7 +207,7 @@ const BookForm = () => {
         </div>
 
         <div className="mb-4">
-          <YourTagCreatorComponent />
+          <CreatorComponent handleTagCreation={handleTagCreation} />
         </div>
 
         <button
@@ -266,11 +280,29 @@ const CustomFileInput = ({ onChange }) => {
   );
 };
 
-const YourTagCreatorComponent = () => {
+const CreatorComponent = ({ handleTagCreation }) => {
   const enumCategoriesOptions = enumCategories.map((category, index) => ({
     value: category,
     label: category,
   }));
+
+  const [tags, setTags] = useState([]);
+
+  const handleCreateOption = (inputValue) => {
+    const newTag = inputValue;
+    setTags([...tags, newTag]);
+    handleTagCreation([...tags, newTag]);
+  };
+
+  const handleChange = (inputValue) => {
+    const newTag = inputValue;
+    setTags([...tags, newTag]);
+    handleTagCreation([...tags, newTag]);
+  };
+
+  useEffect(() => {
+    console.log("tags from t", tags);
+  }, [tags]);
 
   const customStyles = {
     control: (provided) => ({
@@ -280,16 +312,6 @@ const YourTagCreatorComponent = () => {
     }),
   };
 
-  const handleCreateOption = (inputValue) => {
-    // Handle the creation of a new tag here
-    const newTag = {
-      value: inputValue,
-      label: inputValue,
-    };
-
-    // Add the new tag to the array or dispatch an action to update state
-    console.log("Created tag:", newTag);
-  };
   const NoOptionsMessage = ({ inputValue }) => (
     <div className="react-select-no-options">
       No matching options found for `{inputValue}`.
@@ -303,13 +325,26 @@ const YourTagCreatorComponent = () => {
       placeholder="Create or select tags"
       onChange={(selectedOptions, { action, removedValue }) => {
         if (action === "create-option") {
-          handleCreateOption(selectedOptions[selectedOptions.length - 1].value);
-        } else if (action === "remove-value" && removedValue.__isNew__) {
-          // Handle the removal of a newly created tag
-          console.log("Removed tag:", removedValue.value);
+          const newTag = selectedOptions[selectedOptions.length - 1].value;
+          setTags([...tags, newTag]);
+          handleTagCreation([...tags, newTag]);
+        } else if (action === "remove-value") {
+          if (removedValue.__isNew__) {
+            const updatedTags = tags.filter(
+              (tag) => tag !== removedValue.value
+            );
+            setTags(updatedTags);
+            handleTagCreation(updatedTags);
+          } else {
+            const updatedTags = tags.filter(
+              (tag) => tag !== removedValue.value
+            );
+            setTags(updatedTags);
+            handleTagCreation(updatedTags);
+          }
         } else {
-          // Handle other actions like selecting existing tags
-          console.log("Selected options:", selectedOptions);
+          selectedOptions[selectedOptions.length - 1]?.value &&
+            handleChange(selectedOptions[selectedOptions.length - 1].value);
         }
       }}
       isSearchable
