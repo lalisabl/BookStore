@@ -63,7 +63,6 @@ export default function UserNav() {
       setShowLoginPopup(true);
     }
   };
-
   // const [isMobile, setIsMobile] = useState(false);
   const [toggleBar, setToggleBar] = useState(false);
   const user = useSelector((state) => state.store.userInfo);
@@ -76,7 +75,7 @@ export default function UserNav() {
         <div className="nav w-screen right-0 account-nav fixed top-0 sm:pr-8 sm:pl-8  h-0 flex border-b">
           <div className="flex items-center  sm:gap-14">
             {isMobile && back ? <BackBTN /> : ""}
-            
+
             <div onClick={() => navigate("/")}>
               <img
                 className={`h-12 cursor-pointer ${
@@ -198,6 +197,7 @@ export default function UserNav() {
                 </GenericModal>
               </>
             )}
+
             {showRegisterPopup && (
               <>
                 <GenericModal
@@ -220,7 +220,6 @@ export default function UserNav() {
     </div>
   );
 }
-
 function SearchInp() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -282,7 +281,6 @@ function SearchInp() {
             <button className="btn-primary p-1.5 text-white rounded-r-md">
               <BiSearch className=" text-2xl" />
             </button>
-            
           </div>
         </form>
       </div>

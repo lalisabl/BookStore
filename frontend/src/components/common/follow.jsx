@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { apiurl } from "../../assets/constData";
 import axios from "axios";
+import LoginRegisterPopUp from "../loginFormHandle";
 const Follow = ({ userInfo, userId }) => {
   const [isFollow, setIsFollow] = useState(false);
   const [loading, setLoading] = useState(true);
