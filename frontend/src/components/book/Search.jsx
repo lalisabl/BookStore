@@ -15,10 +15,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 export function Search() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const newURL = `${location.pathname}?${searchParams}`;
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const navigate = useNavigate();
 
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -32,7 +29,6 @@ export function Search() {
 
   const fetchData = () => {
     if (hasMore) {
-      setLoading(true);
       axios
         .get(`${apiurl}/books/get?${searchParams}&page=${currentPage + 1}`)
         .then((response) => {
@@ -44,10 +40,8 @@ export function Search() {
           } else {
             setHasMore(false);
           }
-          setLoading(false);
         })
         .catch((error) => {
-          setLoading(false);
           setError(error.message);
         });
       setCurrentPage((prevPage) => prevPage + 1);
