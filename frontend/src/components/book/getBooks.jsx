@@ -24,7 +24,7 @@ export default function GetBooks() {
 
   const isList = useSelector((state) => state.store.isList);
   return (
-    <div className="pl-3 pr-3">
+    <div className="pl-3 pr-3 pb-14">
       {loading ? (
         <>
           {isList ? (

@@ -6,12 +6,19 @@ import { themePlugin } from "@react-pdf-viewer/theme";
 import { fullScreenPlugin } from "@react-pdf-viewer/full-screen";
 import "@react-pdf-viewer/full-screen/lib/styles/index.css";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { apiurl } from "../../assets/constData";
+
+
+
+
 export default function PDFViewer() {
   const { id } = useParams();
   const [fileUrl, setFileUrl] = useState(null);
+  const [isMouseInside, setIsMouseInside] = useState(false);
+  const pdfContainerRef = useRef(null);
+
   useEffect(() => {
     axios
       .get(`${apiurl}/books/getLocation/${id}`)
@@ -22,7 +29,6 @@ export default function PDFViewer() {
   }, [id]);
 
   const themePluginInstance = themePlugin();
-  const { SwitchThemeButton } = themePluginInstance;
   const toolbarPluginInstance = toolbarPlugin();
   const fullScreenPluginInstance = fullScreenPlugin();
   const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
@@ -35,17 +41,30 @@ export default function PDFViewer() {
     Print: () => <></>,
     PrintMenuItem: () => <></>,
   });
+
+  const handleMouseEnter = () => {
+    setIsMouseInside(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsMouseInside(false);
+  };
+
   return (
     <>
       {fileUrl && (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
           <div
-            style={{ height: "83vh", zIndex: "-1", maxWidth: "100%" }}
-            className=" overflow-y-scroll  overflow-x-hidden"
+            ref={pdfContainerRef}
+            className="overflow-y-scroll pdf-reader overflow-x-hidden"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
-            <div className="absolute top-0 left-96  z-40  bg-primary_bg p-1.5">
-              <Toolbar>{renderDefaultToolbar(transformToolbarSlot)}</Toolbar>
-            </div>
+            {(isMouseInside || pdfContainerRef.current?.contains(document.activeElement)) && (
+              <div className="toolbar bg-primary_bg p-1.5">
+                <Toolbar>{renderDefaultToolbar(transformToolbarSlot)}</Toolbar>
+              </div>
+            )}
             <div>
               <Viewer
                 theme="auto"
@@ -63,3 +82,5 @@ export default function PDFViewer() {
     </>
   );
 }
+
+

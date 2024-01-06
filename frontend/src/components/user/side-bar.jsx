@@ -36,7 +36,7 @@ export function AccountSideBar() {
 
   return (
     <div
-      className={`flex-col gap-2 sm:bg-gray-200 sm:p-5 sm:mt-16 
+      className={`flex-col gap-2 sm:bg-gray-200  sm:p-5 sm:mt-16 
       ${!showSidebar ? "sm:fixed sm:w-2/12 sm:flex top-0 bottom-0" : " "}
        `}
     >
@@ -92,7 +92,7 @@ export function RightSideBar({ closeBar, show }) {
       <AnimatePresence>
         {isShow && (
           <div
-            className="modal"
+            className="modal z-30"
             onClick={() => {
               setShow(false);
               setTimeout(closeBar, 1000);
@@ -104,7 +104,7 @@ export function RightSideBar({ closeBar, show }) {
               exit={{ x: "100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               onClick={(e) => e.stopPropagation()}
-              className={`right-sideBar `}
+              className={`right-sideBar z-50 `}
             >
               <span
                 onClick={() => {
@@ -222,7 +222,7 @@ export function UserSideBar() {
   };
 
   return (
-    <div className="left-user-side-bar mt-14 text-center z-10">
+    <div className="fixed left-user-side-bar mt-14 text-center z-10">
       <ul className="flex flex-col">
         <li
           className={`side-bar-item ${
