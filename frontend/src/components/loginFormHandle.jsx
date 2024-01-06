@@ -15,7 +15,6 @@ const LoginRegisterPopUp = ({ asklogin }) => {
       // setShowRegisterPopup(true);
     }
   };
-
   // const handleSignUpClick = (param) => {
   //   if (param) {
   //     setShowRegisterPopup(true);
