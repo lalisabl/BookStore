@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
-
 const bookSchema = new Schema({
   title: { type: String, required: true },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -51,6 +49,7 @@ const bookSchema = new Schema({
       timestamp: { type: Date, default: Date.now },
     },
   ],
+  tags: [String],
   downloads: { type: Number, default: 0 },
   shares: { type: Number, default: 0 },
   reports: [

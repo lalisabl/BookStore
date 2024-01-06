@@ -52,7 +52,7 @@ exports.postBook = catchAsync(async (req, res, next) => {
       return next(new AppError("File upload failed", 500));
     }
     const user = req.user.id;
-    const { title, category } = req.body;
+    const { title, category,tags } = req.body;
     if (!req.file) {
       return next(new AppError("bad request: no file selected", 404));
     }
@@ -87,7 +87,7 @@ exports.postBook = catchAsync(async (req, res, next) => {
         `uploads/${filename}`,
         "thumbnails"
       );
-      await Book.create({ title, user, filename, category, thumbnailPath });
+      await Book.create({ title, user, filename, category, thumbnailPath,tags });
       res.status(201).json({ message: "Book uploaded successfully" });
     } catch (err) {
       const filePath = `uploads/${filename}`;

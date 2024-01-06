@@ -190,7 +190,12 @@ export function RightSideContent({ close }) {
         >
           <FaUserGear className="text-xl mr-3" /> Account detail
         </li>
-        <li>
+        <li
+          onClick={() => {
+            navigate("/My-favorites");
+            close();
+          }}
+        >
           <GoStarFill className="text-xl mr-3" />
           Favorites
         </li>

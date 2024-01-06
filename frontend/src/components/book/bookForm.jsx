@@ -107,32 +107,32 @@ const BookForm = () => {
     formDataToSend.append("category", formData.category);
     formDataToSend.append("downloadable", formData.downloadable);
     formDataToSend.append("file", formData.file);
-    formDataToSend.append("tag", formData.tags);
+    formDataToSend.append("tags", formData.tags);
 
-    // setLoading(true);
-    // try {
-    //   const response = await axios.post(
-    //     `${apiurl}/books/upload`,
-    //     formDataToSend,
-    //     { withCredentials: true }
-    //   );
-    //   setLoading(false);
-    //   setError(false);
-    //   setMsg(response.data.message);
-    // } catch (error) {
-    //   setLoading(false);
-    //   setError(true);
-    //   if (error.response.status === 401) {
-    //     setMsg("unAuthorized");
-    //   }
-    //   console.log(error.response.data.message);
-    //   setMsg(error.response.data.message);
-    //   console.error("Error:", error);
-    // }
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${apiurl}/books/upload`,
+        formDataToSend,
+        { withCredentials: true }
+      );
+      setLoading(false);
+      setError(false);
+      setMsg(response.data.message);
+    } catch (error) {
+      setLoading(false);
+      setError(true);
+      if (error.response.status === 401) {
+        setMsg("unAuthorized");
+      }
+      console.log(error.response.data.message);
+      setMsg(error.response.data.message);
+      console.error("Error:", error);
+    }
   };
 
   return (
-    <div className="m-auto flex items-center justify-center">
+    <div className="m-auto mt-4 mb-14 flex items-center justify-center">
       {loading && <GenericLittleLoadingModal isOpen={loading} />}
 
       <form
@@ -186,7 +186,7 @@ const BookForm = () => {
                 type="radio"
                 name="downloadable"
                 value={true}
-                checked={formData.downloadable === true}
+                checked={formData.downloadable === "true"}
                 onChange={handleChange}
                 className="mr-1"
               />
@@ -197,7 +197,7 @@ const BookForm = () => {
                 type="radio"
                 name="downloadable"
                 value={false}
-                checked={formData.downloadable === false}
+                checked={formData.downloadable === "false"}
                 onChange={handleChange}
                 className="mr-1"
               />
