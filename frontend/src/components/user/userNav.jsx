@@ -239,12 +239,12 @@ function SearchInp() {
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     searchParams.set("q", searchQ);
-    // Add category parameter if it exists
     if (searchParams.has("category")) {
       navigate(`/search?${searchParams.toString()}`);
     } else {
       navigate("/search?q=" + searchQ);
     }
+    window.location.reload();
   };
 
   const handleSelectChange = (selectedOption) => {
