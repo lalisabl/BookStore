@@ -43,18 +43,13 @@ export function HomeBanner() {
     } else {
       navigate("/search?q=" + searchQ);
     }
+    window.location.reload();
   };
 
   const handleSelectChange = (selectedOption) => {
     searchParams.set("category", selectedOption.value);
   };
 
-  const options = [
-    { value: "1", label: "Option 1" },
-    { value: "2", label: "Option 2" },
-    { value: "1", label: "Option 1" },
-    { value: "2", label: "Option 2" },
-  ];
 
   const customStyles = {
     control: (provided) => ({

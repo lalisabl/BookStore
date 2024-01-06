@@ -26,25 +26,30 @@ export function Search() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${apiurl}/books/get?${searchParams}&page=${currentPage + 1}`)
-      .then((response) => {
-        if (response.data.data.Books.length > 0) {
-          setBooks((prevBooks) => [...prevBooks, ...response.data.data.Books]);
-        } else {
-          setHasMore(false);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(error.message);
-      });
-  }, [currentPage]);
-  
+    setCurrentPage(0);
+    fetchData();
+  }, []);
+
   const fetchData = () => {
     if (hasMore) {
+      setLoading(true);
+      axios
+        .get(`${apiurl}/books/get?${searchParams}&page=${currentPage + 1}`)
+        .then((response) => {
+          if (response.data.data.Books.length > 0) {
+            setBooks((prevBooks) => [
+              ...prevBooks,
+              ...response.data.data.Books,
+            ]);
+          } else {
+            setHasMore(false);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          setError(error.message);
+        });
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
@@ -64,74 +69,74 @@ export function Search() {
         style={{ minHeight: "50vh" }}
         className="pl-3 pr-3 pb-24 bg-white w-screen"
       >
-        <InfiniteScroll
-          dataLength={books.length}
-          next={fetchData}
-          hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-          refreshFunction={refresh}
-          pullDownToRefresh
-          pullDownToRefreshThreshold={50}
-          pullDownToRefreshContent={
-            <h3 style={{ textAlign: "center" }}>
-              &#8595; Pull down to refresh
-            </h3>
-          }
-          releaseToRefreshContent={
-            <h3 style={{ textAlign: "center" }}>&#8593; Release to refresh</h3>
-          }
-        >
-          <Filter_View />
-          {loading ? (
-            <>
-              {isList ? (
-                <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full">
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                  <LoadingCardList />
-                </div>
-              ) : (
-                <div className="gap-3 grid sm:grid-cols-3 lg:grid-cols-8  md:grid-cols-5 grid-cols-2">
-                  <LoadingCardVert />
-                  <LoadingCardVert />
-                  <LoadingCardVert /> <LoadingCardVert />
-                  <LoadingCardVert /> <LoadingCardVert />
-                  <LoadingCardVert /> <LoadingCardVert />
-                  <LoadingCardVert /> <LoadingCardVert />
-                  <LoadingCardVert />
-                  <LoadingCardVert />
-                </div>
-              )}
-            </>
-          ) : (
-            <>
+        <Filter_View />
 
-              {isList ? <BookList books={books} /> : <BookGrid books={books} />}
-              
-            </>
-          )}
-          {error && (
-            <div className="m-2 p-4 bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
-              {error}
-            </div>
-          )}
-        </InfiniteScroll>
+        <>
+          <InfiniteScroll
+            dataLength={books.length}
+            next={fetchData}
+            hasMore={hasMore}
+            loader={
+              <>
+                {isList ? (
+                  <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full">
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                    <LoadingCardList />
+                  </div>
+                ) : (
+                  <div className="gap-3 grid sm:grid-cols-3 lg:grid-cols-8  md:grid-cols-5 grid-cols-2">
+                    <LoadingCardVert />
+                    <LoadingCardVert />
+                    <LoadingCardVert /> <LoadingCardVert />
+                    <LoadingCardVert /> <LoadingCardVert />
+                    <LoadingCardVert /> <LoadingCardVert />
+                    <LoadingCardVert /> <LoadingCardVert />
+                    <LoadingCardVert />
+                    <LoadingCardVert />
+                  </div>
+                )}
+              </>
+            }
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+            refreshFunction={refresh}
+            pullDownToRefresh
+            pullDownToRefreshThreshold={50}
+            pullDownToRefreshContent={
+              <h3 style={{ textAlign: "center" }}>
+                &#8595; Pull down to refresh
+              </h3>
+            }
+            releaseToRefreshContent={
+              <h3 style={{ textAlign: "center" }}>
+                &#8593; Release to refresh
+              </h3>
+            }
+          >
+            {isList ? <BookList books={books} /> : <BookGrid books={books} />}
+          </InfiniteScroll>
+        </>
+
+        {error && (
+          <div className="m-2 p-4 bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );
