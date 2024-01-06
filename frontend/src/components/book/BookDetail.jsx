@@ -154,9 +154,9 @@ export default function BookDetail() {
                 </div>
                 <div className="sm:ml-24 mb-4 flex z-0  sm:gap-3 items-end">
                   <a
-                  rel="noreferrer"
+                    rel="noreferrer"
                     href={`http://localhost:5000/file-1702504475442.pdf`}
-                    download={true}
+                    download={"true"}
                     className="m-1 flex items-center  bg-gray-200 border rounded-lg p-1 hover:bg-gray-300"
                   >
                     <BiDownload className="text-xl" />
