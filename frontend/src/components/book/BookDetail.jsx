@@ -27,7 +27,7 @@ function BookNavItem({ text, username }) {
     "Book info": "",
     "Discussion Forum": () => navigate("./forums"),
     "Reviews and rates": () => navigate("#give_rate"),
-    "Book contributor": () => navigate(`/${username}`),
+    "Book contributor": () => navigate(`/user/${username}`),
   };
   return (
     <div
