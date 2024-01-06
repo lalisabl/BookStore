@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { apiurl } from "../../assets/constData";
 import axios from "axios";
+import LoginRegisterPopUp from "../loginFormHandle";
+import { useSelector } from "react-redux";
 const Follow = ({ userInfo, userId }) => {
+  const isLogin = useSelector((state) => state.store.isLogin);
   const [isFollow, setIsFollow] = useState(false);
   const [loading, setLoading] = useState(true);
   const currentUserId = userInfo._id;
@@ -14,7 +17,9 @@ const Follow = ({ userInfo, userId }) => {
       setLoading(false);
     }
   }, [userInfo, userId]);
-  const handleFollow = async (isFollow, uploaderId) => {
+  const [askLogin, setAskLogin] = useState(false);
+
+  const HandleFollow = async (isFollow, uploaderId) => {
     if (!isFollow) {
       try {
         await axios.post(`${apiurl}/users/follow/${uploaderId}`, null, {
@@ -46,12 +51,15 @@ const Follow = ({ userInfo, userId }) => {
           className={`btn-primary rounded-md ml-1 ${
             !isFollow ? "follow" : "unfollow"
           }`}
-          onClick={() => handleFollow(isFollow, userId)}
+          onClick={() =>
+            isLogin ? () => HandleFollow(isFollow, userId) : setAskLogin(true)
+          }
         >
           {currentUserId !== userId &&
             (isFollow ? <p>Unfollow</p> : <p>Follow</p>)}
         </button>
       )}
+      {askLogin && <LoginRegisterPopUp asklogin={true} />}
     </>
   );
 };
