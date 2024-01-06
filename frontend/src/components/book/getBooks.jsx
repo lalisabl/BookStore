@@ -9,12 +9,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function GetBooks() {
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(`${apiurl}/books/get?page=${currentPage + 1}`)
       .then((response) => {
@@ -23,10 +21,8 @@ export default function GetBooks() {
         } else {
           setHasMore(false);
         }
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
         // setError(error.message);
       });
   }, [currentPage]);
