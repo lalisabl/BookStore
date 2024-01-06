@@ -42,6 +42,10 @@ const Follow = ({ userInfo, userId }) => {
       }
     }
   };
+
+  useEffect(() => {
+    console.log(askLogin);
+  }, [askLogin]);
   return (
     <>
       {loading ? (
@@ -51,15 +55,16 @@ const Follow = ({ userInfo, userId }) => {
           className={`btn-primary rounded-md ml-1 ${
             !isFollow ? "follow" : "unfollow"
           }`}
-          onClick={() =>
-            isLogin ? () => HandleFollow(isFollow, userId) : setAskLogin(true)
-          }
+          onClick={() => {
+            isLogin ? () => HandleFollow(isFollow, userId) : setAskLogin(true);
+          }}
         >
           {currentUserId !== userId &&
             (isFollow ? <p>Unfollow</p> : <p>Follow</p>)}
         </button>
       )}
-      {askLogin && <LoginRegisterPopUp asklogin={true} />}
+
+      {askLogin && <LoginRegisterPopUp asklogin={() => setAskLogin(false)} />}
     </>
   );
 };

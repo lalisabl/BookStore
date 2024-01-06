@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import GenericModal from "../shared/GenericModal";
 import { Login } from "./user/login-registration";
 const LoginRegisterPopUp = ({ asklogin }) => {
-  const [showLoginPopup, setShowLoginPopup] = useState(asklogin);
+  const [showLoginPopup, setShowLoginPopup] = useState(true);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
   const isMobile = useSelector((state) => state.store.isMobile);
   const handleSignInClick = (param) => {
     if (param) {
+      asklogin(); //this line is not working 
       setShowLoginPopup(false);
     } else {
       setShowLoginPopup(true);
@@ -31,7 +32,10 @@ const LoginRegisterPopUp = ({ asklogin }) => {
           <GenericModal
             customStyles={!isMobile ? "" : "left"}
             isOpen={showLoginPopup}
-            onClose={() => setShowLoginPopup(false)}
+            onClose={() => {
+              asklogin();
+              setShowLoginPopup(false);
+            }}
           >
             <Login
               success={() => {
