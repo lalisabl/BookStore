@@ -258,7 +258,7 @@ const CustomFileInput = ({ onChange }) => {
         type="file"
         id="file"
         name="file"
-        // accept=".pdf, .doc, .docx, .txt, .xls, .rtf, .odt, .csv, .ods, .xlsx, .ppt, .pptx"
+        accept=".pdf, .doc, .docx, .txt, .xls, .rtf, .odt, .csv, .ods, .xlsx, .ppt, .pptx"
         onChange={handleFileChange}
         style={{ display: "none" }}
       />
