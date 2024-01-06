@@ -43,9 +43,6 @@ const Follow = ({ userInfo, userId }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(askLogin);
-  }, [askLogin]);
   return (
     <>
       {loading ? (
