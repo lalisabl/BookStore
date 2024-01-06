@@ -10,6 +10,7 @@ import { BsFillGrid1X2Fill } from "react-icons/bs";
 import { setListView } from "../../redux/actions";
 import { BookGrid } from "./BookGrid";
 import { LoadingCardList, LoadingCardVert } from "../../shared/LoadingCard";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export function Search() {
   const location = useLocation();
@@ -19,22 +20,43 @@ export function Search() {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
+  const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+
   const [books, setBooks] = useState([]);
+
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${apiurl}/books/get?${searchParams}`)
+      .get(`${apiurl}/books/get?${searchParams}&page=${currentPage + 1}`)
       .then((response) => {
-        setBooks(response.data.data.Books);
+        if (response.data.data.Books.length > 0) {
+          setBooks((prevBooks) => [...prevBooks, ...response.data.data.Books]);
+        } else {
+          setHasMore(false);
+        }
         setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
         setError(error.message);
       });
-  }, [newURL]);
+  }, [currentPage]);
+  
+  const fetchData = () => {
+    if (hasMore) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const isList = useSelector((state) => state.store.isList);
+  const refresh = () => {
+    setBooks([]);
+    setCurrentPage(1);
+    setHasMore(true);
+    fetchData();
+  };
+
   return (
     <div>
       <HomeBanner />
@@ -42,49 +64,74 @@ export function Search() {
         style={{ minHeight: "50vh" }}
         className="pl-3 pr-3 pb-24 bg-white w-screen"
       >
-        <Filter_View />
-        {loading ? (
-          <>
-            {isList ? (
-              <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full">
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-                <LoadingCardList />
-              </div>
-            ) : (
-              <div className="gap-3 grid sm:grid-cols-3 lg:grid-cols-8  md:grid-cols-5 grid-cols-2">
-                <LoadingCardVert />
-                <LoadingCardVert />
-                <LoadingCardVert /> <LoadingCardVert />
-                <LoadingCardVert /> <LoadingCardVert />
-                <LoadingCardVert /> <LoadingCardVert />
-                <LoadingCardVert /> <LoadingCardVert />
-                <LoadingCardVert />
-                <LoadingCardVert />
-              </div>
-            )}
-          </>
-        ) : (
-          <>
-            {isList ? <BookList books={books} /> : <BookGrid books={books} />}
-          </>
-        )}
-        {error && (
-          <div className="m-2 p-4 bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
-            {error}
-          </div>
-        )}
+        <InfiniteScroll
+          dataLength={books.length}
+          next={fetchData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+          refreshFunction={refresh}
+          pullDownToRefresh
+          pullDownToRefreshThreshold={50}
+          pullDownToRefreshContent={
+            <h3 style={{ textAlign: "center" }}>
+              &#8595; Pull down to refresh
+            </h3>
+          }
+          releaseToRefreshContent={
+            <h3 style={{ textAlign: "center" }}>&#8593; Release to refresh</h3>
+          }
+        >
+          <Filter_View />
+          {loading ? (
+            <>
+              {isList ? (
+                <div className="grid grid-cols-1 m-auto md:grid-cols-2 gap-3 lg:w-5/6 sm:w-full">
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                  <LoadingCardList />
+                </div>
+              ) : (
+                <div className="gap-3 grid sm:grid-cols-3 lg:grid-cols-8  md:grid-cols-5 grid-cols-2">
+                  <LoadingCardVert />
+                  <LoadingCardVert />
+                  <LoadingCardVert /> <LoadingCardVert />
+                  <LoadingCardVert /> <LoadingCardVert />
+                  <LoadingCardVert /> <LoadingCardVert />
+                  <LoadingCardVert /> <LoadingCardVert />
+                  <LoadingCardVert />
+                  <LoadingCardVert />
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+
+              {isList ? <BookList books={books} /> : <BookGrid books={books} />}
+              
+            </>
+          )}
+          {error && (
+            <div className="m-2 p-4 bg-red-200 bg-opacity-60 text-red-800 text-center  rounded">
+              {error}
+            </div>
+          )}
+        </InfiniteScroll>
       </div>
     </div>
   );

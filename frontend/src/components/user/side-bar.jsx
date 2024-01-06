@@ -22,7 +22,6 @@ Modal.setAppElement("#root");
 export function AccountSideBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeItem, setActiveItem] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const isActive = (path) => {
     return location.pathname.includes(path);

@@ -5,24 +5,45 @@ import { BookList } from "./BookList";
 import { useSelector } from "react-redux";
 import { BookGrid } from "./BookGrid";
 import { LoadingCardList, LoadingCardVert } from "../../shared/LoadingCard";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function GetBooks() {
-  const [books, setBooks] = useState();
+  const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+
   useEffect(() => {
+    setLoading(true);
     axios
-      .get(`${apiurl}/books/get`)
-      .then((res) => {
-        setBooks(res.data.data.Books);
+      .get(`${apiurl}/books/get?page=${currentPage + 1}`)
+      .then((response) => {
+        if (response.data.data.Books.length > 0) {
+          setBooks((prevBooks) => [...prevBooks, ...response.data.data.Books]);
+        } else {
+          setHasMore(false);
+        }
         setLoading(false);
       })
-      .catch((err) => {
+      .catch((error) => {
         setLoading(false);
-        console.log(err);
+        // setError(error.message);
       });
-  }, []);
+  }, [currentPage]);
+
+  const fetchData = () => {
+    if (hasMore) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const isList = useSelector((state) => state.store.isList);
+  const refresh = () => {
+    setBooks([]);
+    setCurrentPage(1);
+    setHasMore(true);
+    fetchData();
+  };
   return (
     <div className="pl-3 pr-3 pb-14">
       {loading ? (
@@ -58,7 +79,34 @@ export default function GetBooks() {
           )}
         </>
       ) : (
-        <>{isList ? <BookList books={books} /> : <BookGrid books={books} />}</>
+        <>
+          <InfiniteScroll
+            dataLength={books.length}
+            next={fetchData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+            refreshFunction={refresh}
+            pullDownToRefresh
+            pullDownToRefreshThreshold={50}
+            pullDownToRefreshContent={
+              <h3 style={{ textAlign: "center" }}>
+                &#8595; Pull down to refresh
+              </h3>
+            }
+            releaseToRefreshContent={
+              <h3 style={{ textAlign: "center" }}>
+                &#8593; Release to refresh
+              </h3>
+            }
+          >
+            {isList ? <BookList books={books} /> : <BookGrid books={books} />}
+          </InfiniteScroll>{" "}
+        </>
       )}
     </div>
   );
