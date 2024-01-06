@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 const Footer = () => {
   const navigate = useNavigate();
   return (
-    <div className=" bg-gray-800 text-white py-4 lg:py-8 lg:px-24">
+    <div className="mt-16 bg-gray-800 text-white py-4 lg:py-8 lg:px-24">
       <div className="container mx-auto grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:place-items-start">
         <div className="flex flex-col w-60 ">
           <h4 className=" mb-4">BOOKSTORE</h4>

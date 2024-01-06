@@ -22,6 +22,7 @@ import DefaultPage from "./pages/defaultPg";
 import ComingSoon from "./shared/ComingSoon";
 import Favorites from "./components/user/favorites";
 import AboutUs from "./pages/about";
+import UserProfile from "./components/user/UserProfile";
 function Pages() {
   const dispatch = useDispatch();
   const [login, setLogin] = useState(false);
@@ -106,12 +107,21 @@ function Pages() {
               <Route path="/" element={<LandingPage SetLogin={setLogin} />} />
             )}
             <Route
+              path="/:username"
+              element={<DefaultPage page={<UserProfile />} />}
+            />
+            <Route
               path="/aboutUs"
               element={<DefaultPage page={<AboutUs />} />}
             />
+
             <Route
               path="/books/:id"
               element={<DefaultPage page={<BookDetail />} />}
+            />
+            <Route
+              path="/books/:id/forums"
+              element={<DefaultPage page={<ComingSoon />} />}
             />
             <Route path="search/" element={<DefaultPage page={<Search />} />} />
             <Route

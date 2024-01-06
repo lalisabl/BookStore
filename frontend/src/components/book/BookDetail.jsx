@@ -13,21 +13,33 @@ import { MdRateReview } from "react-icons/md";
 import Follow from "../common/follow";
 import { useSelector } from "react-redux";
 
-function BookNavItem({ text }) {
+function BookNavItem({ text, username }) {
+  const navigate = useNavigate();
+
   const icons = {
     "Book info": <BiInfoCircle className="mr-1" />,
     "Discussion Forum": <GoDiscussionDuplicate className="mr-1" />,
     "Reviews and rates": <BiStar />,
     "Book contributor": <FaUser />,
   };
+
+  const actions = {
+    "Book info": "",
+    "Discussion Forum": () => navigate("./forums"),
+    "Reviews and rates": () => navigate("#give_rate"),
+    "Book contributor": () => navigate(`/${username}`),
+  };
   return (
-    <div className="p-1 mb-3  rounded flex items-center cursor-pointer text-gray-900 hover:text-black ">
+    <div
+      onClick={actions[text]}
+      className="p-1 mb-3  rounded flex items-center cursor-pointer text-gray-900 hover:text-black "
+    >
       {icons[text]} <div className="hidden sm:flex">{text}</div>
     </div>
   );
 }
 
-function BookNav() {
+function BookNav({ contributor }) {
   const navItems = [
     "Book info",
     "Discussion Forum",
@@ -38,7 +50,7 @@ function BookNav() {
   return (
     <div className="fixed flex sm:flex-col top-12 -right-3 p-1 pr-4 pb-0 mt-1 sm:p-4 shadow bg-primary_bg text-left">
       {navItems.map((text, index) => (
-        <BookNavItem key={index} text={text} />
+        <BookNavItem username={contributor} key={index} text={text} />
       ))}
     </div>
   );
@@ -71,7 +83,7 @@ export default function BookDetail() {
   }
   const navigate = useNavigate();
   return (
-    <div className="pb-3">
+    <div className="pb-3 mt-10">
       {loading ? (
         <div className="flex m-auto md:w-4/6 shadow sm:w-full     bg-white rounded-md overflow-hidden  px-2">
           <LoadingCardVert />
@@ -158,7 +170,7 @@ export default function BookDetail() {
         </>
       )}
 
-      <BookNav />
+      <BookNav contributor={book?.user.username} />
     </div>
   );
 }
