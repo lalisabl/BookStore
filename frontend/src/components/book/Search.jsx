@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { HomeBanner } from "../user/user-home";
 import axios from "axios";
 import { apiurl } from "../../assets/constData";
