@@ -14,8 +14,8 @@ const LoginRegisterPopUp = ({ asklogin, login }) => {
       setShowRegisterPopup(true);
     }
   };
-  const handleSignUpClick = (param) => {
-    if (param) {
+  const handleSignUpClick = () => {
+    if (!login) {
       setShowRegisterPopup(true);
     } else {
       setShowRegisterPopup(false);
@@ -39,7 +39,10 @@ const LoginRegisterPopUp = ({ asklogin, login }) => {
               success={() => {
                 setShowLoginPopup(false);
               }}
-              HandleRegister={() => handleSignInClick(false)}
+              HandleRegister={() => {
+                setShowLoginPopup(false);
+                setShowRegisterPopup(true);
+              }}
             />
           </GenericModal>
         </>
@@ -49,13 +52,19 @@ const LoginRegisterPopUp = ({ asklogin, login }) => {
           <GenericModal
             customStyles={!isMobile ? "" : "left"}
             isOpen={showRegisterPopup}
-            onClose={() => setShowRegisterPopup(false)}
+            onClose={() => {
+              asklogin();
+              setShowRegisterPopup(false);
+            }}
           >
             <Register
               success={() => {
                 setShowRegisterPopup(false);
               }}
-              HandleLogin={() => handleSignUpClick(false)}
+              HandleLogin={() => {
+                setShowRegisterPopup(false);
+                setShowLoginPopup(true);
+              }}
             />
           </GenericModal>
         </>

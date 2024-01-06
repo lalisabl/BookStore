@@ -50,7 +50,14 @@ export default function UserNav() {
       link: "/search?category=Religion%2FSpirituality",
     },
   ];
-  const handleSignInClick = (param) => {};
+  const handleSignInClick = (param) => {
+    if (param) {
+      setShowLoginPopup(true);
+    } else {
+      setShowLoginPopup(false);
+      setShowRegisterPopup(true);
+    }
+  };
 
   const handleSignUpClick = (param) => {};
   // const [isMobile, setIsMobile] = useState(false);
