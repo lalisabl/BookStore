@@ -266,6 +266,10 @@ exports.getEachBook = catchAsync(async (req, res, next) => {
       },
     });
 
+  if (book && book.reviews) {
+    book.reviews.sort((a, b) => b.timestamp - a.timestamp);
+  }
+  
   res.status(200).json({
     status: "success",
     data: {
