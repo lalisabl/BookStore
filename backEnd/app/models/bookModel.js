@@ -33,7 +33,6 @@ const bookSchema = new Schema({
   },
   thumbnail: {
     type: String,
-    required: true,
   },
   downloadable: { type: Boolean, default: true },
   upload_date: { type: Date, default: Date.now },
