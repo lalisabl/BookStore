@@ -24,7 +24,7 @@ const upload = multer({ storage });
 const Thumbnail = async (pdfFilePath, outputFolderPath) => {
   const options = {
     density: 100,
-    saveFilename: "thumbnail_page_1",
+    saveFilename: "thumbnail_page_1", 
     savePath: outputFolderPath,
     format: "png",
     width: 100,
