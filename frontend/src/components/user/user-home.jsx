@@ -128,7 +128,7 @@ export function HomeBanner() {
 }
 
 function SearchRecommenderTag({ setSearch }) {
-  const recommended = [`top new book`, "chemistry", "poetry", "handout"];
+  const recommended = [`new book`, "chemistry", "poetry", "handout"];
   return (
     <div className="flex flex-wrap gap-2">
       {recommended.map((s, index) => (
