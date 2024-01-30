@@ -26,7 +26,6 @@ const Thumbnail = async (pdfFilePath, filename, outputFolderPath) => {
   const options = {
     density: 100,
     saveFilename: filename,
-    saveFilename: "thumbnail_page_1",
     savePath: outputFolderPath,
     format: "png",
     width: 100,
@@ -87,11 +86,11 @@ exports.postBook = catchAsync(async (req, res, next) => {
 
     try {
       await Thumbnail(
-        `uploads/${filename}`,
+        `uploads/${filename.split(".")[0]}`,
         filename,
         "./public/images/thumbnails"
       );
-      const thumbnail = filename;
+      const thumbnail = filename.split(".")[0];
       console.log(thumbnail);
       await Book.create({ title, user, filename, category, thumbnail });
       res.status(201).json({ message: "Book uploaded successfully" });
