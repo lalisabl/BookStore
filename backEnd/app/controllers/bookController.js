@@ -26,6 +26,7 @@ const Thumbnail = async (pdfFilePath, filename, outputFolderPath) => {
   const options = {
     density: 100,
     saveFilename: filename,
+    saveFilename: "thumbnail_page_1",
     savePath: outputFolderPath,
     format: "png",
     width: 100,
