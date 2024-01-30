@@ -22,7 +22,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const Thumbnail = async (pdfFilePath, filename, outputFolderPath) => {
-  console.log(filename);
   const options = {
     density: 100,
     saveFilename: filename,
@@ -40,7 +39,6 @@ const Thumbnail = async (pdfFilePath, filename, outputFolderPath) => {
       responseType: "image",
     });
 
-    console.log("Thumbnail extraction successful:", result.name);
     return result[0];
   } catch (error) {
     console.error("Error extracting thumbnail:", error);
@@ -83,15 +81,13 @@ exports.postBook = catchAsync(async (req, res, next) => {
       await fs.unlink(filePath);
       return next(new AppError("Unsupported file type", 400));
     }
-
     try {
       await Thumbnail(
-        `uploads/${filename.split(".")[0]}`,
-        filename,
+        `uploads/${filename}`,
+        filename.split(".")[0],
         "./public/images/thumbnails"
       );
-      const thumbnail = filename.split(".")[0];
-      console.log(thumbnail);
+      const thumbnail = filename.replace(".pdf", ".1.png");
       await Book.create({ title, user, filename, category, thumbnail });
       res.status(201).json({ message: "Book uploaded successfully" });
     } catch (err) {
@@ -270,7 +266,6 @@ exports.getAllBooks = async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       status: "fail",
       message: err,
@@ -394,7 +389,6 @@ exports.getFileLocation = async (req, res, next) => {
       return res.status(404).json({ message: "Book not found" });
     }
 
-    // Construct the complete file location URL
     //need to be edited
     const fileLocationURL = `http://localhost:5000/${book.filename}`;
 
