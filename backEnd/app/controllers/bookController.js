@@ -21,10 +21,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const Thumbnail = async (pdfFilePath, outputFolderPath) => {
+const Thumbnail = async (pdfFilePath, filename, outputFolderPath) => {
+  console.log(filename);
   const options = {
     density: 100,
-    saveFilename: "thumbnail_page_1",
+    saveFilename: filename,
     savePath: outputFolderPath,
     format: "png",
     width: 100,
@@ -38,7 +39,8 @@ const Thumbnail = async (pdfFilePath, outputFolderPath) => {
     const result = await convert(pageToConvertAsImage, {
       responseType: "image",
     });
-    console.log("Thumbnail extraction successful:", result[0]);
+
+    console.log("Thumbnail extraction successful:", result.name);
     return result[0];
   } catch (error) {
     console.error("Error extracting thumbnail:", error);
@@ -83,7 +85,13 @@ exports.postBook = catchAsync(async (req, res, next) => {
     }
 
     try {
-      const thumbnail = await Thumbnail(`uploads/${filename}`, "./thumbnails");
+      await Thumbnail(
+        `uploads/${filename}`,
+        filename,
+        "./public/images/thumbnails"
+      );
+      const thumbnail = filename;
+      console.log(thumbnail);
       await Book.create({ title, user, filename, category, thumbnail });
       res.status(201).json({ message: "Book uploaded successfully" });
     } catch (err) {

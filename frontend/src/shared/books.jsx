@@ -97,7 +97,7 @@ export const Books = ({ book, isGrid }) => {
                     fileType(book.filename) === "docx"
                   ? "images/word.png"
                   : "images/default.png"
-              : `${host}/thumbnails/${book.thumbnail}`
+              : `${host}/images/thumbnails/${book.thumbnail}`
           }
           alt={book.title}
           className={`${
