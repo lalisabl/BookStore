@@ -29,7 +29,7 @@ const Thumbnail = async (pdfFilePath, filename, outputFolderPath) => {
     format: "png",
     width: 100,
     height: 100,
-  };
+  }; 
 
   const convert = fromPath(pdfFilePath, options);
   const pageToConvertAsImage = 1;
