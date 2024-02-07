@@ -117,7 +117,7 @@ export default function BookDetail() {
                             ? "/images/word.png"
                             : "/images/default.png"
                       }
-                      className="bg-gray-100 w-24 mr-2"
+                      className="bg-gray-100 w-24 mr-2 hover:cursor-pointer"
                     />
                   </div>
                 </div>

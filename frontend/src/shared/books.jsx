@@ -100,7 +100,7 @@ export const Books = ({ book, isGrid }) => {
               : `${host}/images/thumbnails/${book.thumbnail}`
           }
           alt={book.title}
-          className={`${
+          className={`hover:cursor-pointer ${
             !isGrid ? "w-24  h-auto object-contai" : ""
           } bg-gray-100`}
         />
