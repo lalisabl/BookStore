@@ -28,7 +28,8 @@ export function Login({ HandleRegister, success }) {
       .post(
         `${apiurl}/users/login`,
         {
-          [identifier.includes("@") ? "email" : "username"]: identifier,
+          // [identifier.includes("@") ? "email" : "username"]: identifier,
+          email,
           password,
         },
         { withCredentials: true }
